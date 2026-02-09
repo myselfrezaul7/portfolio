@@ -14,21 +14,21 @@
   --text-secondary: #a3a3a3;
   --text-tertiary: #737373;
 
-  --accent: #ffffff;
-  --accent-hover: #e5e5e5;
+  --accent: #d4a853;
+  --accent-hover: #e8c170;
 
   --border: #262626;
   --border-hover: #404040;
 
-  /* Gradients - Neutral */
-  --gradient-primary: linear-gradient(135deg, #ffffff 0%, #e5e5e5 100%);
+  /* Gradients - Warm Gold */
+  --gradient-primary: linear-gradient(135deg, #d4a853 0%, #c49a4b 100%);
   --gradient-subtle: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
 
   /* Shadows */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
-  --shadow-glow: 0 0 40px rgba(255, 255, 255, 0.1);
+  --shadow-glow: 0 0 40px rgba(212, 168, 83, 0.15);
 
   /* Spacing */
   --section-padding: 120px;

@@ -1,4 +1,6 @@
 import { ImageResponse } from 'next/og';
+import { readFile } from 'fs/promises';
+import { join } from 'path';
 
 // Image metadata
 export const size = {
@@ -7,30 +9,34 @@ export const size = {
 };
 export const contentType = 'image/png';
 
-// Image generation
-export default function Icon() {
+// Image generation - uses profile photo
+export default async function Icon() {
     return new ImageResponse(
         (
-            // ImageResponse JSX element
             <div
                 style={{
-                    fontSize: 20,
-                    background: '#0a0a0a',
                     width: '100%',
                     height: '100%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#f5f5f0',
-                    fontWeight: 600,
-                    fontFamily: 'sans-serif',
-                    borderRadius: 4, // Optional: adds slight rounding like modern app icons
+                    borderRadius: '50%',
+                    overflow: 'hidden',
+                    background: '#0a0a0a',
                 }}
             >
-                M•K
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                    src="https://myselfkarim.vercel.app/images/profile.jpg"
+                    alt="MK"
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                    }}
+                />
             </div>
         ),
-        // ImageResponse options
         {
             ...size,
         }

@@ -1,0 +1,170 @@
+.about {
+    padding: 120px 0;
+    background: var(--bg-secondary);
+}
+
+.container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 0 48px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        padding: 0 64px;
+    }
+}
+
+.sectionTitle {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 48px;
+    max-width: 700px;
+}
+
+.content {
+    max-width: 800px;
+}
+
+.bioSection {
+    margin-bottom: 48px;
+}
+
+.bio {
+    font-size: 18px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.bio:last-child {
+    margin-bottom: 0;
+}
+
+.bio strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.infoCards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 48px;
+}
+
+@media (min-width: 768px) {
+    .infoCards {
+        flex-direction: row;
+        gap: 24px;
+    }
+}
+
+.infoCard {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    flex: 1;
+    transition: all var(--transition-normal);
+}
+
+.infoCard:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+}
+
+.infoCard svg {
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.infoLabel {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+
+.infoValue {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.languagesSection {
+    margin-bottom: 48px;
+}
+
+.languagesTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+}
+
+.languagesGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.languageItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.languageName {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.languageLevel {
+    font-size: 12px;
+    color: var(--accent);
+    background: rgba(59, 130, 246, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.resumeButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    background: var(--gradient-primary);
+    border-radius: 10px;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-glow);
+}
+
+.resumeButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 60px rgba(59, 130, 246, 0.3);
+}

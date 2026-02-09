@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Download, Mail } from 'lucide-react';
+import { Menu, X, Download, ArrowUpRight } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import styles from './Navbar.module.css';
 
@@ -13,17 +13,7 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-    const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
     const handleNavClick = (href: string) => {
         setIsMobileMenuOpen(false);
@@ -33,15 +23,27 @@ export default function Navbar() {
         }
     };
 
+    // Prevent body scroll when mobile menu is open
+    useEffect(() => {
+        if (isMobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isMobileMenuOpen]);
+
     return (
         <>
             <motion.nav
-                className={`${styles.navbar} ${isScrolled ? styles.scrolled : ''}`}
+                className={styles.navbar}
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
             >
-                <div className={styles.container}>
+                <div className={styles.navbarInner}>
                     {/* Logo */}
                     <a href="#" className={styles.logo}>
                         M—K
@@ -62,25 +64,25 @@ export default function Navbar() {
 
                     {/* Desktop Actions */}
                     <div className={styles.desktopActions}>
-                        <ThemeToggle />
                         <a
                             href="/resume.pdf"
                             download
                             className={styles.resumeLink}
                         >
-                            <Download size={16} />
                             Resume
+                            <Download size={14} />
                         </a>
+                        <ThemeToggle />
                         <a
                             href="mailto:myselfrezaul@gmail.com"
                             className={styles.ctaButton}
                         >
-                            <Mail size={16} />
                             Let's Talk
+                            <ArrowUpRight size={14} />
                         </a>
                     </div>
 
-                    {/* Mobile Menu Toggle */}
+                    {/* Mobile Actions */}
                     <div className={styles.mobileActions}>
                         <ThemeToggle />
                         <button
@@ -123,8 +125,8 @@ export default function Navbar() {
                                     Download Resume
                                 </a>
                                 <a href="mailto:myselfrezaul@gmail.com" className={styles.mobileCta}>
-                                    <Mail size={18} />
                                     Let's Talk
+                                    <ArrowUpRight size={18} />
                                 </a>
                             </div>
                         </div>

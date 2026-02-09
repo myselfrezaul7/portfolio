@@ -1,6 +1,5 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Marquee from '@/components/Marquee';
@@ -12,11 +11,6 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import SkipToContent from '@/components/SkipToContent';
 import PageTransition from '@/components/animations/PageTransition';
-
-// Dynamic import for custom cursor (client-side only)
-const CustomCursor = dynamic(() => import('@/components/CustomCursor'), {
-  ssr: false,
-});
 
 const marqueeItems = [
   'Business Strategy',
@@ -33,7 +27,6 @@ export default function Home() {
   return (
     <>
       <SkipToContent />
-      <CustomCursor />
       <Navbar />
       <PageTransition>
         <main id="main-content">

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Linkedin, Github, Mail, ArrowUp } from 'lucide-react';
+import { Linkedin, Github, Mail } from 'lucide-react';
 import styles from './Footer.module.css';
 
 const socialLinks = [
@@ -11,10 +11,6 @@ const socialLinks = [
 ];
 
 export default function Footer() {
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
     return (
         <footer className={styles.footer}>
             <div className={styles.container}>
@@ -44,17 +40,6 @@ export default function Footer() {
                         © 2026 — Crafted by Md Rezaul Karim
                     </p>
                 </div>
-
-                {/* Back to Top */}
-                <motion.button
-                    className={styles.backToTop}
-                    onClick={scrollToTop}
-                    whileHover={{ y: -3 }}
-                    whileTap={{ scale: 0.95 }}
-                    aria-label="Back to top"
-                >
-                    <ArrowUp size={20} />
-                </motion.button>
             </div>
         </footer>
     );

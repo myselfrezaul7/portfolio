@@ -10,6 +10,7 @@ import About from '@/components/About';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import SkipToContent from '@/components/SkipToContent';
+import ScrollToTop from '@/components/ScrollToTop';
 import PageTransition from '@/components/animations/PageTransition';
 
 const marqueeItems = [
@@ -40,6 +41,7 @@ export default function Home() {
         </main>
       </PageTransition>
       <Footer />
+      <ScrollToTop />
     </>
   );
 }

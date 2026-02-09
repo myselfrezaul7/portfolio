@@ -16,7 +16,7 @@ export default function Footer() {
             <div className={styles.container}>
                 <div className={styles.content}>
                     {/* Logo */}
-                    <a href="#" className={styles.logo}>M—K</a>
+                    <a href="#" className={styles.logo}>M•K</a>
 
                     {/* Social Links */}
                     <div className={styles.socialLinks}>

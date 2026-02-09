@@ -46,7 +46,7 @@ export default function Navbar() {
                 <div className={styles.navbarInner}>
                     {/* Logo */}
                     <a href="#" className={styles.logo}>
-                        M—K
+                        M•K
                     </a>
 
                     {/* Desktop Navigation */}

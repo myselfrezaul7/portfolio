@@ -136,18 +136,19 @@
     align-items: center;
     justify-content: center;
     padding: 16px 32px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
+    letter-spacing: 0.02em;
     color: white;
     background: var(--gradient-primary);
-    border-radius: 10px;
+    border-radius: 50px;
     transition: all var(--transition-normal);
     box-shadow: var(--shadow-glow);
 }
 
 .primaryBtn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 0 60px rgba(59, 130, 246, 0.3);
+    opacity: 0.9;
 }
 
 .secondaryBtn {
@@ -155,12 +156,13 @@
     align-items: center;
     justify-content: center;
     padding: 16px 32px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
+    letter-spacing: 0.02em;
     color: var(--text-primary);
     background: var(--bg-tertiary);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 50px;
     transition: all var(--transition-normal);
 }
 

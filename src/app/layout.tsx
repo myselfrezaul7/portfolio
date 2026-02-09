@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://rezaulkarim.vercel.app'),
+  metadataBase: new URL('https://myselfkarim.vercel.app'),
   title: {
     default: "Md Rezaul Karim — Business Strategy & Technical Execution",
     template: "%s | Md Rezaul Karim"
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://rezaulkarim.vercel.app",
+    url: "https://myselfkarim.vercel.app",
     siteName: "Md Rezaul Karim",
     title: "Md Rezaul Karim — Business Strategy & Technical Execution",
     description: "Master's student in International Management & Information System with expertise in process optimization, data analytics, and technical deployment.",
@@ -70,8 +70,8 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Md Rezaul Karim",
-  url: "https://rezaulkarim.vercel.app",
-  image: "https://rezaulkarim.vercel.app/images/profile.jpg",
+  url: "https://myselfkarim.vercel.app",
+  image: "https://myselfkarim.vercel.app/images/profile.jpg",
   sameAs: [
     "https://linkedin.com/in/myselfkarim",
     "https://github.com/myselfrezaul7",

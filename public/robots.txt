@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://rezaulkarim.vercel.app/sitemap.xml
+Sitemap: https://myselfkarim.vercel.app/sitemap.xml
 
 # Disallow admin/api routes
 Disallow: /api/

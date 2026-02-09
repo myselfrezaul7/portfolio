@@ -22,6 +22,8 @@ const marqueeItems = [
   'Data Analytics',
   'Project Management',
   'Technical Execution',
+  'Antigravity',
+  'Visual Studio Code',
 ];
 
 export default function Home() {

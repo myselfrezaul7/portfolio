@@ -9,7 +9,10 @@ interface ThemeContextType {
     toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+const ThemeContext = createContext<ThemeContextType>({
+    theme: 'dark',
+    toggleTheme: () => { },
+});
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
     const [theme, setTheme] = useState<Theme>('dark');
@@ -31,21 +34,14 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         document.documentElement.setAttribute('data-theme', newTheme);
     };
 
-    if (!mounted) {
-        return <>{children}</>;
-    }
-
+    // Always render children, but provide default values during SSR
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <ThemeContext.Provider value={{ theme: mounted ? theme : 'dark', toggleTheme }}>
             {children}
         </ThemeContext.Provider>
     );
 }
 
 export function useTheme() {
-    const context = useContext(ThemeContext);
-    if (context === undefined) {
-        throw new Error('useTheme must be used within a ThemeProvider');
-    }
-    return context;
+    return useContext(ThemeContext);
 }

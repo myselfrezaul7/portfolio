@@ -15,6 +15,7 @@ export default function ThemeToggle() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            suppressHydrationWarning
         >
             {theme === 'dark' ? (
                 <Sun size={18} />

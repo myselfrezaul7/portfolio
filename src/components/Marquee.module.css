@@ -1,0 +1,30 @@
+.marqueeContainer {
+    width: 100%;
+    overflow: hidden;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-secondary);
+}
+
+.marqueeTrack {
+    display: flex;
+    white-space: nowrap;
+    will-change: transform;
+}
+
+.marqueeItem {
+    display: inline-flex;
+    align-items: center;
+    font-size: clamp(16px, 3vw, 24px);
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.separator {
+    margin: 0 32px;
+    color: var(--text-tertiary);
+    font-size: 12px;
+}

@@ -24,6 +24,9 @@ export default function About() {
                                 I am currently pursuing an M.A. in International Management and Information Systems, where I focus on business process management and data-driven decision making. Alongside my studies, I am involved in two early-stage ventures in education consulting and e-commerce.
                             </p>
                             <p className={styles.bio}>
+                                My focus areas are <strong>Operational Efficiency</strong> and <strong>Digital Transformation</strong>. Whether it is a healthcare facility or an e-commerce platform, the goal is always to create systems that work better for everyone.
+                            </p>
+                            <p className={styles.bio}>
                                 Previously, I worked for two years as an Assistant Manager at a diagnostic clinic. I redesigned patient workflows, managed lab inventory, and supported daily operations to ensure smooth service delivery.
                             </p>
                         </div>

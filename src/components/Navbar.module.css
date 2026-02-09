@@ -109,7 +109,7 @@
     font-weight: 600;
     letter-spacing: 0.03em;
     text-transform: uppercase;
-    color: white;
+    color: var(--bg-primary);
     background: var(--text-primary);
     border-radius: 50px;
     transition: all var(--transition-fast);

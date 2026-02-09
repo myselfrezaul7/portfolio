@@ -2,17 +2,9 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { ArrowDown } from 'lucide-react';
 import styles from './Hero.module.css';
 
 export default function Hero() {
-    const scrollToServices = () => {
-        const element = document.querySelector('#services');
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
-
     return (
         <section className={styles.hero}>
             <div className={styles.container}>
@@ -35,7 +27,7 @@ export default function Hero() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.4 }}
                     >
-                        Rezaul
+                        Karim
                     </motion.h1>
 
                     {/* Title */}
@@ -94,19 +86,6 @@ export default function Hero() {
                         <div className={styles.imageGlow} />
                     </div>
                 </motion.div>
-
-                {/* Scroll Indicator */}
-                <motion.button
-                    className={styles.scrollIndicator}
-                    onClick={scrollToServices}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.5 }}
-                    whileHover={{ y: 5 }}
-                >
-                    <span>Scroll</span>
-                    <ArrowDown size={16} />
-                </motion.button>
             </div>
 
             {/* Background Elements */}

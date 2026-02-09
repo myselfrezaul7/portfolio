@@ -4,7 +4,7 @@
     left: 0;
     right: 0;
     z-index: 100;
-    padding: 16px 24px;
+    padding: 20px 24px;
     display: flex;
     justify-content: center;
     transition: all var(--transition-normal);
@@ -13,21 +13,54 @@
 .navbarInner {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    max-width: 900px;
+    justify-content: center;
+    max-width: 720px;
     width: 100%;
-    padding: 12px 24px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 50px;
+    padding: 10px 28px;
+    /* Glassmorphism effect */
+    background: rgba(30, 30, 30, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+        0 4px 30px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
     transition: all var(--transition-normal);
+    gap: 8px;
+}
+
+/* Light mode glassmorphism */
+:global([data-theme="light"]) .navbarInner {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow:
+        0 4px 30px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 @media (min-width: 768px) {
     .navbarInner {
-        padding: 12px 32px;
+        padding: 10px 32px;
     }
+}
+
+/* Scrolled Logo - appears on scroll (like L—B in reference) */
+.scrolledLogo {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--text-primary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 0;
+    margin-right: auto;
+    transition: opacity var(--transition-fast);
+}
+
+.scrolledLogo:hover {
+    opacity: 0.7;
 }
 
 .logo {
@@ -45,7 +78,7 @@
 .desktopNav {
     display: none;
     align-items: center;
-    gap: 32px;
+    gap: 28px;
 }
 
 @media (min-width: 768px) {
@@ -60,11 +93,12 @@
     color: var(--text-secondary);
     font-size: 13px;
     font-weight: 500;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     cursor: pointer;
     transition: color var(--transition-fast);
-    padding: 8px 0;
+    padding: 6px 0;
+    white-space: nowrap;
 }
 
 .navLink:hover {
@@ -74,7 +108,8 @@
 .desktopActions {
     display: none;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+    margin-left: auto;
 }
 
 @media (min-width: 768px) {
@@ -87,13 +122,14 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 12px;
+    padding: 6px 12px;
     font-size: 13px;
     font-weight: 500;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--text-secondary);
     transition: color var(--transition-fast);
+    white-space: nowrap;
 }
 
 .resumeLink:hover {
@@ -103,16 +139,16 @@
 .ctaButton {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
+    gap: 6px;
+    padding: 8px 18px;
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.03em;
-    text-transform: uppercase;
     color: var(--bg-primary);
     background: var(--text-primary);
-    border-radius: 50px;
+    border-radius: 100px;
     transition: all var(--transition-fast);
+    white-space: nowrap;
 }
 
 .ctaButton:hover {
@@ -124,8 +160,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     background: none;
     border: none;
     color: var(--text-primary);
@@ -135,7 +171,7 @@
 .mobileActions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
 }
 
 @media (min-width: 768px) {
@@ -152,14 +188,22 @@
 
 .mobileMenu {
     position: fixed;
-    top: 90px;
+    top: 80px;
     left: 16px;
     right: 16px;
     z-index: 99;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    /* Glassmorphism for mobile menu */
+    background: rgba(30, 30, 30, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 24px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     overflow: hidden;
+}
+
+:global([data-theme="light"]) .mobileMenu {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .mobileMenuContent {

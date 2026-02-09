@@ -14,6 +14,16 @@ const navLinks = [
 
 export default function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    // Detect scroll for showing logo
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 100);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const handleNavClick = (href: string) => {
         setIsMobileMenuOpen(false);
@@ -21,6 +31,10 @@ export default function Navbar() {
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
         }
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     // Prevent body scroll when mobile menu is open
@@ -38,16 +52,27 @@ export default function Navbar() {
     return (
         <>
             <motion.nav
-                className={styles.navbar}
+                className={`${styles.navbar} ${isScrolled ? styles.scrolled : ''}`}
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
             >
                 <div className={styles.navbarInner}>
-                    {/* Logo */}
-                    <a href="#" className={styles.logo}>
-                        M•K
-                    </a>
+                    {/* Scrolled Logo - appears on scroll */}
+                    <AnimatePresence>
+                        {isScrolled && (
+                            <motion.button
+                                onClick={scrollToTop}
+                                className={styles.scrolledLogo}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                M—K
+                            </motion.button>
+                        )}
+                    </AnimatePresence>
 
                     {/* Desktop Navigation */}
                     <div className={styles.desktopNav}>

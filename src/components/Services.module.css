@@ -43,13 +43,14 @@
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
 }
 
 @media (min-width: 768px) {
     .grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
     }
 }
 
@@ -62,12 +63,19 @@
 .card {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 32px;
+    border-radius: 16px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     height: 100%;
     transition: all var(--transition-normal);
+}
+
+@media (min-width: 768px) {
+    .card {
+        border-radius: 20px;
+        padding: 32px;
+    }
 }
 
 .card:hover {

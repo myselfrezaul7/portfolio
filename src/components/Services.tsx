@@ -9,20 +9,20 @@ const services = [
     {
         icon: Settings,
         title: 'Process Management',
-        description: 'I optimize business workflows using BPMN 2.0 and SAP Signavio. From mapping processes to automating workflows, I ensure operational efficiency.',
-        skills: ['SAP Signavio', 'BPMN 2.0', 'Workflow Automation'],
+        description: 'I turn complex workflows into clear, repeatable systems. Using BPMN 2.0 and SAP Signavio, I map, analyse, and improve how work gets done.',
+        skills: ['SAP Signavio', 'BPMN 2.0', 'Workflow Design'],
     },
     {
         icon: BarChart3,
-        title: 'Data & Analytics',
-        description: 'Transform raw data into actionable insights using Power BI and KNIME. I create dashboards and reports that drive data-informed decisions.',
+        title: 'Data Analysis',
+        description: 'I help teams make better decisions with data. Using Power BI and KNIME, I build dashboards and reports that turn numbers into clear insights.',
         skills: ['Power BI', 'KNIME', 'Data Analysis'],
     },
     {
         icon: Code2,
-        title: 'Tech & Deployment',
-        description: 'I build and deploy web applications using modern technologies. From development to deployment on Vercel, I handle the complete technical lifecycle.',
-        skills: ['Vercel', 'GitHub', 'HTML5/CSS4', 'Bootstrap'],
+        title: 'Technical Deployment',
+        description: 'I handle small web projects from start to finish. Whether it is a landing page or a simple web app, I can build and deploy it using GitHub and Vercel.',
+        skills: ['Vercel', 'GitHub', 'HTML/CSS'],
     },
 ];
 
@@ -33,10 +33,9 @@ export default function Services() {
                 {/* Section Header */}
                 <ScrollReveal>
                     <div className={styles.header}>
-                        <h2 className={styles.sectionTitle}>What I do.</h2>
+                        <h2 className={styles.sectionTitle}>What I do</h2>
                         <p className={styles.sectionDescription}>
-                            A hybrid approach to business and technology: from strategy research
-                            to process optimization, to technical deployment.
+                            I combine process design with operational analysis to help organisations run more efficiently.
                         </p>
                     </div>
                 </ScrollReveal>

@@ -10,7 +10,7 @@ export default function About() {
             <div className={styles.container}>
                 <ScrollReveal>
                     <h2 className={styles.sectionTitle}>
-                        Business isn't just about numbers.
+                        A bit about me
                     </h2>
                 </ScrollReveal>
 
@@ -18,17 +18,13 @@ export default function About() {
                     <ScrollReveal delay={0.1}>
                         <div className={styles.bioSection}>
                             <p className={styles.bio}>
-                                I'm a Master's student in <strong>International Management & Information System</strong> with
-                                a strong background in operational leadership and technical deployment.
+                                I help organisations improve inefficient operations by turning complex workflows into clear and repeatable systems.
                             </p>
                             <p className={styles.bio}>
-                                My goal is simple: create systems that businesses love and teams enjoy using.
-                                I work like a chameleon, adapting to every phase of the process—from strategy
-                                research to the final deployment—always using the latest technologies.
+                                I am currently pursuing an M.A. in International Management and Information Systems, where I focus on business process management and data-driven decision making. Alongside my studies, I am involved in two early-stage ventures in education consulting and e-commerce.
                             </p>
                             <p className={styles.bio}>
-                                I focus on what really matters: <strong>Operational Efficiency</strong> and <strong>Digital Transformation</strong>.
-                                Whether it's a healthcare facility or an e-commerce platform, the goal is always the same.
+                                Previously, I worked for two years as an Assistant Manager at a diagnostic clinic. I redesigned patient workflows, managed lab inventory, and supported daily operations to ensure smooth service delivery.
                             </p>
                         </div>
                     </ScrollReveal>
@@ -49,7 +45,7 @@ export default function About() {
                                 <GraduationCap size={20} />
                                 <div>
                                     <span className={styles.infoLabel}>Education</span>
-                                    <span className={styles.infoValue}>M.A. IMIS – South Westphalia University</span>
+                                    <span className={styles.infoValue}>M.A. IMIS, South Westphalia University</span>
                                 </div>
                             </div>
 
@@ -58,7 +54,7 @@ export default function About() {
                                 <Briefcase size={20} />
                                 <div>
                                     <span className={styles.infoLabel}>Experience</span>
-                                    <span className={styles.infoValue}>2+ Years in Operations Management</span>
+                                    <span className={styles.infoValue}>2+ Years in Operations</span>
                                 </div>
                             </div>
                         </div>
@@ -78,7 +74,7 @@ export default function About() {
                                 </div>
                                 <div className={styles.languageItem}>
                                     <span className={styles.languageName}>German</span>
-                                    <span className={styles.languageLevel}>A1 → A2</span>
+                                    <span className={styles.languageLevel}>A1 to A2</span>
                                 </div>
                             </div>
                         </div>

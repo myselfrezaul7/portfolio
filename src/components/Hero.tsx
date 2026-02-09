@@ -17,7 +17,7 @@ export default function Hero() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
                         <span className={styles.emoji}>👋</span>
-                        <span className={styles.greetingText}>Hello, I'm</span>
+                        <span className={styles.greetingText}>Hello, I am</span>
                     </motion.div>
 
                     {/* Name */}
@@ -38,7 +38,7 @@ export default function Hero() {
                         transition={{ duration: 0.7, delay: 0.6 }}
                     >
                         Business Strategist<br />
-                        <span className={styles.titleAccent}>&</span> Technical Executor
+                        and Technical Executor
                     </motion.h2>
 
                     {/* Description */}
@@ -48,8 +48,7 @@ export default function Hero() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.8 }}
                     >
-                        I help organizations optimize operations by bridging business strategy
-                        with technical execution using SAP, BPMN, and data-driven insights.
+                        I help organisations improve operations by turning complex workflows into clear and repeatable systems using SAP Signavio, BPMN, and data-driven insights.
                     </motion.p>
 
                     {/* CTA Buttons */}

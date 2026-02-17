@@ -37,7 +37,7 @@ export default function Footer() {
 
                     {/* Copyright */}
                     <p className={styles.copyright}>
-                        © 2026 Md Rezaul Karim
+                        © 2025 Md Rezaul Karim
                     </p>
                 </div>
             </div>

@@ -74,6 +74,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -83,6 +84,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 /* Container */
@@ -107,7 +109,7 @@ body {
 
 /* Section */
 .section {
-  padding: 80px 0;
+  padding: 64px 0;
 }
 
 @media (min-width: 768px) {

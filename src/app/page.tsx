@@ -13,6 +13,7 @@ import Footer from '@/components/Footer';
 import SkipToContent from '@/components/SkipToContent';
 import ScrollToTop from '@/components/ScrollToTop';
 import PageTransition from '@/components/animations/PageTransition';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 const marqueeItems = [
   'Supply Chain Optimization',
@@ -34,14 +35,14 @@ export default function Home() {
       <Navbar />
       <PageTransition>
         <main id="main-content">
-          <Hero />
-          <Marquee items={marqueeItems} speed={40} />
-          <Services />
-          <Projects />
-          <HowIWork />
-          <SkillsRadar />
-          <About />
-          <Contact />
+          <ErrorBoundary><Hero /></ErrorBoundary>
+          <ErrorBoundary><Marquee items={marqueeItems} speed={40} /></ErrorBoundary>
+          <ErrorBoundary><Services /></ErrorBoundary>
+          <ErrorBoundary><Projects /></ErrorBoundary>
+          <ErrorBoundary><HowIWork /></ErrorBoundary>
+          <ErrorBoundary><SkillsRadar /></ErrorBoundary>
+          <ErrorBoundary><About /></ErrorBoundary>
+          <ErrorBoundary><Contact /></ErrorBoundary>
         </main>
       </PageTransition>
       <Footer />

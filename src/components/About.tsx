@@ -119,6 +119,10 @@ export default function About() {
                                     <span className={styles.toolCategory}>Management</span>
                                     <span className={styles.toolName}>Lean Management</span>
                                 </div>
+                                <div className={styles.toolItem}>
+                                    <span className={styles.toolCategory}>Management</span>
+                                    <span className={styles.toolName}>Agile (Scrum)</span>
+                                </div>
                             </div>
                         </div>
                     </ScrollReveal>

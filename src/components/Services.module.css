@@ -126,22 +126,3 @@
     background: rgba(59, 130, 246, 0.1);
     border-radius: 20px;
 }
-
-.cardFooter {
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-}
-
-.learnMore {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-tertiary);
-    transition: color var(--transition-fast);
-}
-
-.card:hover .learnMore {
-    color: var(--accent);
-}

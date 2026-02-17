@@ -9,20 +9,20 @@ const steps = [
     {
         icon: Search,
         number: '01',
-        title: 'Research & Strategy',
-        description: 'User research, competitive analysis, moodboard and style tile to define the operational identity.',
+        title: 'Diagnose & Analyse',
+        description: 'Understand current operations through data collection, stakeholder interviews, and process mapping to identify bottlenecks and inefficiencies.',
     },
     {
         icon: FileText,
         number: '02',
-        title: 'Definition & Planning',
-        description: 'Process mapping, workflow design, and usability testing to validate solutions before implementation.',
+        title: 'Design & Optimise',
+        description: 'Develop improved workflows, build data models, and prototype solutions using tools like SAP Signavio and Power BI.',
     },
     {
         icon: Rocket,
         number: '03',
-        title: 'Implementation',
-        description: 'Pixel-perfect execution with technical deployment and system integration for development teams.',
+        title: 'Implement & Scale',
+        description: 'Deploy solutions, integrate with existing systems, and set up monitoring to ensure continuous improvement.',
     },
 ];
 

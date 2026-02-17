@@ -37,8 +37,7 @@ export default function Hero() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.6 }}
                     >
-                        Business Strategist<br />
-                        and Technical Executor
+                        Operations × Technology
                     </motion.h2>
 
                     {/* Description */}
@@ -48,7 +47,7 @@ export default function Hero() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.8 }}
                     >
-                        I help organisations improve operations by turning complex workflows into clear and repeatable systems using SAP Signavio, BPMN, and data-driven insights.
+                        Optimizing operations through data and technology. I bridge the gap between business processes and technical systems to help organisations run smarter.
                     </motion.p>
 
                     {/* CTA Buttons */}

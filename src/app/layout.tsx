@@ -6,19 +6,22 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL('https://myselfkarim.vercel.app'),
   title: {
-    default: "Md Rezaul Karim — Business Strategy & Technical Execution",
+    default: "Md Rezaul Karim — Bridging Business Operations & Technology",
     template: "%s | Md Rezaul Karim"
   },
-  description: "Master's student in International Management & Information System with expertise in process optimization, data analytics, and technical deployment. Based in Germany.",
+  description: "Master's student in IMIS | Supply Chain Optimizer | Founder. Bridging business operations and technology through process analytics, data-driven insights, and digital transformation. Based in Germany.",
   keywords: [
     "Rezaul Karim",
-    "Business Strategy",
-    "Process Management",
+    "Supply Chain Optimization",
+    "Operations Management",
+    "Process Analytics",
     "SAP Signavio",
     "BPMN",
     "Power BI",
     "Data Analytics",
-    "Technical Execution",
+    "Digital Transformation",
+    "IMIS",
+    "Founder",
     "Germany",
     "International Management"
   ],
@@ -29,21 +32,21 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://myselfkarim.vercel.app",
     siteName: "Md Rezaul Karim",
-    title: "Md Rezaul Karim — Business Strategy & Technical Execution",
-    description: "Master's student in International Management & Information System with expertise in process optimization, data analytics, and technical deployment.",
+    title: "Md Rezaul Karim — Bridging Business Operations & Technology",
+    description: "Master's student in IMIS | Supply Chain Optimizer | Founder. Bridging business operations and technology through process analytics and digital transformation.",
     images: [
       {
         url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Md Rezaul Karim - Business Strategist",
+        alt: "Md Rezaul Karim - Operations & Technology",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Md Rezaul Karim — Business Strategy & Technical Execution",
-    description: "Master's student in IMIS with expertise in process optimization and data analytics.",
+    title: "Md Rezaul Karim — Bridging Business Operations & Technology",
+    description: "Master's student in IMIS | Supply Chain Optimizer | Founder. Bridging operations and technology.",
     images: ["/images/og-image.jpg"],
   },
   robots: {
@@ -72,7 +75,7 @@ const jsonLd = {
     "https://linkedin.com/in/myselfkarim",
     "https://github.com/myselfrezaul7",
   ],
-  jobTitle: "Business Strategy & Technical Execution Professional",
+  jobTitle: "Operations & Technology Strategist | IMIS Master's Student",
   worksFor: {
     "@type": "Organization",
     name: "South Westphalia University of Applied Sciences",
@@ -82,12 +85,14 @@ const jsonLd = {
     name: "South Westphalia University of Applied Sciences",
   },
   knowsAbout: [
+    "Supply Chain Optimization",
     "Business Process Management",
     "SAP Signavio",
     "BPMN 2.0",
     "Power BI",
     "Data Analytics",
-    "Project Management",
+    "Digital Transformation",
+    "Operations Management",
   ],
   address: {
     "@type": "PostalAddress",

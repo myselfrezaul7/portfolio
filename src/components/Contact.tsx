@@ -11,11 +11,11 @@ export default function Contact() {
             <div className={styles.container}>
                 <ScrollReveal>
                     <div className={styles.card}>
-                        <span className={styles.label}>Have an idea?</span>
+                        <span className={styles.label}>Have an operations challenge?</span>
                         <h2 className={styles.title}>Let's talk</h2>
                         <p className={styles.description}>
-                            Book a free 30-minute intro call to discuss your operational challenges
-                            and discover how we can transform them into efficient systems.
+                            Book a free 30-minute intro call to discuss your supply chain, process, or operational challenges
+                            and discover how we can turn them into efficient, data-driven systems.
                         </p>
 
                         <div className={styles.actions}>

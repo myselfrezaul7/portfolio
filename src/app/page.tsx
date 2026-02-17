@@ -14,16 +14,16 @@ import ScrollToTop from '@/components/ScrollToTop';
 import PageTransition from '@/components/animations/PageTransition';
 
 const marqueeItems = [
-  'Business Strategy',
-  'Process Optimization',
+  'Supply Chain Optimization',
+  'Process Analytics',
   'SAP Signavio',
   'BPMN 2.0',
   'Power BI',
-  'Data Analytics',
-  'Project Management',
-  'Technical Execution',
-  'Antigravity',
-  'Visual Studio Code',
+  'KNIME',
+  'Data-Driven Operations',
+  'Digital Transformation',
+  'ERP Systems',
+  'Lean Management',
 ];
 
 export default function Home() {

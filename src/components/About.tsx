@@ -18,16 +18,16 @@ export default function About() {
                     <ScrollReveal delay={0.1}>
                         <div className={styles.bioSection}>
                             <p className={styles.bio}>
-                                I help organisations improve inefficient operations by turning complex workflows into clear and repeatable systems.
+                                I bridge the gap between business operations and technology. My goal is simple: make organisations run smarter by combining process thinking with the right technical tools.
                             </p>
                             <p className={styles.bio}>
-                                I am currently pursuing an M.A. in International Management and Information Systems, where I focus on business process management and data-driven decision making. Alongside my studies, I am involved in two early-stage ventures in education consulting and e-commerce.
+                                I am pursuing an M.A. in International Management and Information Systems (IMIS), where I focus on supply chain management, process analytics, and how information systems can transform everyday operations. The programme sits right at the crossroads of business and tech — which is exactly where I work best.
                             </p>
                             <p className={styles.bio}>
-                                My focus areas are <strong>Operational Efficiency</strong> and <strong>Digital Transformation</strong>. Whether it is a healthcare facility or an e-commerce platform, the goal is always to create systems that work better for everyone.
+                                Alongside my studies, I founded two ventures: <strong>NexTep Edu</strong>, an education consultancy where I designed operational workflows and built the platform from the ground up, and <strong>PetBhai</strong>, an e-commerce business where I handle everything from supplier sourcing to inventory management.
                             </p>
                             <p className={styles.bio}>
-                                Previously, I worked for two years as an Assistant Manager at a diagnostic clinic. I redesigned patient workflows, managed lab inventory, and supported daily operations to ensure smooth service delivery.
+                                Before this, I spent two years as an Assistant Manager at a diagnostic clinic. I managed the lab supply chain — procurement, inventory, vendor coordination — and redesigned patient workflows to improve service delivery across the board.
                             </p>
                         </div>
                     </ScrollReveal>
@@ -57,7 +57,7 @@ export default function About() {
                                 <Briefcase size={20} />
                                 <div>
                                     <span className={styles.infoLabel}>Experience</span>
-                                    <span className={styles.infoValue}>2+ Years in Operations</span>
+                                    <span className={styles.infoValue}>2+ Years in Operations & Supply Chain</span>
                                 </div>
                             </div>
                         </div>

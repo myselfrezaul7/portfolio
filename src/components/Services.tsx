@@ -8,21 +8,21 @@ import styles from './Services.module.css';
 const services = [
     {
         icon: Settings,
-        title: 'Process Management',
-        description: 'I turn complex workflows into clear, repeatable systems. Using BPMN 2.0 and SAP Signavio, I map, analyse, and improve how work gets done.',
-        skills: ['SAP Signavio', 'BPMN 2.0', 'Workflow Design'],
+        title: 'Supply Chain & Process Optimization',
+        description: 'I map and improve supply chain workflows, identify operational bottlenecks, and design repeatable systems that keep things moving smoothly.',
+        skills: ['SAP Signavio', 'BPMN 2.0', 'Lean Management'],
     },
     {
         icon: BarChart3,
-        title: 'Data Analysis',
-        description: 'I help teams make better decisions with data. Using Power BI and KNIME, I build dashboards and reports that turn numbers into clear insights.',
-        skills: ['Power BI', 'KNIME', 'Data Analysis'],
+        title: 'Data Analytics & Business Intelligence',
+        description: 'I turn operational data into actionable insights — building dashboards for supply chain KPIs, process performance, and data-driven decision support.',
+        skills: ['Power BI', 'KNIME', 'Excel/SQL'],
     },
     {
         icon: Code2,
-        title: 'Technical Deployment',
-        description: 'I handle small web projects from start to finish. Whether it is a landing page or a simple web app, I can build and deploy it using GitHub and Vercel.',
-        skills: ['Vercel', 'GitHub', 'HTML/CSS'],
+        title: 'Digital Transformation & Tech Integration',
+        description: 'I translate business requirements into technical solutions — from automating workflows to deploying web platforms that support day-to-day operations.',
+        skills: ['ERP Systems', 'Vercel/GitHub', 'Process Automation'],
     },
 ];
 
@@ -35,7 +35,7 @@ export default function Services() {
                     <div className={styles.header}>
                         <h2 className={styles.sectionTitle}>What I do</h2>
                         <p className={styles.sectionDescription}>
-                            I combine process design with operational analysis to help organisations run more efficiently.
+                            I sit at the intersection of operations and technology — turning complex business challenges into streamlined, data-driven systems.
                         </p>
                     </div>
                 </ScrollReveal>

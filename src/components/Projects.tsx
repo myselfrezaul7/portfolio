@@ -9,8 +9,8 @@ const projects = [
     {
         id: 1,
         category: 'Education Consulting',
-        title: 'NexTep Edu — International Education Consultancy',
-        description: 'Founded an education consultancy where I designed the entire operational workflow for student admissions — from lead tracking to document processing — and built the web platform from scratch.',
+        title: 'NexTep Edu - International Education Consultancy',
+        description: 'Founded an education consultancy where I designed the entire operational workflow for student admissions, from lead tracking to document processing, and built the web platform from scratch.',
         gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         icon: GraduationCap,
         link: 'https://www.nextepedu.com',
@@ -19,8 +19,8 @@ const projects = [
     {
         id: 2,
         category: 'E-commerce',
-        title: 'PetBhai — Pet Supplies E-commerce Platform',
-        description: 'Founded an e-commerce venture where I managed the full product lifecycle — from supplier sourcing and inventory optimization to automated order tracking and delivery workflows.',
+        title: 'PetBhai - Pet Supplies E-commerce Platform',
+        description: 'Built a fully functional e-commerce platform from scratch. While currently a prototype, I designed the backend to handle complex inventory logic, mapped out the entire order-to-delivery process, and built the system to track stock levels and automate order statuses.',
         gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
         icon: ShoppingBag,
         link: 'https://www.petbhai.com',
@@ -29,7 +29,7 @@ const projects = [
     {
         id: 3,
         category: 'Non-Profit',
-        title: 'Kuttawaala — কুত্তাওয়ালা (Dog Lovers of Bangladesh)',
+        title: 'Kuttawaala - কুত্তাওয়ালা (Dog Lovers of Bangladesh)',
         description: 'Founded a non-profit for dog welfare in Bangladesh. Built a community platform and designed volunteer coordination, rescue logistics, and adoption workflows to scale impact efficiently.',
         gradient: 'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)',
         icon: Dog,
@@ -39,7 +39,7 @@ const projects = [
     {
         id: 4,
         category: 'Non-Profit',
-        title: 'Catwaala — বিলাইওয়ালা (Cat Lovers of Bangladesh)',
+        title: 'Catwaala - বিলাইওয়ালা (Cat Lovers of Bangladesh)',
         description: 'Co-founded a non-profit for cat welfare in Bangladesh. Designed the adoption process flow, volunteer management system, and deployed the platform to connect cat lovers nationwide.',
         gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
         icon: Cat,
@@ -49,8 +49,8 @@ const projects = [
     {
         id: 5,
         category: 'Healthcare',
-        title: 'Renaissance Diagnostic Care — Operations Excellence',
-        description: 'Optimized healthcare operations — redesigned patient workflows, managed lab supply chain (procurement, inventory, vendor relations), and ran marketing campaigns that increased reach by 30% in 6 months.',
+        title: 'Renaissance Diagnostic Care - Operations Excellence',
+        description: 'Optimized healthcare operations by redesigning patient workflows, managing the lab supply chain (procurement, inventory, vendor relations), and running marketing campaigns that increased reach by 30% in 6 months.',
         gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
         icon: Heart,
         link: null,

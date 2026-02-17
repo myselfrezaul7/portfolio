@@ -6,7 +6,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL('https://myselfkarim.vercel.app'),
   title: {
-    default: "Md Rezaul Karim — Bridging Business Operations & Technology",
+    default: "Md Rezaul Karim - Bridging Business Operations & Technology",
     template: "%s | Md Rezaul Karim"
   },
   description: "Master's student in IMIS | Supply Chain Optimizer | Founder. Bridging business operations and technology through process analytics, data-driven insights, and digital transformation. Based in Germany.",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://myselfkarim.vercel.app",
     siteName: "Md Rezaul Karim",
-    title: "Md Rezaul Karim — Bridging Business Operations & Technology",
+    title: "Md Rezaul Karim - Bridging Business Operations & Technology",
     description: "Master's student in IMIS | Supply Chain Optimizer | Founder. Bridging business operations and technology through process analytics and digital transformation.",
     images: [
       {
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Md Rezaul Karim — Bridging Business Operations & Technology",
+    title: "Md Rezaul Karim - Bridging Business Operations & Technology",
     description: "Master's student in IMIS | Supply Chain Optimizer | Founder. Bridging operations and technology.",
     images: ["/images/og-image.jpg"],
   },

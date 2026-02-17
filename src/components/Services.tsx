@@ -15,13 +15,13 @@ const services = [
     {
         icon: BarChart3,
         title: 'Data Analytics & Business Intelligence',
-        description: 'I turn operational data into actionable insights — building dashboards for supply chain KPIs, process performance, and data-driven decision support.',
+        description: 'I turn operational data into actionable insights by building dashboards for supply chain KPIs, process performance, and data-driven decision support.',
         skills: ['Power BI', 'KNIME', 'Excel/SQL'],
     },
     {
         icon: Code2,
         title: 'Digital Transformation & Tech Integration',
-        description: 'I translate business requirements into technical solutions — from automating workflows to deploying web platforms that support day-to-day operations.',
+        description: 'I translate business requirements into technical solutions, from automating workflows to deploying web platforms that support day-to-day operations.',
         skills: ['ERP Systems', 'Vercel/GitHub', 'Process Automation'],
     },
 ];
@@ -35,7 +35,7 @@ export default function Services() {
                     <div className={styles.header}>
                         <h2 className={styles.sectionTitle}>What I do</h2>
                         <p className={styles.sectionDescription}>
-                            I sit at the intersection of operations and technology — turning complex business challenges into streamlined, data-driven systems.
+                            I sit at the intersection of operations and technology, turning complex business challenges into streamlined, data-driven systems.
                         </p>
                     </div>
                 </ScrollReveal>

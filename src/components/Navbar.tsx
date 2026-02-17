@@ -9,7 +9,7 @@ import styles from './Navbar.module.css';
 const navLinks = [
     { name: 'Services', href: '#services' },
     { name: 'Projects', href: '#work' },
-    { name: 'Blog', href: '#blog' },
+    { name: 'Blog', href: '/blog' },
     { name: 'About', href: '#about' },
 ];
 
@@ -28,9 +28,13 @@ export default function Navbar() {
 
     const handleNavClick = (href: string) => {
         setIsMobileMenuOpen(false);
-        const element = document.querySelector(href);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+        if (href.startsWith('#')) {
+            const element = document.querySelector(href);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        } else {
+            window.location.href = href;
         }
     };
 

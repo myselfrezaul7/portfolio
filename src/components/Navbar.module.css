@@ -259,7 +259,7 @@
     padding: 14px 24px;
     font-size: 14px;
     font-weight: 600;
-    color: white;
+    color: var(--bg-primary);
     background: var(--text-primary);
     border-radius: 50px;
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { ArrowUpRight, ExternalLink, GraduationCap, ShoppingBag, Heart, Dog, Cat } from 'lucide-react';
 import ScrollReveal from './animations/ScrollReveal';
 import styles from './Projects.module.css';
@@ -15,6 +16,7 @@ const projects = [
         icon: GraduationCap,
         link: 'https://www.nextepedu.com',
         tags: ['Founder', 'Process Design', 'Web Deployment'],
+        image: '/images/projects/nextepedu.jpg',
     },
     {
         id: 2,
@@ -25,6 +27,7 @@ const projects = [
         icon: ShoppingBag,
         link: 'https://www.petbhai.com',
         tags: ['Founder', 'Supply Chain', 'E-commerce'],
+        image: '/images/projects/petbhai.jpg',
     },
     {
         id: 3,
@@ -35,6 +38,7 @@ const projects = [
         icon: Dog,
         link: 'https://kuttawaala.com',
         tags: ['Founder', 'Operations', 'Community Platform'],
+        image: '/images/projects/kuttawaala.jpg',
     },
     {
         id: 4,
@@ -45,6 +49,7 @@ const projects = [
         icon: Cat,
         link: 'https://catwaala.com',
         tags: ['Founder', 'Operations', 'Community Platform'],
+        image: '/images/projects/catwaala.jpg',
     },
     {
         id: 5,
@@ -55,6 +60,7 @@ const projects = [
         icon: Heart,
         link: null,
         tags: ['Supply Chain', 'Process Analysis', 'Healthcare Ops'],
+        image: null,
     },
 ];
 
@@ -80,12 +86,22 @@ export default function Projects() {
                             >
                                 {/* Project Visual */}
                                 <div className={styles.imageWrapper}>
-                                    <div
-                                        className={styles.gradientBg}
-                                        style={{ background: project.gradient }}
-                                    >
-                                        <project.icon size={64} strokeWidth={1} className={styles.projectIcon} />
-                                    </div>
+                                    {project.image ? (
+                                        <Image
+                                            src={project.image}
+                                            alt={project.title}
+                                            fill
+                                            style={{ objectFit: 'cover', objectPosition: 'top' }}
+                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                        />
+                                    ) : (
+                                        <div
+                                            className={styles.gradientBg}
+                                            style={{ background: project.gradient }}
+                                        >
+                                            <project.icon size={64} strokeWidth={1} className={styles.projectIcon} />
+                                        </div>
+                                    )}
                                     <span className={styles.category}>{project.category}</span>
                                     {project.link && (
                                         <div className={styles.imageOverlay}>

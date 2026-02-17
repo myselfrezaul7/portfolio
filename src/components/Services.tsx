@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Settings, BarChart3, Code2, ArrowUpRight } from 'lucide-react';
+import { Settings, BarChart3, Code2 } from 'lucide-react';
 import ScrollReveal from './animations/ScrollReveal';
 import styles from './Services.module.css';
 
@@ -63,13 +63,6 @@ export default function Services() {
                                             {skill}
                                         </span>
                                     ))}
-                                </div>
-
-                                <div className={styles.cardFooter}>
-                                    <span className={styles.learnMore}>
-                                        Learn more
-                                        <ArrowUpRight size={14} />
-                                    </span>
                                 </div>
                             </motion.div>
                         </ScrollReveal>

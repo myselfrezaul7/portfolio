@@ -83,7 +83,47 @@ export default function About() {
                         </div>
                     </ScrollReveal>
 
-                    <ScrollReveal delay={0.4}>
+                    <ScrollReveal delay={0.35}>
+                        <div className={styles.toolsSection}>
+                            <h3 className={styles.toolsTitle}>Tools & Technologies</h3>
+                            <div className={styles.toolsGrid}>
+                                <div className={styles.toolItem}>
+                                    <span className={styles.toolCategory}>Process</span>
+                                    <span className={styles.toolName}>SAP Signavio</span>
+                                </div>
+                                <div className={styles.toolItem}>
+                                    <span className={styles.toolCategory}>Process</span>
+                                    <span className={styles.toolName}>BPMN 2.0</span>
+                                </div>
+                                <div className={styles.toolItem}>
+                                    <span className={styles.toolCategory}>Analytics</span>
+                                    <span className={styles.toolName}>Power BI</span>
+                                </div>
+                                <div className={styles.toolItem}>
+                                    <span className={styles.toolCategory}>Analytics</span>
+                                    <span className={styles.toolName}>KNIME</span>
+                                </div>
+                                <div className={styles.toolItem}>
+                                    <span className={styles.toolCategory}>Analytics</span>
+                                    <span className={styles.toolName}>Excel / SQL</span>
+                                </div>
+                                <div className={styles.toolItem}>
+                                    <span className={styles.toolCategory}>Development</span>
+                                    <span className={styles.toolName}>Next.js</span>
+                                </div>
+                                <div className={styles.toolItem}>
+                                    <span className={styles.toolCategory}>Development</span>
+                                    <span className={styles.toolName}>Vercel / GitHub</span>
+                                </div>
+                                <div className={styles.toolItem}>
+                                    <span className={styles.toolCategory}>Management</span>
+                                    <span className={styles.toolName}>Lean Management</span>
+                                </div>
+                            </div>
+                        </div>
+                    </ScrollReveal>
+
+                    <ScrollReveal delay={0.45}>
                         <a href="/resume.pdf" download className={styles.resumeButton}>
                             <Download size={18} />
                             Download Resume

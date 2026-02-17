@@ -6,12 +6,12 @@ import ScrollReveal from './animations/ScrollReveal';
 import styles from './SkillsRadar.module.css';
 
 const skills = [
-    { name: 'Supply Chain', value: 85 },
-    { name: 'Process Design', value: 90 },
-    { name: 'Data Analytics', value: 80 },
-    { name: 'Tech Integration', value: 75 },
-    { name: 'Project Management', value: 85 },
-    { name: 'Business Strategy', value: 80 },
+    { name: 'Supply Chain', value: 65 },
+    { name: 'Process Design', value: 70 },
+    { name: 'Data Analytics', value: 60 },
+    { name: 'Tech Integration', value: 55 },
+    { name: 'Project Management', value: 65 },
+    { name: 'Business Strategy', value: 60 },
 ];
 
 function polarToCartesian(cx: number, cy: number, r: number, angleDeg: number) {

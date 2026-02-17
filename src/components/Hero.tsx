@@ -50,12 +50,23 @@ export default function Hero() {
                         Optimizing operations through data and technology. I bridge the gap between business processes and technical systems to help organisations run smarter.
                     </motion.p>
 
+                    {/* Availability Badge */}
+                    <motion.div
+                        className={styles.availabilityBadge}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: 0.9 }}
+                    >
+                        <span className={styles.statusDot} />
+                        <span className={styles.statusText}>Open to Opportunities</span>
+                    </motion.div>
+
                     {/* CTA Buttons */}
                     <motion.div
                         className={styles.actions}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 1 }}
+                        transition={{ duration: 0.6, delay: 1.1 }}
                     >
                         <a href="mailto:myselfrezaul@gmail.com" className={styles.primaryBtn}>
                             Get in Touch

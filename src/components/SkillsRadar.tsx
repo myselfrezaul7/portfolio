@@ -7,11 +7,11 @@ import styles from './SkillsRadar.module.css';
 
 const skills = [
     { name: 'Supply Chain', value: 65 },
-    { name: 'Process Design', value: 70 },
+    { name: 'Process Design', value: 65 },
     { name: 'Data Analytics', value: 60 },
-    { name: 'Tech Integration', value: 55 },
-    { name: 'Project Management', value: 65 },
-    { name: 'Business Strategy', value: 60 },
+    { name: 'Tech Integration', value: 70 },
+    { name: 'Project Management', value: 60 },
+    { name: 'Business Strategy', value: 55 },
 ];
 
 function polarToCartesian(cx: number, cy: number, r: number, angleDeg: number) {

@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Calendar, Clock, ArrowLeft } from 'lucide-react';
@@ -18,6 +19,18 @@ function formatDate(dateStr: string) {
 }
 
 export default function BlogPage() {
+    useEffect(() => {
+        const hash = window.location.hash;
+        if (hash) {
+            setTimeout(() => {
+                const element = document.querySelector(hash);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 500);
+        }
+    }, []);
+
     return (
         <>
             <Navbar />
@@ -50,6 +63,7 @@ export default function BlogPage() {
                         {blogPosts.map((post, index) => (
                             <motion.article
                                 key={post.id}
+                                id={post.slug}
                                 className={styles.postCard}
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -86,3 +100,4 @@ export default function BlogPage() {
         </>
     );
 }
+

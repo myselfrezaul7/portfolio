@@ -1,5 +1,6 @@
 export interface BlogPost {
     id: number;
+    slug: string;
     title: string;
     excerpt: string;
     content: string;
@@ -11,6 +12,7 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
     {
         id: 1,
+        slug: 'lab-supply-chain',
         title: 'What Running a Lab Supply Chain Actually Taught Me',
         excerpt: 'I spent two years managing procurement and inventory at a diagnostic clinic in Dhaka. Vendors would ghost, reagents would expire, and nobody tracked anything properly.',
         content: `When I joined Renaissance Diagnostic Care in Dhaka, the supply chain was basically a WhatsApp group and a spreadsheet that nobody updated. Reagents would expire on the shelf, vendors would delay shipments for weeks, and the lab techs were always scrambling at the last minute to find what they needed.
@@ -26,6 +28,7 @@ The biggest lesson? Operations is not about big frameworks or fancy tools. It is
     },
     {
         id: 2,
+        slug: 'building-petbhai',
         title: 'Building PetBhai From My Room in Germany',
         excerpt: 'I wanted to build a proper pet supplies platform for Bangladesh, but I had no team, no funding, and I was sitting 7,000 km away. So I just started.',
         content: `I have always wanted to build something for the pet community back home in Bangladesh. The pet supplies market there is growing fast, but most people still buy from random Facebook sellers with no proper system. So I decided to build PetBhai, a proper e-commerce platform for pet supplies.
@@ -41,6 +44,7 @@ Right now PetBhai is still a working prototype. I am not pretending it is a fini
     },
     {
         id: 3,
+        slug: 'solo-sprints',
         title: 'I Run Sprints Even When Nobody Is Watching',
         excerpt: 'Most people think Scrum is something you do with a team. But I have been running solo sprints for over a year now and it is one of the best habits I have picked up.',
         content: `Most people think Scrum is something you do with a team. Standups, sprint planning, retros, the whole ceremony. And yeah, that is the standard use case. But I have been running solo sprints for over a year now and honestly it is one of the best habits I have picked up.

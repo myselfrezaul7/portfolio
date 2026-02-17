@@ -31,29 +31,31 @@ export default function Blog() {
                 <div className={styles.grid}>
                     {blogPosts.map((post, index) => (
                         <ScrollReveal key={post.id} delay={index * 0.1}>
-                            <motion.div
-                                className={styles.card}
-                                whileHover={{ y: -6 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <div className={styles.cardTop}>
-                                    <span className={styles.category}>{post.category}</span>
-                                </div>
+                            <Link href={`/blog#${post.slug}`} className={styles.cardLink}>
+                                <motion.div
+                                    className={styles.card}
+                                    whileHover={{ y: -6 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    <div className={styles.cardTop}>
+                                        <span className={styles.category}>{post.category}</span>
+                                    </div>
 
-                                <h3 className={styles.cardTitle}>{post.title}</h3>
-                                <p className={styles.cardExcerpt}>{post.excerpt}</p>
+                                    <h3 className={styles.cardTitle}>{post.title}</h3>
+                                    <p className={styles.cardExcerpt}>{post.excerpt}</p>
 
-                                <div className={styles.cardMeta}>
-                                    <span className={styles.metaItem}>
-                                        <Calendar size={14} />
-                                        {formatDate(post.date)}
-                                    </span>
-                                    <span className={styles.metaItem}>
-                                        <Clock size={14} />
-                                        {post.readTime}
-                                    </span>
-                                </div>
-                            </motion.div>
+                                    <div className={styles.cardMeta}>
+                                        <span className={styles.metaItem}>
+                                            <Calendar size={14} />
+                                            {formatDate(post.date)}
+                                        </span>
+                                        <span className={styles.metaItem}>
+                                            <Clock size={14} />
+                                            {post.readTime}
+                                        </span>
+                                    </div>
+                                </motion.div>
+                            </Link>
                         </ScrollReveal>
                     ))}
                 </div>

@@ -16,7 +16,8 @@ const projects = [
         icon: GraduationCap,
         link: 'https://www.nextepedu.com',
         tags: ['Founder', 'Process Design', 'Web Deployment'],
-        image: '/images/projects/nextepedu.jpg',
+        image: '/images/projects/nextepedu.webp',
+        blur: 'data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAEx/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANi7FAH/2Q==',
     },
     {
         id: 2,
@@ -27,7 +28,8 @@ const projects = [
         icon: ShoppingBag,
         link: 'https://www.petbhai.com',
         tags: ['Founder', 'Supply Chain', 'E-commerce'],
-        image: '/images/projects/petbhai.jpg',
+        image: '/images/projects/petbhai.webp',
+        blur: 'data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAEx/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANi7FAH/2Q==',
     },
     {
         id: 3,
@@ -38,7 +40,8 @@ const projects = [
         icon: Dog,
         link: 'https://kuttawaala.com',
         tags: ['Founder', 'Operations', 'Community Platform'],
-        image: '/images/projects/kuttawaala.jpg',
+        image: '/images/projects/kuttawaala.webp',
+        blur: 'data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAEx/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANi7FAH/2Q==',
     },
     {
         id: 4,
@@ -49,7 +52,8 @@ const projects = [
         icon: Cat,
         link: 'https://catwaala.com',
         tags: ['Founder', 'Operations', 'Community Platform'],
-        image: '/images/projects/catwaala.jpg',
+        image: '/images/projects/catwaala.webp',
+        blur: 'data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhAAAwEAAwAAAAAAAAAAAAAAAAEDAhEhQf/EABQBAQAAAAAAAAAAAAAAAAAAAAL/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEQMRAD8A06UeJPXqJK+uF0gA0n//2Q==',
     },
     {
         id: 5,
@@ -61,6 +65,7 @@ const projects = [
         link: null,
         tags: ['Supply Chain', 'Process Analysis', 'Healthcare Ops'],
         image: null,
+        blur: null,
     },
 ];
 
@@ -93,6 +98,8 @@ export default function Projects() {
                                             fill
                                             style={{ objectFit: 'cover', objectPosition: 'top' }}
                                             sizes="(max-width: 768px) 100vw, 50vw"
+                                            placeholder={project.blur ? 'blur' : 'empty'}
+                                            blurDataURL={project.blur || undefined}
                                         />
                                     ) : (
                                         <div

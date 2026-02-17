@@ -8,6 +8,7 @@ import Projects from '@/components/Projects';
 import HowIWork from '@/components/HowIWork';
 import SkillsRadar from '@/components/SkillsRadar';
 import About from '@/components/About';
+import Blog from '@/components/Blog';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import SkipToContent from '@/components/SkipToContent';
@@ -42,6 +43,7 @@ export default function Home() {
           <ErrorBoundary><HowIWork /></ErrorBoundary>
           <ErrorBoundary><SkillsRadar /></ErrorBoundary>
           <ErrorBoundary><About /></ErrorBoundary>
+          <ErrorBoundary><Blog /></ErrorBoundary>
           <ErrorBoundary><Contact /></ErrorBoundary>
         </main>
       </PageTransition>

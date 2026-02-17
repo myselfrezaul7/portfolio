@@ -9,6 +9,7 @@ import styles from './Navbar.module.css';
 const navLinks = [
     { name: 'Services', href: '#services' },
     { name: 'Projects', href: '#work' },
+    { name: 'Blog', href: '#blog' },
     { name: 'About', href: '#about' },
 ];
 

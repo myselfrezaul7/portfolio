@@ -31,6 +31,10 @@ export default function SkillsRadar() {
     const n = skills.length;
     const angleStep = 360 / n;
 
+    const handleToggle = (index: number) => {
+        setHoveredIndex(prev => prev === index ? null : index);
+    };
+
     const radarPoints = skills
         .map((skill, i) => {
             const r = (skill.value / 100) * maxR;
@@ -114,6 +118,7 @@ export default function SkillsRadar() {
                                     return (
                                         <g
                                             key={skill.name}
+                                            onClick={() => handleToggle(i)}
                                             onMouseEnter={() => setHoveredIndex(i)}
                                             onMouseLeave={() => setHoveredIndex(null)}
                                             style={{ cursor: 'pointer' }}
@@ -156,6 +161,7 @@ export default function SkillsRadar() {
                                 <motion.div
                                     key={skill.name}
                                     className={`${styles.skillBar} ${hoveredIndex === index ? styles.skillBarHovered : ''}`}
+                                    onClick={() => handleToggle(index)}
                                     onMouseEnter={() => setHoveredIndex(index)}
                                     onMouseLeave={() => setHoveredIndex(null)}
                                     initial={{ opacity: 0, x: 20 }}

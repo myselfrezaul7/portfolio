@@ -164,43 +164,78 @@
 }
 
 .toolsGrid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
 }
 
-.toolItem {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
+@media (min-width: 640px) {
+    .toolsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .toolsGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.toolGroup {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     transition: all var(--transition-normal);
 }
 
-.toolItem:hover {
+.toolGroup:hover {
     border-color: var(--border-hover);
     background: var(--bg-card-hover);
+    transform: translateY(-2px);
 }
 
-.toolCategory {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--accent);
-    background: rgba(59, 130, 246, 0.1);
-    padding: 2px 8px;
-    border-radius: 4px;
+.groupHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.toolName {
+.groupTitle {
     font-size: 14px;
-    font-weight: 500;
-    color: var(--text-primary);
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
+
+.toolList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.toolTag {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--bg-tertiary);
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: all var(--transition-fast);
+}
+
+.toolGroup:hover .toolTag {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border-color: var(--border);
+}
+
+
 
 .resumeButton {
     display: inline-flex;

@@ -87,41 +87,49 @@ export default function About() {
                         <div className={styles.toolsSection}>
                             <h3 className={styles.toolsTitle}>Tools & Technologies</h3>
                             <div className={styles.toolsGrid}>
-                                <div className={styles.toolItem}>
-                                    <span className={styles.toolCategory}>Process</span>
-                                    <span className={styles.toolName}>SAP Signavio</span>
+                                {/* Process */}
+                                <div className={styles.toolGroup}>
+                                    <div className={styles.groupHeader}>
+                                        <span className={styles.groupTitle}>Process</span>
+                                    </div>
+                                    <div className={styles.toolList}>
+                                        <span className={styles.toolTag}>SAP Signavio</span>
+                                        <span className={styles.toolTag}>BPMN 2.0</span>
+                                    </div>
                                 </div>
-                                <div className={styles.toolItem}>
-                                    <span className={styles.toolCategory}>Process</span>
-                                    <span className={styles.toolName}>BPMN 2.0</span>
+
+                                {/* Analytics */}
+                                <div className={styles.toolGroup}>
+                                    <div className={styles.groupHeader}>
+                                        <span className={styles.groupTitle}>Analytics</span>
+                                    </div>
+                                    <div className={styles.toolList}>
+                                        <span className={styles.toolTag}>Power BI</span>
+                                        <span className={styles.toolTag}>KNIME</span>
+                                        <span className={styles.toolTag}>Excel / SQL</span>
+                                    </div>
                                 </div>
-                                <div className={styles.toolItem}>
-                                    <span className={styles.toolCategory}>Analytics</span>
-                                    <span className={styles.toolName}>Power BI</span>
+
+                                {/* Development */}
+                                <div className={styles.toolGroup}>
+                                    <div className={styles.groupHeader}>
+                                        <span className={styles.groupTitle}>Development</span>
+                                    </div>
+                                    <div className={styles.toolList}>
+                                        <span className={styles.toolTag}>Next.js</span>
+                                        <span className={styles.toolTag}>Vercel / GitHub</span>
+                                    </div>
                                 </div>
-                                <div className={styles.toolItem}>
-                                    <span className={styles.toolCategory}>Analytics</span>
-                                    <span className={styles.toolName}>KNIME</span>
-                                </div>
-                                <div className={styles.toolItem}>
-                                    <span className={styles.toolCategory}>Analytics</span>
-                                    <span className={styles.toolName}>Excel / SQL</span>
-                                </div>
-                                <div className={styles.toolItem}>
-                                    <span className={styles.toolCategory}>Development</span>
-                                    <span className={styles.toolName}>Next.js</span>
-                                </div>
-                                <div className={styles.toolItem}>
-                                    <span className={styles.toolCategory}>Development</span>
-                                    <span className={styles.toolName}>Vercel / GitHub</span>
-                                </div>
-                                <div className={styles.toolItem}>
-                                    <span className={styles.toolCategory}>Management</span>
-                                    <span className={styles.toolName}>Lean Management</span>
-                                </div>
-                                <div className={styles.toolItem}>
-                                    <span className={styles.toolCategory}>Management</span>
-                                    <span className={styles.toolName}>Agile (Scrum)</span>
+
+                                {/* Management */}
+                                <div className={styles.toolGroup}>
+                                    <div className={styles.groupHeader}>
+                                        <span className={styles.groupTitle}>Management</span>
+                                    </div>
+                                    <div className={styles.toolList}>
+                                        <span className={styles.toolTag}>Lean Management</span>
+                                        <span className={styles.toolTag}>Agile (Scrum)</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -47,7 +47,7 @@ const projects = [
         id: 4,
         category: 'Non-Profit',
         title: 'Cat Lovers of Bangladesh',
-        description: 'Co-founded a non-profit for cat welfare in Bangladesh. Designed the adoption process flow, volunteer management system, and deployed the platform to connect cat lovers nationwide.',
+        description: 'Founded a non-profit for cat welfare in Bangladesh. Designed the adoption process flow, volunteer management system, and deployed the platform to connect cat lovers nationwide.',
         gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
         icon: Cat,
         link: 'https://catwaala.com',

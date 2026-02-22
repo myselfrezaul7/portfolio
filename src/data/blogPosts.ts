@@ -38,7 +38,7 @@ The catch? I was sitting in Soest, Germany, 7,000 km away from my target market.
 The hardest part was not the code. It was designing the inventory and order flow. I had to think about how stock levels update when someone places an order, how to handle out-of-stock items gracefully, and how to map the delivery process for a country where structured logistics barely exist outside Dhaka.
 
 Right now PetBhai is still a working prototype. I am not pretending it is a finished product. But building it end-to-end taught me more about product thinking, supply chain logic, and shipping under constraints than any course I have taken. Sometimes you just have to start with what you have.`,
-        date: '2025-01-20',
+        date: '2024-11-10',
         readTime: '10 min read',
         category: 'Entrepreneurship',
     },
@@ -54,7 +54,7 @@ Here is how it works for me. Every two weeks I sit down and decide what I want t
 At the end of the sprint I do a quick retro. What went well? What slowed me down? Did I overcommit? Usually the answer to that last one is yes. But that is fine, because now I know for next time.
 
 The real value of solo sprints is not productivity hacks or time management. It is honesty. When you set a goal and review it two weeks later, you cannot hide from what you actually did or did not do. It keeps me focused and stops me from spending three weeks perfecting a button animation when the real work is somewhere else.`,
-        date: '2025-01-05',
+        date: '2024-06-10',
         readTime: '6 min read',
         category: 'Productivity',
     },

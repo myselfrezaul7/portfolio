@@ -34,7 +34,7 @@ const projects = [
     {
         id: 3,
         category: 'Non-Profit',
-        title: 'Kuttawaala - কুত্তাওয়ালা (Dog Lovers of Bangladesh)',
+        title: 'Dog Lovers of Bangladesh',
         description: 'Founded a non-profit for dog welfare in Bangladesh. Built a community platform and designed volunteer coordination, rescue logistics, and adoption workflows to scale impact efficiently.',
         gradient: 'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)',
         icon: Dog,
@@ -46,7 +46,7 @@ const projects = [
     {
         id: 4,
         category: 'Non-Profit',
-        title: 'Catwaala - বিলাইওয়ালা (Cat Lovers of Bangladesh)',
+        title: 'Cat Lovers of Bangladesh',
         description: 'Co-founded a non-profit for cat welfare in Bangladesh. Designed the adoption process flow, volunteer management system, and deployed the platform to connect cat lovers nationwide.',
         gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
         icon: Cat,

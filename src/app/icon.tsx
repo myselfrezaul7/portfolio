@@ -24,7 +24,7 @@ export default function Icon() {
             >
                 {/* Profile image with circular mask */}
                 <img
-                    src="https://myselfkarim.vercel.app/images/profile.jpg"
+                    src="https://mdkarim.vercel.app/images/profile.jpg"
                     width={32}
                     height={32}
                     style={{

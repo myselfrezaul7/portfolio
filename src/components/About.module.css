@@ -45,6 +45,14 @@
     text-align: justify;
 }
 
+@media (max-width: 767px) {
+    .bio {
+        text-align: left;
+        hyphens: auto;
+        -webkit-hyphens: auto;
+    }
+}
+
 .bio:last-child {
     margin-bottom: 0;
 }

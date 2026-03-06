@@ -35,6 +35,11 @@ export default function Footer() {
                         ))}
                     </div>
 
+                    {/* Tagline */}
+                    <p className={styles.tagline}>
+                        Based in Soest, Germany · Open to Opportunities
+                    </p>
+
                     {/* Copyright */}
                     <p className={styles.copyright}>
                         © 2024 Md Rezaul Karim

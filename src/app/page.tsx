@@ -37,7 +37,7 @@ export default function Home() {
       <PageTransition>
         <main id="main-content">
           <ErrorBoundary><Hero /></ErrorBoundary>
-          <ErrorBoundary><Marquee items={marqueeItems} speed={40} /></ErrorBoundary>
+          <ErrorBoundary><Marquee items={marqueeItems} speed={55} /></ErrorBoundary>
           <ErrorBoundary><Services /></ErrorBoundary>
           <ErrorBoundary><Projects /></ErrorBoundary>
           <ErrorBoundary><HowIWork /></ErrorBoundary>

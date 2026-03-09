@@ -11,7 +11,6 @@ import About from '@/components/About';
 import Blog from '@/components/Blog';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
-import SkipToContent from '@/components/SkipToContent';
 import ScrollToTop from '@/components/ScrollToTop';
 import PageTransition from '@/components/animations/PageTransition';
 import ErrorBoundary from '@/components/ErrorBoundary';
@@ -20,6 +19,7 @@ const marqueeItems = [
   'Supply Chain Optimization',
   'Process Analytics',
   'SAP Signavio',
+  'SAP B/W (Eclipse)',
   'BPMN 2.0',
   'Power BI',
   'KNIME',
@@ -32,7 +32,6 @@ const marqueeItems = [
 export default function Home() {
   return (
     <>
-      <SkipToContent />
       <Navbar />
       <PageTransition>
         <main id="main-content">

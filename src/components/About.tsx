@@ -98,6 +98,7 @@ export default function About() {
                                         <span className={styles.groupTitle}>Analytics</span>
                                     </div>
                                     <div className={styles.toolList}>
+                                        <span className={styles.toolTag}>SAP B/W (Eclipse)</span>
                                         <span className={styles.toolTag}>Power BI</span>
                                         <span className={styles.toolTag}>KNIME</span>
                                         <span className={styles.toolTag}>Excel / SQL</span>

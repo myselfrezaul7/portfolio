@@ -88,6 +88,7 @@ const jsonLd = {
     "Supply Chain Optimization",
     "Business Process Management",
     "SAP Signavio",
+    "SAP Business Warehouse (BW)",
     "BPMN 2.0",
     "Power BI",
     "Data Analytics",

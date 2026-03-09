@@ -16,7 +16,7 @@ const services = [
         icon: BarChart3,
         title: 'Data Analytics & Business Intelligence',
         description: 'I turn operational data into actionable insights by building dashboards for supply chain KPIs, process performance, and data-driven decision support.',
-        skills: ['Power BI', 'KNIME', 'Excel/SQL'],
+        skills: ['SAP B/W', 'Power BI', 'KNIME', 'SQL'],
     },
     {
         icon: Code2,

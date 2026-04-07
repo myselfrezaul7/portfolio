@@ -1,6 +1,12 @@
 .howIWork {
-    padding: 120px 0;
+    padding: 80px 0;
     background: var(--bg-primary);
+}
+
+@media (max-width: 767px) {
+    .howIWork {
+        padding: 60px 0;
+    }
 }
 
 .container {
@@ -25,19 +31,47 @@
     font-size: clamp(32px, 5vw, 48px);
     font-weight: 700;
     letter-spacing: -0.02em;
-    margin-bottom: 64px;
+    margin-bottom: 48px;
 }
 
-.stepsGrid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
+.stepsHorizontal {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding-bottom: 24px;
+    margin: 0 -24px; /* edge-to-edge on mobile */
+    padding-left: 24px;
+    padding-right: 24px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.stepsHorizontal::-webkit-scrollbar {
+    display: none;
 }
 
 @media (min-width: 768px) {
-    .stepsGrid {
-        grid-template-columns: repeat(3, 1fr);
+    .stepsHorizontal {
         gap: 32px;
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+        overflow-x: visible;
+        padding-bottom: 0;
+    }
+}
+
+.snapItem {
+    scroll-snap-align: center;
+    flex: 0 0 85vw; /* visible preview of next card */
+    max-width: 400px;
+}
+
+@media (min-width: 768px) {
+    .snapItem {
+        flex: 1;
+        max-width: none;
     }
 }
 
@@ -47,6 +81,7 @@
     border: 1px solid var(--border);
     border-radius: 20px;
     padding: 32px;
+    height: 100%;
     transition: all var(--transition-normal);
 }
 

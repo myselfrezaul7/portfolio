@@ -77,59 +77,6 @@ export default function About() {
                         </div>
                     </ScrollReveal>
 
-                    <ScrollReveal delay={0.35}>
-                        <div className={styles.toolsSection}>
-                            <h3 className={styles.toolsTitle}>Tools & Technologies</h3>
-                            <div className={styles.toolsGrid}>
-                                {/* Process */}
-                                <div className={styles.toolGroup}>
-                                    <div className={styles.groupHeader}>
-                                        <span className={styles.groupTitle}>Process</span>
-                                    </div>
-                                    <div className={styles.toolList}>
-                                        <span className={styles.toolTag}>SAP Signavio</span>
-                                        <span className={styles.toolTag}>BPMN 2.0</span>
-                                    </div>
-                                </div>
-
-                                {/* Analytics */}
-                                <div className={styles.toolGroup}>
-                                    <div className={styles.groupHeader}>
-                                        <span className={styles.groupTitle}>Analytics</span>
-                                    </div>
-                                    <div className={styles.toolList}>
-                                        <span className={styles.toolTag}>SAP B/W (Eclipse)</span>
-                                        <span className={styles.toolTag}>Power BI</span>
-                                        <span className={styles.toolTag}>KNIME</span>
-                                        <span className={styles.toolTag}>Excel / SQL</span>
-                                    </div>
-                                </div>
-
-                                {/* Development */}
-                                <div className={styles.toolGroup}>
-                                    <div className={styles.groupHeader}>
-                                        <span className={styles.groupTitle}>Development</span>
-                                    </div>
-                                    <div className={styles.toolList}>
-                                        <span className={styles.toolTag}>Next.js</span>
-                                        <span className={styles.toolTag}>Vercel / GitHub</span>
-                                    </div>
-                                </div>
-
-                                {/* Management */}
-                                <div className={styles.toolGroup}>
-                                    <div className={styles.groupHeader}>
-                                        <span className={styles.groupTitle}>Management</span>
-                                    </div>
-                                    <div className={styles.toolList}>
-                                        <span className={styles.toolTag}>Lean Management</span>
-                                        <span className={styles.toolTag}>Agile (Scrum)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </ScrollReveal>
-
                     <ScrollReveal delay={0.45}>
                         <a href="/resume.pdf" download className={styles.resumeButton}>
                             <Download size={18} />

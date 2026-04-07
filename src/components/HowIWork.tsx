@@ -34,22 +34,24 @@ export default function HowIWork() {
                     <h2 className={styles.sectionTitle}>How I work.</h2>
                 </ScrollReveal>
 
-                <div className={styles.stepsGrid}>
+                <div className={styles.stepsHorizontal}>
                     {steps.map((step, index) => (
-                        <ScrollReveal key={step.title} delay={index * 0.15}>
-                            <motion.div
-                                className={styles.stepCard}
-                                whileHover={{ y: -4 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <span className={styles.stepNumber}>{step.number}</span>
-                                <div className={styles.iconWrapper}>
-                                    <step.icon size={24} strokeWidth={1.5} />
-                                </div>
-                                <h3 className={styles.stepTitle}>{step.title}</h3>
-                                <p className={styles.stepDescription}>{step.description}</p>
-                            </motion.div>
-                        </ScrollReveal>
+                        <div key={step.title} className={styles.snapItem}>
+                            <ScrollReveal delay={index * 0.15}>
+                                <motion.div
+                                    className={styles.stepCard}
+                                    whileHover={{ y: -4 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    <span className={styles.stepNumber}>{step.number}</span>
+                                    <div className={styles.iconWrapper}>
+                                        <step.icon size={24} strokeWidth={1.5} />
+                                    </div>
+                                    <h3 className={styles.stepTitle}>{step.title}</h3>
+                                    <p className={styles.stepDescription}>{step.description}</p>
+                                </motion.div>
+                            </ScrollReveal>
+                        </div>
                     ))}
                 </div>
             </div>

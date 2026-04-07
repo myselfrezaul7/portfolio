@@ -1,6 +1,12 @@
 .skills {
-    padding: 120px 0;
+    padding: 80px 0;
     background: var(--bg-primary);
+}
+
+@media (max-width: 767px) {
+    .skills {
+        padding: 60px 0;
+    }
 }
 
 .container {
@@ -22,7 +28,7 @@
 }
 
 .header {
-    margin-bottom: 64px;
+    margin-bottom: 48px;
 }
 
 .sectionTitle {
@@ -39,150 +45,71 @@
     max-width: 500px;
 }
 
-.content {
+.grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 48px;
-    align-items: center;
+    gap: 40px;
 }
 
 @media (min-width: 768px) {
-    .content {
+    .grid {
         grid-template-columns: 1fr 1fr;
         gap: 64px;
     }
 }
 
-/* Radar Chart Card */
-.radarCard {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all var(--transition-normal);
-}
-
-.radarCard:hover {
-    border-color: var(--border-hover);
-    box-shadow: var(--shadow-lg);
-}
-
-.radarSvg {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-}
-
-.gridLevel {
-    fill: none;
-    stroke: var(--border);
-    stroke-width: 0.5;
-}
-
-.axisLine {
-    stroke: var(--border);
-    stroke-width: 0.5;
-    stroke-dasharray: 4 4;
-}
-
-.dataPolygon {
-    fill: rgba(59, 130, 246, 0.15);
-    stroke: rgba(59, 130, 246, 0.8);
-    stroke-width: 2;
-    transition: all var(--transition-normal);
-}
-
-.radarCard:hover .dataPolygon {
-    fill: rgba(59, 130, 246, 0.2);
-    stroke: rgba(59, 130, 246, 1);
-}
-
-.dataPoint {
-    fill: rgba(59, 130, 246, 0.9);
-    stroke: var(--bg-card);
-    stroke-width: 2;
-    transition: all var(--transition-fast);
-}
-
-.dataPointHovered {
-    fill: #3b82f6;
-    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
-}
-
-.label {
-    font-size: 10px;
-    font-weight: 500;
-    fill: var(--text-tertiary);
-    transition: all var(--transition-fast);
-}
-
-.labelHovered {
-    fill: var(--text-primary);
+.categoryTitle {
+    font-size: 20px;
     font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
 }
 
-.valueTooltip {
-    font-size: 11px;
-    font-weight: 700;
-    fill: #3b82f6;
-}
-
-/* Skills List */
-.skillsList {
+.chipsContainer {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 12px;
 }
 
-.skillBar {
+.skillChip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 16px 20px;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
     transition: all var(--transition-normal);
-    cursor: default;
 }
 
-.skillBar:hover,
-.skillBarHovered {
-    border-color: var(--border-hover);
-    background: var(--bg-card-hover);
-    transform: translateX(4px);
-}
-
-.skillInfo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+.skillChip:hover {
+    background: var(--bg-secondary);
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: var(--shadow-sm);
 }
 
 .skillName {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 500;
     color: var(--text-primary);
 }
 
-.skillValue {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--accent);
+.dotMeter {
+    display: flex;
+    gap: 6px;
 }
 
-.progressTrack {
-    width: 100%;
+.dot {
+    width: 6px;
     height: 6px;
-    background: var(--bg-tertiary);
-    border-radius: 3px;
-    overflow: hidden;
+    border-radius: 50%;
+    background: var(--border-hover);
+    transition: background-color var(--transition-normal);
 }
 
-.progressFill {
-    height: 100%;
-    background: linear-gradient(90deg, rgba(59, 130, 246, 0.7), #3b82f6);
-    border-radius: 3px;
-    transition: width 0.8s ease;
+.dotFilled {
+    background: var(--accent);
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
 }

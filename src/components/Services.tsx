@@ -40,14 +40,17 @@ export default function Services() {
                     </div>
                 </ScrollReveal>
 
-                {/* Services Grid */}
-                <div className={styles.grid}>
+                {/* Services Carousel */}
+                <div className={styles.scrollStrip}>
                     {services.map((service, index) => (
-                        <ScrollReveal key={service.title} delay={index * 0.15}>
+                        <div key={service.title} className={styles.snapItem}>
                             <motion.div
                                 className={styles.card}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
                                 whileHover={{ y: -8 }}
-                                transition={{ duration: 0.3 }}
+                                transition={{ duration: 0.4, delay: index * 0.15 }}
                             >
                                 <div className={styles.iconWrapper}>
                                     <service.icon size={28} strokeWidth={1.5} />
@@ -65,7 +68,7 @@ export default function Services() {
                                     ))}
                                 </div>
                             </motion.div>
-                        </ScrollReveal>
+                        </div>
                     ))}
                 </div>
             </div>

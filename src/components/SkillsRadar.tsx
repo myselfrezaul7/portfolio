@@ -86,7 +86,7 @@ export default function SkillsRadar() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.6 }}
                         >
-                            <svg viewBox="0 0 300 300" className={styles.radarSvg}>
+                            <svg viewBox="-40 -20 380 340" className={styles.radarSvg}>
                                 {/* Grid levels */}
                                 {Array.from({ length: levels }).map((_, level) => {
                                     const r = ((level + 1) / levels) * maxR;
@@ -134,7 +134,7 @@ export default function SkillsRadar() {
                                 {skills.map((skill, i) => {
                                     const r = (skill.value / 100) * maxR;
                                     const pt = polarToCartesian(cx, cy, r, i * angleStep);
-                                    const labelPt = polarToCartesian(cx, cy, maxR + 24, i * angleStep);
+                                    const labelPt = polarToCartesian(cx, cy, maxR + 20, i * angleStep);
                                     const isHovered = hoveredIndex === i;
 
                                     return (

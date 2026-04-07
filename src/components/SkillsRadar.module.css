@@ -45,16 +45,131 @@
     max-width: 500px;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 40px;
+/* Radar Chart Card */
+.radarWrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 48px;
+}
+
+.radarCard {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-normal);
+    width: 100%;
+    max-width: 400px;
+}
+
+.radarCard:hover {
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-lg);
+}
+
+.radarSvg {
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+}
+
+.gridLevel {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 0.5;
+}
+
+.axisLine {
+    stroke: var(--border);
+    stroke-width: 0.5;
+    stroke-dasharray: 4 4;
+}
+
+.dataPolygon {
+    fill: rgba(59, 130, 246, 0.15);
+    stroke: rgba(59, 130, 246, 0.8);
+    stroke-width: 2;
+    transition: all var(--transition-normal);
+}
+
+.radarCard:hover .dataPolygon {
+    fill: rgba(59, 130, 246, 0.2);
+    stroke: rgba(59, 130, 246, 1);
+}
+
+.dataPoint {
+    fill: rgba(59, 130, 246, 0.9);
+    stroke: var(--bg-card);
+    stroke-width: 2;
+    transition: all var(--transition-fast);
+}
+
+.dataPointHovered {
+    fill: #3b82f6;
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
+}
+
+.label {
+    font-size: 10px;
+    font-weight: 500;
+    fill: var(--text-tertiary);
+    transition: all var(--transition-fast);
+}
+
+.labelHovered {
+    fill: var(--text-primary);
+    font-weight: 600;
+}
+
+.valueTooltip {
+    font-size: 11px;
+    font-weight: 700;
+    fill: #3b82f6;
+}
+
+/* Scroll Strip */
+.scrollStrip {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding-bottom: 24px;
+    margin: 0 -24px;
+    padding-left: 24px;
+    padding-right: 24px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    justify-content: center;
+}
+
+.scrollStrip::-webkit-scrollbar {
+    display: none;
 }
 
 @media (min-width: 768px) {
-    .grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 64px;
+    .scrollStrip {
+        gap: 40px;
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+        overflow-x: visible;
+        padding-bottom: 0;
+    }
+}
+
+.snapItem {
+    scroll-snap-align: center;
+    flex: 0 0 85vw;
+    max-width: 400px;
+}
+
+@media (min-width: 768px) {
+    .snapItem {
+        flex: 1;
+        max-width: 430px;
     }
 }
 

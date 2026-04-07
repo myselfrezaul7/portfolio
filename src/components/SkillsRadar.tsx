@@ -1,8 +1,18 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import ScrollReveal from './animations/ScrollReveal';
 import styles from './SkillsRadar.module.css';
+
+const skills = [
+    { name: 'Supply Chain Optimization', value: 85 },
+    { name: 'Data Analytics', value: 80 },
+    { name: 'Process Design', value: 90 },
+    { name: 'Tech Integration', value: 75 },
+    { name: 'Project Management', value: 85 },
+    { name: 'Business Strategy', value: 70 },
+];
 
 const skillCategories = [
     {
@@ -25,7 +35,36 @@ const skillCategories = [
     }
 ];
 
+const polarToCartesian = (centerX: number, centerY: number, radius: number, angleInDegrees: number) => {
+    const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
+    return {
+        x: centerX + radius * Math.cos(angleInRadians),
+        y: centerY + radius * Math.sin(angleInRadians),
+    };
+};
+
 export default function SkillsRadar() {
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+    const cx = 150;
+    const cy = 150;
+    const maxR = 100;
+    const n = skills.length;
+    const angleStep = 360 / n;
+    const levels = 5;
+
+    const radarPoints = skills
+        .map((skill, i) => {
+            const r = (skill.value / 100) * maxR;
+            const pt = polarToCartesian(cx, cy, r, i * angleStep);
+            return `${pt.x},${pt.y}`;
+        })
+        .join(' ');
+
+    const handleToggle = (index: number) => {
+        setHoveredIndex(hoveredIndex === index ? null : index);
+    };
+
     return (
         <section id="skills" className={styles.skills}>
             <div className={styles.container}>
@@ -38,9 +77,110 @@ export default function SkillsRadar() {
                     </div>
                 </ScrollReveal>
 
-                <div className={styles.grid}>
+                <ScrollReveal delay={0.1}>
+                    <div className={styles.radarWrapper}>
+                        <motion.div
+                            className={styles.radarCard}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                        >
+                            <svg viewBox="0 0 300 300" className={styles.radarSvg}>
+                                {/* Grid levels */}
+                                {Array.from({ length: levels }).map((_, level) => {
+                                    const r = ((level + 1) / levels) * maxR;
+                                    const points = Array.from({ length: n })
+                                        .map((_, i) => {
+                                            const pt = polarToCartesian(cx, cy, r, i * angleStep);
+                                            return `${pt.x},${pt.y}`;
+                                        })
+                                        .join(' ');
+                                    return (
+                                        <polygon
+                                            key={level}
+                                            points={points}
+                                            className={styles.gridLevel}
+                                        />
+                                    );
+                                })}
+
+                                {/* Axis lines */}
+                                {skills.map((_, i) => {
+                                    const pt = polarToCartesian(cx, cy, maxR, i * angleStep);
+                                    return (
+                                        <line
+                                            key={i}
+                                            x1={cx}
+                                            y1={cy}
+                                            x2={pt.x}
+                                            y2={pt.y}
+                                            className={styles.axisLine}
+                                        />
+                                    );
+                                })}
+
+                                {/* Data polygon */}
+                                <motion.polygon
+                                    points={radarPoints}
+                                    className={styles.dataPolygon}
+                                    initial={{ opacity: 0 }}
+                                    whileInView={{ opacity: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.8, delay: 0.3 }}
+                                />
+
+                                {/* Data points + labels */}
+                                {skills.map((skill, i) => {
+                                    const r = (skill.value / 100) * maxR;
+                                    const pt = polarToCartesian(cx, cy, r, i * angleStep);
+                                    const labelPt = polarToCartesian(cx, cy, maxR + 24, i * angleStep);
+                                    const isHovered = hoveredIndex === i;
+
+                                    return (
+                                        <g
+                                            key={skill.name}
+                                            onClick={() => handleToggle(i)}
+                                            onMouseEnter={() => setHoveredIndex(i)}
+                                            onMouseLeave={() => setHoveredIndex(null)}
+                                            style={{ cursor: 'pointer' }}
+                                        >
+                                            <circle
+                                                cx={pt.x}
+                                                cy={pt.y}
+                                                r={isHovered ? 6 : 4}
+                                                className={`${styles.dataPoint} ${isHovered ? styles.dataPointHovered : ''}`}
+                                            />
+                                            <text
+                                                x={labelPt.x}
+                                                y={labelPt.y}
+                                                textAnchor="middle"
+                                                dominantBaseline="central"
+                                                className={`${styles.label} ${isHovered ? styles.labelHovered : ''}`}
+                                            >
+                                                {skill.name}
+                                            </text>
+                                            {isHovered && (
+                                                <text
+                                                    x={pt.x}
+                                                    y={pt.y - 14}
+                                                    textAnchor="middle"
+                                                    className={styles.valueTooltip}
+                                                >
+                                                    {skill.value}%
+                                                </text>
+                                            )}
+                                        </g>
+                                    );
+                                })}
+                            </svg>
+                        </motion.div>
+                    </div>
+                </ScrollReveal>
+
+                <div className={styles.scrollStrip}>
                     {skillCategories.map((category, catIdx) => (
-                        <ScrollReveal key={category.title} delay={catIdx * 0.1}>
+                        <div key={category.title} className={styles.snapItem}>
                             <div className={styles.categoryGroup}>
                                 <h3 className={styles.categoryTitle}>{category.title}</h3>
                                 <div className={styles.chipsContainer}>
@@ -67,7 +207,7 @@ export default function SkillsRadar() {
                                     ))}
                                 </div>
                             </div>
-                        </ScrollReveal>
+                        </div>
                     ))}
                 </div>
             </div>

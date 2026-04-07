@@ -28,14 +28,17 @@ export default function Blog() {
                     </div>
                 </ScrollReveal>
 
-                <div className={styles.grid}>
+                <div className={styles.scrollStrip}>
                     {blogPosts.map((post, index) => (
-                        <ScrollReveal key={post.id} delay={index * 0.1}>
+                        <div key={post.id} className={styles.snapItem}>
                             <Link href={`/blog#${post.slug}`} className={styles.cardLink}>
                                 <motion.div
                                     className={styles.card}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
                                     whileHover={{ y: -6 }}
-                                    transition={{ duration: 0.3 }}
+                                    transition={{ duration: 0.4, delay: index * 0.1 }}
                                 >
                                     <div className={styles.cardTop}>
                                         <span className={styles.category}>{post.category}</span>
@@ -56,7 +59,7 @@ export default function Blog() {
                                     </div>
                                 </motion.div>
                             </Link>
-                        </ScrollReveal>
+                        </div>
                     ))}
                 </div>
 

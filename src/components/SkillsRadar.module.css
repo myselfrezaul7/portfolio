@@ -142,7 +142,6 @@
     padding-right: 24px;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    justify-content: center;
 }
 
 .scrollStrip::-webkit-scrollbar {

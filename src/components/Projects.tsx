@@ -9,6 +9,18 @@ import styles from './Projects.module.css';
 const projects = [
     {
         id: 1,
+        category: 'Healthcare',
+        title: 'Renaissance Diagnostic Care - Operations Excellence',
+        description: 'Optimized healthcare operations by redesigning patient workflows, managing the lab supply chain (procurement, inventory, vendor relations), and running marketing campaigns that increased reach by 30% in 6 months.',
+        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+        icon: Heart,
+        link: null,
+        tags: ['Supply Chain', 'Process Analysis', 'Healthcare Ops'],
+        image: null,
+        blur: null,
+    },
+    {
+        id: 2,
         category: 'Education Consulting',
         title: 'NexTep Edu - International Education Consultancy',
         description: 'Founded an education consultancy where I designed the entire operational workflow for student admissions, from lead tracking to document processing, and built the web platform from scratch.',
@@ -20,7 +32,7 @@ const projects = [
         blur: 'data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAEx/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANi7FAH/2Q==',
     },
     {
-        id: 2,
+        id: 3,
         category: 'E-commerce',
         title: 'PetBhai - Pet Supplies E-commerce Platform',
         description: 'Built a fully functional e-commerce platform from scratch. While currently a prototype, I designed the backend to handle complex inventory logic, mapped out the entire order-to-delivery process, and built the system to track stock levels and automate order statuses.',
@@ -32,7 +44,7 @@ const projects = [
         blur: 'data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAEx/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANi7FAH/2Q==',
     },
     {
-        id: 3,
+        id: 4,
         category: 'Non-Profit',
         title: 'Dog Lovers of Bangladesh',
         description: 'Founded a non-profit for dog welfare in Bangladesh. Built a community platform and designed volunteer coordination, rescue logistics, and adoption workflows to scale impact efficiently.',
@@ -44,7 +56,7 @@ const projects = [
         blur: 'data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAEx/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANi7FAH/2Q==',
     },
     {
-        id: 4,
+        id: 5,
         category: 'Non-Profit',
         title: 'Cat Lovers of Bangladesh',
         description: 'Founded a non-profit for cat welfare in Bangladesh with over 450K+ members. Designed the adoption process flow, volunteer management system, and deployed the platform to connect cat lovers nationwide.',
@@ -54,18 +66,6 @@ const projects = [
         tags: ['Founder', 'Operations', 'Community Platform'],
         image: '/images/projects/catwaala.webp',
         blur: 'data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhAAAwEAAwAAAAAAAAAAAAAAAAEDAhEhQf/EABQBAQAAAAAAAAAAAAAAAAAAAAL/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEQMRAD8A06UeJPXqJK+uF0gA0n//2Q==',
-    },
-    {
-        id: 5,
-        category: 'Healthcare',
-        title: 'Renaissance Diagnostic Care - Operations Excellence',
-        description: 'Optimized healthcare operations by redesigning patient workflows, managing the lab supply chain (procurement, inventory, vendor relations), and running marketing campaigns that increased reach by 30% in 6 months.',
-        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-        icon: Heart,
-        link: null,
-        tags: ['Supply Chain', 'Process Analysis', 'Healthcare Ops'],
-        image: null,
-        blur: null,
     },
 ];
 
@@ -80,14 +80,17 @@ export default function Projects() {
                     </div>
                 </ScrollReveal>
 
-                {/* Projects List */}
+                {/* Projects Carousel */}
                 <div className={styles.projectsList}>
                     {projects.map((project, index) => (
-                        <ScrollReveal key={project.id} delay={index * 0.1}>
+                        <div key={project.id} className={styles.snapItem}>
                             <motion.article
                                 className={styles.projectCard}
-                                whileHover={{ scale: 1.02 }}
-                                transition={{ duration: 0.3 }}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                whileHover={{ y: -6 }}
+                                transition={{ duration: 0.4, delay: index * 0.1 }}
                             >
                                 {/* Project Visual */}
                                 <div className={styles.imageWrapper}>
@@ -152,7 +155,7 @@ export default function Projects() {
                                     </div>
                                 </div>
                             </motion.article>
-                        </ScrollReveal>
+                        </div>
                     ))}
                 </div>
             </div>

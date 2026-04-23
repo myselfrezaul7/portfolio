@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import { Download, MapPin, GraduationCap, Briefcase } from 'lucide-react';
 import ScrollReveal from './animations/ScrollReveal';
 import styles from './About.module.css';
@@ -26,36 +27,52 @@ export default function About() {
                         </div>
                     </ScrollReveal>
 
-                    <ScrollReveal delay={0.2}>
-                        <div className={styles.infoCards}>
-                            {/* Location */}
-                            <div className={styles.infoCard}>
-                                <MapPin size={20} />
-                                <div>
-                                    <span className={styles.infoLabel}>Location</span>
-                                    <span className={styles.infoValue}>Soest, Germany</span>
-                                </div>
+                    <div className={styles.infoCards}>
+                        {/* Location */}
+                        <motion.div
+                            className={styles.infoCard}
+                            initial={{ opacity: 0, y: 15 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: 0.1 }}
+                        >
+                            <MapPin size={20} />
+                            <div>
+                                <span className={styles.infoLabel}>Location</span>
+                                <span className={styles.infoValue}>Soest, Germany</span>
                             </div>
+                        </motion.div>
 
-                            {/* Education */}
-                            <div className={styles.infoCard}>
-                                <GraduationCap size={20} />
-                                <div>
-                                    <span className={styles.infoLabel}>Education</span>
-                                    <span className={styles.infoValue}>M.A. IMIS, South Westphalia University</span>
-                                </div>
+                        {/* Education */}
+                        <motion.div
+                            className={styles.infoCard}
+                            initial={{ opacity: 0, y: 15 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: 0.2 }}
+                        >
+                            <GraduationCap size={20} />
+                            <div>
+                                <span className={styles.infoLabel}>Education</span>
+                                <span className={styles.infoValue}>M.A. IMIS, South Westphalia University</span>
                             </div>
+                        </motion.div>
 
-                            {/* Experience */}
-                            <div className={styles.infoCard}>
-                                <Briefcase size={20} />
-                                <div>
-                                    <span className={styles.infoLabel}>Experience</span>
-                                    <span className={styles.infoValue}>2+ Years in Operations & Supply Chain</span>
-                                </div>
+                        {/* Experience */}
+                        <motion.div
+                            className={styles.infoCard}
+                            initial={{ opacity: 0, y: 15 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: 0.3 }}
+                        >
+                            <Briefcase size={20} />
+                            <div>
+                                <span className={styles.infoLabel}>Experience</span>
+                                <span className={styles.infoValue}>2+ Years in Operations & Supply Chain</span>
                             </div>
-                        </div>
-                    </ScrollReveal>
+                        </motion.div>
+                    </div>
 
                     <ScrollReveal delay={0.3}>
                         <div className={styles.languagesSection}>

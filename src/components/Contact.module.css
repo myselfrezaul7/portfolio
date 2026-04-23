@@ -147,3 +147,9 @@
 .bookingNote a:hover {
     color: var(--text-primary);
 }
+
+@media (max-width: 767px) {
+    .bookingNote {
+        display: none;
+    }
+}

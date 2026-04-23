@@ -42,7 +42,7 @@ export default function Footer() {
 
                     {/* Copyright */}
                     <p className={styles.copyright}>
-                        © 2024 Md Rezaul Karim
+                        © {new Date().getFullYear()} Md Rezaul Karim
                     </p>
                 </div>
             </div>

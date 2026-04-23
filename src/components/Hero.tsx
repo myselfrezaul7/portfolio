@@ -68,12 +68,20 @@ export default function Hero() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 1.1 }}
                     >
-                        <a href="mailto:myselfrezaul@gmail.com" className={styles.primaryBtn}>
+                        <motion.a 
+                            href="mailto:myselfrezaul@gmail.com" 
+                            className={styles.primaryBtn}
+                            whileTap={{ scale: 0.95 }}
+                        >
                             Get in Touch
-                        </a>
-                        <a href="#work" className={styles.secondaryBtn}>
+                        </motion.a>
+                        <motion.a 
+                            href="#work" 
+                            className={styles.secondaryBtn}
+                            whileTap={{ scale: 0.95 }}
+                        >
                             View My Work
-                        </a>
+                        </motion.a>
                     </motion.div>
                 </div>
 

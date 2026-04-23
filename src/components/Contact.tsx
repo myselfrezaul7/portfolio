@@ -26,7 +26,7 @@ export default function Contact() {
                                 rel="noopener noreferrer"
                                 className={styles.bookCallBtn}
                                 whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
+                                whileTap={{ scale: 0.95 }}
                             >
                                 BOOK A CALL
                                 <Calendar size={18} strokeWidth={1.5} />
@@ -37,7 +37,7 @@ export default function Contact() {
                                 href="mailto:myselfrezaul@gmail.com"
                                 className={styles.emailBtn}
                                 whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
+                                whileTap={{ scale: 0.95 }}
                             >
                                 <Mail size={18} />
                                 Send an Email

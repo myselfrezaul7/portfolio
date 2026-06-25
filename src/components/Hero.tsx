@@ -6,7 +6,7 @@ import styles from './Hero.module.css';
 
 export default function Hero() {
     return (
-        <section className={styles.hero}>
+        <section className={styles.hero} aria-label="Hero">
             <div className={styles.container}>
                 <div className={styles.content}>
                     {/* Greeting */}
@@ -14,7 +14,7 @@ export default function Hero() {
                         className={styles.greeting}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
+                        transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
                     >
                         <span className={styles.emoji}>👋</span>
                         <span className={styles.greetingText}>Hello, I am</span>
@@ -25,7 +25,7 @@ export default function Hero() {
                         className={styles.name}
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.4 }}
+                        transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                     >
                         Karim
                     </motion.h1>
@@ -35,7 +35,7 @@ export default function Hero() {
                         className={styles.title}
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.6 }}
+                        transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
                     >
                         Operations × Technology
                     </motion.h2>
@@ -45,7 +45,7 @@ export default function Hero() {
                         className={styles.description}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.8 }}
+                        transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
                     >
                         Optimizing operations through data and technology. I bridge the gap between business processes and technical systems to help organisations run smarter.
                     </motion.p>
@@ -55,7 +55,7 @@ export default function Hero() {
                         className={styles.availabilityBadge}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5, delay: 0.9 }}
+                        transition={{ duration: 0.5, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
                     >
                         <span className={styles.statusDot} />
                         <span className={styles.statusText}>Open to Opportunities</span>
@@ -66,7 +66,7 @@ export default function Hero() {
                         className={styles.actions}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 1.1 }}
+                        transition={{ duration: 0.6, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
                     >
                         <motion.a 
                             href="mailto:myselfrezaul@gmail.com" 
@@ -90,7 +90,7 @@ export default function Hero() {
                     className={styles.imageWrapper}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.5 }}
+                    transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 >
                     <div className={styles.imageContainer}>
                         <Image

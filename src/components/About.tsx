@@ -7,7 +7,7 @@ import styles from './About.module.css';
 
 export default function About() {
     return (
-        <section id="about" className={styles.about}>
+        <section id="about" className={styles.about} aria-label="About me">
             <div className={styles.container}>
                 <ScrollReveal>
                     <h2 className={styles.sectionTitle}>
@@ -95,10 +95,10 @@ export default function About() {
                     </ScrollReveal>
 
                     <ScrollReveal delay={0.45}>
-                        <a href="/resume.pdf" download className={styles.resumeButton}>
+                        <motion.a href="/resume.pdf" download className={styles.resumeButton} whileTap={{ scale: 0.95 }}>
                             <Download size={18} />
                             Download Resume
-                        </a>
+                        </motion.a>
                     </ScrollReveal>
                 </div>
             </div>

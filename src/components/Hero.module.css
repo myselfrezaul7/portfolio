@@ -103,10 +103,6 @@
     letter-spacing: -0.02em;
 }
 
-.titleAccent {
-    color: var(--text-tertiary);
-    font-weight: 400;
-}
 
 .description {
     font-size: 16px;
@@ -265,6 +261,13 @@
             transparent 60%,
             rgba(10, 10, 10, 0.6) 100%);
     pointer-events: none;
+}
+
+:global([data-theme="light"]) .imageGlow {
+    background: linear-gradient(180deg,
+            transparent 0%,
+            transparent 60%,
+            rgba(240, 240, 240, 0.4) 100%);
 }
 
 /* Background */

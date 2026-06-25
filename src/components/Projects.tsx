@@ -71,7 +71,7 @@ const projects = [
 
 export default function Projects() {
     return (
-        <section id="work" className={styles.projects}>
+        <section id="work" className={styles.projects} aria-label="Recent projects">
             <div className={styles.container}>
                 {/* Section Header */}
                 <ScrollReveal>
@@ -90,6 +90,7 @@ export default function Projects() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 whileHover={{ y: -6 }}
+                                whileTap={{ scale: 0.97 }}
                                 transition={{ duration: 0.4, delay: index * 0.1 }}
                             >
                                 {/* Project Visual */}
@@ -97,10 +98,10 @@ export default function Projects() {
                                     {project.image ? (
                                         <Image
                                             src={project.image}
-                                            alt={project.title}
+                                            alt={`${project.category} project screenshot`}
                                             fill
                                             style={{ objectFit: 'cover', objectPosition: 'top' }}
-                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                            sizes="(max-width: 767px) 85vw, (max-width: 1199px) 50vw, 33vw"
                                             placeholder={project.blur ? 'blur' : 'empty'}
                                             blurDataURL={project.blur || undefined}
                                         />

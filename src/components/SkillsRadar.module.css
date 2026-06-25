@@ -89,27 +89,27 @@
 }
 
 .dataPolygon {
-    fill: rgba(59, 130, 246, 0.15);
-    stroke: rgba(59, 130, 246, 0.8);
+    fill: rgba(74, 155, 155, 0.15);
+    stroke: rgba(74, 155, 155, 0.8);
     stroke-width: 2;
     transition: all var(--transition-normal);
 }
 
 .radarCard:hover .dataPolygon {
-    fill: rgba(59, 130, 246, 0.2);
-    stroke: rgba(59, 130, 246, 1);
+    fill: rgba(74, 155, 155, 0.2);
+    stroke: rgba(74, 155, 155, 1);
 }
 
 .dataPoint {
-    fill: rgba(59, 130, 246, 0.9);
+    fill: rgba(74, 155, 155, 0.9);
     stroke: var(--bg-card);
     stroke-width: 2;
     transition: all var(--transition-fast);
 }
 
 .dataPointHovered {
-    fill: #3b82f6;
-    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
+    fill: var(--accent);
+    filter: drop-shadow(0 0 8px rgba(74, 155, 155, 0.6));
 }
 
 .label {
@@ -127,7 +127,7 @@
 .valueTooltip {
     font-size: 11px;
     font-weight: 700;
-    fill: #3b82f6;
+    fill: var(--accent);
 }
 
 /* Scroll Strip */
@@ -200,7 +200,7 @@
 
 .skillChip:hover {
     background: var(--bg-secondary);
-    border-color: rgba(59, 130, 246, 0.3);
+    border-color: rgba(74, 155, 155, 0.3);
     box-shadow: var(--shadow-sm);
 }
 
@@ -225,5 +225,5 @@
 
 .dotFilled {
     background: var(--accent);
-    box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 0 8px rgba(74, 155, 155, 0.4);
 }

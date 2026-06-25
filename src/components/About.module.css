@@ -175,96 +175,10 @@
 .languageLevel {
     font-size: 12px;
     color: var(--accent);
-    background: rgba(59, 130, 246, 0.1);
+    background: rgba(74, 155, 155, 0.1);
     padding: 2px 8px;
     border-radius: 4px;
 }
-
-.toolsSection {
-    margin-bottom: 48px;
-}
-
-.toolsTitle {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-tertiary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 16px;
-}
-
-.toolsGrid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-}
-
-@media (min-width: 640px) {
-    .toolsGrid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (min-width: 1024px) {
-    .toolsGrid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-.toolGroup {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    transition: all var(--transition-normal);
-}
-
-.toolGroup:hover {
-    border-color: var(--border-hover);
-    background: var(--bg-card-hover);
-    transform: translateY(-2px);
-}
-
-.groupHeader {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.groupTitle {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.toolList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.toolTag {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    background: var(--bg-tertiary);
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: 1px solid transparent;
-    transition: all var(--transition-fast);
-}
-
-.toolGroup:hover .toolTag {
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    border-color: var(--border);
-}
-
 
 
 .resumeButton {

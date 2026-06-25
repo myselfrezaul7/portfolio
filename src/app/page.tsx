@@ -32,6 +32,7 @@ const marqueeItems = [
 export default function Home() {
   return (
     <>
+      <a href="#main-content" className="skip-nav">Skip to main content</a>
       <Navbar />
       <PageTransition>
         <main id="main-content">

@@ -12,7 +12,7 @@ const socialLinks = [
 
 export default function Footer() {
     return (
-        <footer className={styles.footer}>
+        <footer className={styles.footer} role="contentinfo">
             <div className={styles.container}>
                 <div className={styles.content}>
                     {/* Logo */}
@@ -28,6 +28,7 @@ export default function Footer() {
                                 rel={social.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
                                 className={styles.socialLink}
                                 whileHover={{ y: -3 }}
+                                whileTap={{ scale: 0.9 }}
                                 aria-label={social.label}
                             >
                                 <social.icon size={20} />

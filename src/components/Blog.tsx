@@ -17,7 +17,7 @@ function formatDate(dateStr: string) {
 
 export default function Blog() {
     return (
-        <section id="blog" className={styles.blog}>
+        <section id="blog" className={styles.blog} aria-label="Blog and insights">
             <div className={styles.container}>
                 <ScrollReveal>
                     <div className={styles.header}>
@@ -38,6 +38,7 @@ export default function Blog() {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     whileHover={{ y: -6 }}
+                                    whileTap={{ scale: 0.97 }}
                                     transition={{ duration: 0.4, delay: index * 0.1 }}
                                 >
                                     <div className={styles.cardTop}>
@@ -64,12 +65,12 @@ export default function Blog() {
                 </div>
 
                 <ScrollReveal delay={0.3}>
-                    <div className={styles.viewAll}>
+                    <motion.div className={styles.viewAll} whileTap={{ scale: 0.97 }}>
                         <Link href="/blog" className={styles.viewAllLink}>
                             Read All Posts
                             <ArrowRight size={16} />
                         </Link>
-                    </div>
+                    </motion.div>
                 </ScrollReveal>
             </div>
         </section>

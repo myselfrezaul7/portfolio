@@ -66,7 +66,7 @@ export default function SkillsRadar() {
     };
 
     return (
-        <section id="skills" className={styles.skills}>
+        <section id="skills" className={styles.skills} aria-label="Skills and Expertise">
             <div className={styles.container}>
                 <ScrollReveal>
                     <div className={styles.header}>
@@ -86,7 +86,8 @@ export default function SkillsRadar() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.6 }}
                         >
-                            <svg viewBox="-40 -20 380 340" className={styles.radarSvg}>
+                            <svg viewBox="-40 -20 380 340" className={styles.radarSvg} aria-label="Skills competency radar chart">
+                                <title>Radar chart showing competency levels across 6 skill areas</title>
                                 {/* Grid levels */}
                                 {Array.from({ length: levels }).map((_, level) => {
                                     const r = ((level + 1) / levels) * maxR;

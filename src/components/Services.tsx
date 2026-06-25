@@ -28,7 +28,7 @@ const services = [
 
 export default function Services() {
     return (
-        <section id="services" className={styles.services}>
+        <section id="services" className={styles.services} aria-label="What I do">
             <div className={styles.container}>
                 {/* Section Header */}
                 <ScrollReveal>
@@ -50,6 +50,7 @@ export default function Services() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 whileHover={{ y: -8 }}
+                                whileTap={{ scale: 0.97 }}
                                 transition={{ duration: 0.4, delay: index * 0.15 }}
                             >
                                 <div className={styles.iconWrapper}>

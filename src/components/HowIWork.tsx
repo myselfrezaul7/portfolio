@@ -28,7 +28,7 @@ const steps = [
 
 export default function HowIWork() {
     return (
-        <section className={styles.howIWork}>
+        <section className={styles.howIWork} aria-label="How I work">
             <div className={styles.container}>
                 <ScrollReveal>
                     <h2 className={styles.sectionTitle}>How I work.</h2>
@@ -41,6 +41,7 @@ export default function HowIWork() {
                                 <motion.div
                                     className={styles.stepCard}
                                     whileHover={{ y: -4 }}
+                                    whileTap={{ scale: 0.97 }}
                                     transition={{ duration: 0.3 }}
                                 >
                                     <span className={styles.stepNumber}>{step.number}</span>

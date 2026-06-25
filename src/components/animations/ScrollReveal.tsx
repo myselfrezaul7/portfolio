@@ -19,7 +19,7 @@ export default function ScrollReveal({
     duration = 0.6
 }: ScrollRevealProps) {
     const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: "-100px" });
+    const isInView = useInView(ref, { once: true, margin: "-60px" });
 
     const directions = {
         up: { y: 50 },
@@ -44,7 +44,7 @@ export default function ScrollReveal({
             transition={{
                 duration,
                 delay,
-                ease: [0.25, 0.4, 0.25, 1]
+                ease: [0.22, 1, 0.36, 1]
             }}
         >
             {children}

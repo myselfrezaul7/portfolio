@@ -22,7 +22,7 @@ export default function Navbar() {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 100);
         };
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -149,19 +149,20 @@ export default function Navbar() {
                                     initial={{ opacity: 0, x: -20 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: index * 0.1 }}
+                                    whileTap={{ scale: 0.96 }}
                                 >
                                     {link.name}
                                 </motion.button>
                             ))}
                             <div className={styles.mobileActionsMenu}>
-                                <a href="/resume.pdf" download className={styles.mobileResumeLink}>
+                                <motion.a href="/resume.pdf" download className={styles.mobileResumeLink} whileTap={{ scale: 0.96 }}>
                                     <Download size={18} />
                                     Download Resume
-                                </a>
-                                <a href="mailto:myselfrezaul@gmail.com" className={styles.mobileCta}>
+                                </motion.a>
+                                <motion.a href="mailto:myselfrezaul@gmail.com" className={styles.mobileCta} whileTap={{ scale: 0.96 }}>
                                     Let's Talk
                                     <ArrowUpRight size={18} />
-                                </a>
+                                </motion.a>
                             </div>
                         </div>
                     </motion.div>

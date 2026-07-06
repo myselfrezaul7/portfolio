@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { ArrowUpRight, ExternalLink, GraduationCap, ShoppingBag, Heart, Dog, Cat } from 'lucide-react';
+import { ArrowUpRight, ExternalLink, GraduationCap, ShoppingBag, Heart, Dog, Cat, Database, CalendarCheck } from 'lucide-react';
 import ScrollReveal from './animations/ScrollReveal';
 import styles from './Projects.module.css';
 
@@ -45,6 +45,30 @@ const projects = [
     },
     {
         id: 4,
+        category: 'Data Warehousing',
+        title: 'SAP BW/4HANA: Enterprise Data Warehouse',
+        description: 'Built a multi-layer Enterprise Data Warehouse structure using SAP HANA Studio, designed complex BW Queries to analyse KPIs and sales trends, and configured Master Data hierarchies for structured reporting.',
+        gradient: 'linear-gradient(135deg, #0061ff 0%, #60efff 100%)',
+        icon: Database,
+        link: null,
+        tags: ['SAP BW/4HANA', 'Data Warehousing', 'Business Intelligence'],
+        image: null,
+        blur: null,
+    },
+    {
+        id: 5,
+        category: 'Project Management',
+        title: 'Agile Event Coordination',
+        description: 'Applied Agile methodologies to organise large-scale university events. Managed Jira Kanban boards, structured complex event logistics into actionable tickets, and ensured all cross-team deadlines were met.',
+        gradient: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+        icon: CalendarCheck,
+        link: null,
+        tags: ['Agile', 'Jira', 'Event Management'],
+        image: null,
+        blur: null,
+    },
+    {
+        id: 6,
         category: 'Non-Profit',
         title: 'Dog Lovers of Bangladesh',
         description: 'Founded a non-profit for dog welfare in Bangladesh. Built a community platform and designed volunteer coordination, rescue logistics, and adoption workflows to scale impact efficiently.',
@@ -56,7 +80,7 @@ const projects = [
         blur: 'data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAEx/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANi7FAH/2Q==',
     },
     {
-        id: 5,
+        id: 7,
         category: 'Non-Profit',
         title: 'Cat Lovers of Bangladesh',
         description: 'Founded a non-profit for cat welfare in Bangladesh with over 450K+ members. Designed the adoption process flow, volunteer management system, and deployed the platform to connect cat lovers nationwide.',

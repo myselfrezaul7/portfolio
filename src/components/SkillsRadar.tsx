@@ -38,7 +38,7 @@ const skillCategories = [
         skills: [
             { name: 'Rapid Tool Adoption', level: 5 },
             { name: 'AI-Augmented Workflows', level: 4 },
-            { name: 'Prompt Engineering', level: 4 },
+            { name: 'Agile / Scrum', level: 3 },
             { name: 'AI-Powered Development', level: 3 },
         ]
     }

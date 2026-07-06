@@ -30,6 +30,7 @@ export default function Icon() {
                     style={{
                         borderRadius: '50%',
                         objectFit: 'cover',
+                        objectPosition: 'top',
                     }}
                 />
             </div>

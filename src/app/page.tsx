@@ -29,6 +29,8 @@ const marqueeItems = [
   'Lean Management',
   'AI-Powered Automation',
   'Prompt Engineering',
+  'SAP BW/4HANA',
+  'Agile / Scrum',
 ];
 
 export default function Home() {

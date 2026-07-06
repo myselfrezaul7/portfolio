@@ -24,6 +24,9 @@ export default function About() {
                             <p className={styles.bio}>
                                 Alongside my studies, I founded two ventures: <strong>NexTep Edu</strong>, an education consultancy where I designed operational workflows and built the platform from the ground up, and <strong>PetBhai</strong>, a fully functional e-commerce platform currently in prototype stage, preparing to launch in Bangladesh soon. Before this, I spent two years as an Assistant Manager at a diagnostic clinic, where I managed the lab supply chain (procurement, inventory, vendor coordination) and redesigned patient workflows to improve service delivery across the board.
                             </p>
+                            <p className={styles.bio}>
+                                I am deeply comfortable working with AI and use it as a force multiplier across everything I do — from coding and data analysis to content creation and process design. I believe the biggest advantage is not what tools you know today, but how fast you can learn the ones you will need tomorrow. I adapt quickly, pick up new systems with minimal onboarding, and consistently look for ways to work smarter, not harder.
+                            </p>
                         </div>
                     </ScrollReveal>
 

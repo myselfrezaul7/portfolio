@@ -27,6 +27,8 @@ const marqueeItems = [
   'Digital Transformation',
   'ERP Systems',
   'Lean Management',
+  'AI-Powered Automation',
+  'Prompt Engineering',
 ];
 
 export default function Home() {

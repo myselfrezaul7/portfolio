@@ -47,7 +47,7 @@ export default function Hero() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        Optimizing operations through data and technology. I bridge the gap between business processes and technical systems to help organisations run smarter.
+                        Optimizing operations through data, technology, and AI. I bridge the gap between business processes and technical systems — using AI-driven automation to help organisations run smarter, faster.
                     </motion.p>
 
                     {/* Availability Badge */}

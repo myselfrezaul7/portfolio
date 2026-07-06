@@ -32,6 +32,15 @@ const skillCategories = [
             { name: 'SAP Signavio / B/W', level: 3 },
             { name: 'Power BI / SQL', level: 3 },
         ]
+    },
+    {
+        title: 'AI & Adaptability',
+        skills: [
+            { name: 'Rapid Tool Adoption', level: 5 },
+            { name: 'AI-Augmented Workflows', level: 4 },
+            { name: 'Prompt Engineering', level: 4 },
+            { name: 'AI-Powered Development', level: 3 },
+        ]
     }
 ];
 

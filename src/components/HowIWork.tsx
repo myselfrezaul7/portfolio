@@ -10,19 +10,19 @@ const steps = [
         icon: Search,
         number: '01',
         title: 'Diagnose & Analyse',
-        description: 'Understand current operations through data collection, stakeholder interviews, and process mapping to identify bottlenecks and inefficiencies.',
+        description: 'Understand current operations through data collection, stakeholder interviews, and AI-assisted process mapping to identify bottlenecks and inefficiencies faster.',
     },
     {
         icon: FileText,
         number: '02',
         title: 'Design & Optimise',
-        description: 'Develop improved workflows, build data models, and prototype solutions using tools like SAP Signavio and Power BI.',
+        description: 'Develop improved workflows, build data models, and rapidly prototype solutions using SAP Signavio, Power BI, and AI-powered development tools.',
     },
     {
         icon: Rocket,
         number: '03',
         title: 'Implement & Scale',
-        description: 'Deploy solutions, integrate with existing systems, and set up monitoring to ensure continuous improvement.',
+        description: 'Deploy solutions, integrate with existing systems, and leverage AI-driven monitoring to ensure continuous improvement at scale.',
     },
 ];
 

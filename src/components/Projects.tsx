@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { ArrowUpRight, ExternalLink, GraduationCap, ShoppingBag, Heart, Dog, Cat, Database, CalendarCheck } from 'lucide-react';
+import { ArrowUpRight, ExternalLink, GraduationCap, ShoppingBag, Heart, Dog, Cat, Database, CalendarCheck, Newspaper } from 'lucide-react';
 import ScrollReveal from './animations/ScrollReveal';
 import styles from './Projects.module.css';
 
@@ -28,8 +28,8 @@ const projects = [
         icon: GraduationCap,
         link: 'https://www.nextepedu.com',
         tags: ['Founder', 'Process Design', 'Web Deployment'],
-        image: '/images/projects/nextepedu.webp',
-        blur: 'data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAEx/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANi7FAH/2Q==',
+        image: '/images/projects/nextepedu.png',
+        blur: null,
     },
     {
         id: 3,
@@ -45,6 +45,18 @@ const projects = [
     },
     {
         id: 4,
+        category: 'Digital Content',
+        title: 'Digital Content Management & Web Coordination',
+        description: 'Officially manage the news and events section for the FH Sudwestfalen IMIS alumni webpage. Create engaging content bridging students, faculty, and alumni, designed a Google Maps SEO strategy for the university, and coordinate digital presence for events like the 2026 IMIS Smart Cricket Championship.',
+        gradient: 'linear-gradient(135deg, #2b5876 0%, #4e4376 100%)',
+        icon: Newspaper,
+        link: 'https://www.fh-swf.de/en/karriere/alumni/ehemalige/imis_alumni/index.php',
+        tags: ['Content Strategy', 'Local SEO', 'Web Coordination'],
+        image: null,
+        blur: null,
+    },
+    {
+        id: 5,
         category: 'Data Warehousing',
         title: 'SAP BW/4HANA: Enterprise Data Warehouse',
         description: 'Built a multi-layer Enterprise Data Warehouse structure using SAP HANA Studio, designed complex BW Queries to analyse KPIs and sales trends, and configured Master Data hierarchies for structured reporting.',
@@ -56,7 +68,7 @@ const projects = [
         blur: null,
     },
     {
-        id: 5,
+        id: 6,
         category: 'Project Management',
         title: 'Agile Event Coordination',
         description: 'Applied Agile methodologies to organise large-scale university events. Managed Jira Kanban boards, structured complex event logistics into actionable tickets, and ensured all cross-team deadlines were met.',
@@ -68,7 +80,7 @@ const projects = [
         blur: null,
     },
     {
-        id: 6,
+        id: 7,
         category: 'Non-Profit',
         title: 'Dog Lovers of Bangladesh',
         description: 'Founded a non-profit for dog welfare in Bangladesh. Built a community platform and designed volunteer coordination, rescue logistics, and adoption workflows to scale impact efficiently.',
@@ -80,7 +92,7 @@ const projects = [
         blur: 'data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAEx/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANi7FAH/2Q==',
     },
     {
-        id: 7,
+        id: 8,
         category: 'Non-Profit',
         title: 'Cat Lovers of Bangladesh',
         description: 'Founded a non-profit for cat welfare in Bangladesh with over 450K+ members. Designed the adoption process flow, volunteer management system, and deployed the platform to connect cat lovers nationwide.',

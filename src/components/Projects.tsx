@@ -76,7 +76,7 @@ const projects = [
         icon: CalendarCheck,
         link: null,
         tags: ['Agile', 'Jira', 'Event Management'],
-        image: null,
+        image: '/images/projects/agile-event.jpg',
         blur: null,
     },
     {

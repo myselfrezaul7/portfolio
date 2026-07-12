@@ -16,7 +16,7 @@ const projects = [
         icon: Heart,
         link: null,
         tags: ['Supply Chain', 'Process Analysis', 'Healthcare Ops'],
-        image: null,
+        image: '/images/projects/renaissance.jpg',
         blur: null,
     },
     {
@@ -52,7 +52,7 @@ const projects = [
         icon: Database,
         link: null,
         tags: ['SAP BW/4HANA', 'Data Warehousing', 'Business Intelligence'],
-        image: null,
+        image: '/images/projects/sap-bw.jpg',
         blur: null,
     },
     {

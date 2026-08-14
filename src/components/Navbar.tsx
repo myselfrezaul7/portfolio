@@ -29,21 +29,28 @@ export default function Navbar() {
     const handleNavClick = (href: string) => {
         setIsMobileMenuOpen(false);
         if (href.startsWith('#')) {
-            if (window.location.pathname !== '/') {
+            if (typeof window !== 'undefined' && window.location.pathname !== '/') {
                 window.location.href = `/${href}`;
             } else {
                 const element = document.querySelector(href);
                 if (element) {
                     element.scrollIntoView({ behavior: 'smooth' });
+                    if (typeof window !== 'undefined') {
+                        window.history.pushState(null, '', href);
+                    }
                 }
             }
         } else {
-            window.location.href = href;
+            if (typeof window !== 'undefined') {
+                window.location.href = href;
+            }
         }
     };
 
     const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (typeof window !== 'undefined') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     };
 
     // Prevent body scroll when mobile menu is open
@@ -61,7 +68,7 @@ export default function Navbar() {
     return (
         <>
             <motion.nav
-                className={`${styles.navbar} ${isScrolled ? styles.scrolled : ''}`}
+                className={styles.navbar}
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
@@ -77,8 +84,10 @@ export default function Navbar() {
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -20 }}
                                 transition={{ duration: 0.3 }}
+                                whileTap={{ scale: 0.95 }}
+                                aria-label="Scroll to top"
                             >
-                                M—K
+                                M•K
                             </motion.button>
                         )}
                     </AnimatePresence>
@@ -98,19 +107,12 @@ export default function Navbar() {
 
                     {/* Desktop Actions */}
                     <div className={styles.desktopActions}>
-                        <a
-                            href="/resume.pdf"
-                            download
-                            className={styles.resumeLink}
-                        >
-                            Resume
-                            <Download size={14} />
-                        </a>
                         <ThemeToggle />
-                        <a
-                            href="mailto:myselfrezaul@gmail.com"
-                            className={styles.ctaButton}
-                        >
+                        <a href="/resume.pdf" download className={styles.resumeLink}>
+                            <Download size={14} />
+                            Resume
+                        </a>
+                        <a href="mailto:myselfrezaul@gmail.com" className={styles.ctaButton}>
                             Let's Talk
                             <ArrowUpRight size={14} />
                         </a>
@@ -119,13 +121,14 @@ export default function Navbar() {
                     {/* Mobile Actions */}
                     <div className={styles.mobileActions}>
                         <ThemeToggle />
-                        <button
+                        <motion.button
                             className={styles.mobileMenuToggle}
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             aria-label="Toggle menu"
+                            whileTap={{ scale: 0.9 }}
                         >
                             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                        </button>
+                        </motion.button>
                     </div>
                 </div>
             </motion.nav>

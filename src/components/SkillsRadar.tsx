@@ -70,8 +70,9 @@ export default function SkillsRadar() {
         })
         .join(' ');
 
-    const handleToggle = (index: number) => {
-        setHoveredIndex(hoveredIndex === index ? null : index);
+    const handleToggle = (e: React.MouseEvent, index: number) => {
+        e.stopPropagation();
+        setHoveredIndex((prev) => (prev === index ? null : index));
     };
 
     return (
@@ -146,15 +147,31 @@ export default function SkillsRadar() {
                                     const pt = polarToCartesian(cx, cy, r, i * angleStep);
                                     const labelPt = polarToCartesian(cx, cy, maxR + 20, i * angleStep);
                                     const isHovered = hoveredIndex === i;
+                                    const tooltipY = pt.y < 65 ? pt.y + 18 : pt.y - 14;
 
                                     return (
                                         <g
                                             key={skill.name}
-                                            onClick={() => handleToggle(i)}
-                                            onMouseEnter={() => setHoveredIndex(i)}
-                                            onMouseLeave={() => setHoveredIndex(null)}
+                                            onClick={(e) => handleToggle(e, i)}
+                                            onMouseEnter={() => {
+                                                if (typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches) {
+                                                    setHoveredIndex(i);
+                                                }
+                                            }}
+                                            onMouseLeave={() => {
+                                                if (typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches) {
+                                                    setHoveredIndex(null);
+                                                }
+                                            }}
                                             style={{ cursor: 'pointer' }}
                                         >
+                                            {/* Invisible expanded touch hit target for mobile */}
+                                            <circle
+                                                cx={pt.x}
+                                                cy={pt.y}
+                                                r={18}
+                                                fill="transparent"
+                                            />
                                             <circle
                                                 cx={pt.x}
                                                 cy={pt.y}
@@ -173,7 +190,7 @@ export default function SkillsRadar() {
                                             {isHovered && (
                                                 <text
                                                     x={pt.x}
-                                                    y={pt.y - 14}
+                                                    y={tooltipY}
                                                     textAnchor="middle"
                                                     className={styles.valueTooltip}
                                                 >
@@ -199,6 +216,7 @@ export default function SkillsRadar() {
                                             key={skill.name}
                                             className={styles.skillChip}
                                             whileHover={{ y: -2 }}
+                                            whileTap={{ scale: 0.98 }}
                                             initial={{ opacity: 0, y: 10 }}
                                             whileInView={{ opacity: 1, y: 0 }}
                                             viewport={{ once: true }}

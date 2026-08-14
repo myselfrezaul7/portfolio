@@ -21,7 +21,7 @@ const services = [
     {
         icon: Code2,
         title: 'Digital Transformation & Tech Integration',
-        description: 'I translate business requirements into technical solutions — from automating workflows with AI to deploying web platforms that support day-to-day operations. I use AI tools to accelerate development, content generation, and process mapping.',
+        description: 'I translate business requirements into technical solutions, from automating workflows with AI to deploying web platforms that support day-to-day operations. I use AI tools to accelerate development, content generation, and process mapping.',
         skills: ['ERP Systems', 'AI Automation', 'Vercel/GitHub', 'Prompt Engineering'],
     },
 ];

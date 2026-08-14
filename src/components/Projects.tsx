@@ -134,7 +134,7 @@ export default function Projects() {
                                     {project.image ? (
                                         <Image
                                             src={project.image}
-                                            alt={`${project.category} project screenshot`}
+                                            alt={`${project.title} screenshot`}
                                             fill
                                             style={{ objectFit: 'cover', objectPosition: 'top' }}
                                             sizes="(max-width: 767px) 85vw, (max-width: 1199px) 50vw, 33vw"
@@ -157,6 +157,7 @@ export default function Projects() {
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className={styles.viewButton}
+                                                aria-label={`View live site for ${project.title}`}
                                             >
                                                 <ExternalLink size={20} />
                                                 View Live
@@ -175,6 +176,7 @@ export default function Projects() {
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className={styles.titleLink}
+                                                aria-label={`Visit ${project.title}`}
                                             >
                                                 <ArrowUpRight size={24} />
                                             </a>

@@ -7,7 +7,7 @@ import styles from './Contact.module.css';
 
 export default function Contact() {
     return (
-        <section className={styles.contact}>
+        <section id="contact" className={styles.contact} aria-label="Contact me">
             <div className={styles.container}>
                 <ScrollReveal>
                     <div className={styles.card}>

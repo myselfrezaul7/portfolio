@@ -43,18 +43,18 @@ export const metadata: Metadata = {
     description: "Master's student in IMIS | Supply Chain Optimizer | Founder. Bridging business operations and technology through process analytics and digital transformation.",
     images: [
       {
-        url: "/images/og-image.jpg",
-        width: 1200,
-        height: 630,
+        url: "/images/profile.jpg",
+        width: 800,
+        height: 800,
         alt: "Md Rezaul Karim - Operations & Technology",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Md Rezaul Karim - Bridging Business Operations & Technology",
     description: "Master's student in IMIS | Supply Chain Optimizer | Founder. Bridging operations and technology.",
-    images: ["/images/og-image.jpg"],
+    images: ["/images/profile.jpg"],
   },
   robots: {
     index: true,
@@ -117,6 +117,11 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

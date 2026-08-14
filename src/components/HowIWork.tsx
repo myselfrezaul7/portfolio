@@ -37,7 +37,7 @@ export default function HowIWork() {
                 <div className={styles.stepsHorizontal}>
                     {steps.map((step, index) => (
                         <div key={step.title} className={styles.snapItem}>
-                            <ScrollReveal delay={index * 0.15}>
+                            <ScrollReveal delay={index * 0.15} className={styles.revealWrapper}>
                                 <motion.div
                                     className={styles.stepCard}
                                     whileHover={{ y: -4 }}

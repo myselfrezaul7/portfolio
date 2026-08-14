@@ -45,7 +45,7 @@
     }
 }
 
-/* Scrolled Logo - appears on scroll (like L—B in reference) */
+/* Scrolled Logo - appears on scroll */
 .scrolledLogo {
     font-size: 14px;
     font-weight: 700;
@@ -95,21 +95,30 @@
     font-weight: 500;
     letter-spacing: 0.04em;
     text-transform: uppercase;
+    padding: 8px 16px;
     cursor: pointer;
-    transition: color var(--transition-fast);
-    padding: 6px 0;
-    white-space: nowrap;
+    transition: all var(--transition-fast);
+    border-radius: 100px;
 }
 
 .navLink:hover {
     color: var(--text-primary);
 }
 
+.navLinkActive {
+    color: var(--text-primary);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+}
+
+:global([data-theme="light"]) .navLinkActive {
+    background: rgba(0, 0, 0, 0.05);
+}
+
 .desktopActions {
     display: none;
     align-items: center;
-    gap: 10px;
-    margin-left: auto;
+    gap: 8px;
 }
 
 @media (min-width: 768px) {
@@ -191,6 +200,8 @@
     top: 80px;
     left: 16px;
     right: 16px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
     z-index: 99;
     /* Glassmorphism for mobile menu */
     background: rgba(30, 30, 30, 0.85);
@@ -198,7 +209,6 @@
     border-radius: 24px;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    overflow: hidden;
 }
 
 :global([data-theme="light"]) .mobileMenu {

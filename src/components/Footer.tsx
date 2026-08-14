@@ -11,12 +11,24 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+    const scrollToTop = () => {
+        if (typeof window !== 'undefined') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
     return (
         <footer className={styles.footer} role="contentinfo">
             <div className={styles.container}>
                 <div className={styles.content}>
                     {/* Logo */}
-                    <a href="#" className={styles.logo}>M•K</a>
+                    <button
+                        onClick={scrollToTop}
+                        className={styles.logo}
+                        aria-label="Scroll to top"
+                    >
+                        M•K
+                    </button>
 
                     {/* Social Links */}
                     <div className={styles.socialLinks}>

@@ -8,7 +8,10 @@ import ScrollReveal from './animations/ScrollReveal';
 import styles from './Blog.module.css';
 
 function formatDate(dateStr: string) {
-    return new Date(dateStr).toLocaleDateString('en-US', {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const date = new Date(Date.UTC(year, month - 1, day));
+    return date.toLocaleDateString('en-US', {
+        timeZone: 'UTC',
         month: 'short',
         day: 'numeric',
         year: 'numeric',

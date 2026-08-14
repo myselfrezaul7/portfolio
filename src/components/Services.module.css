@@ -79,6 +79,8 @@
     scroll-snap-align: center;
     flex: 0 0 85vw;
     max-width: 400px;
+    display: flex;
+    flex-direction: column;
 }
 
 @media (min-width: 768px) {
@@ -95,6 +97,7 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
+    height: 100%;
     transition: all var(--transition-normal);
 }
 
@@ -142,7 +145,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 24px;
+    margin-top: auto;
 }
 
 .skillTag {

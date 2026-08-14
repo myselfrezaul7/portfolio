@@ -9,6 +9,7 @@
 
 .marqueeTrack {
     display: flex;
+    width: max-content;
     white-space: nowrap;
     will-change: transform;
     backface-visibility: hidden;

@@ -58,6 +58,7 @@
     border-radius: 20px;
     padding: 36px;
     transition: border-color var(--transition-normal);
+    scroll-margin-top: 100px;
 }
 
 .postCard:hover {
@@ -81,7 +82,7 @@
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--accent);
-    background: rgba(59, 130, 246, 0.08);
+    background: rgba(74, 155, 155, 0.1);
     border-radius: 20px;
 }
 

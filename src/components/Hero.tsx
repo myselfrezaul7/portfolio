@@ -98,6 +98,7 @@ export default function Hero() {
                             alt="Md Rezaul Karim"
                             fill
                             priority
+                            sizes="(max-width: 768px) 200px, (max-width: 1024px) 300px, 340px"
                             style={{ objectFit: 'cover', objectPosition: 'center top' }}
                         />
                         <div className={styles.imageGlow} />

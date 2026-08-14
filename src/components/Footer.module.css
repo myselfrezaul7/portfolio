@@ -45,6 +45,10 @@
     font-weight: 700;
     letter-spacing: 0.05em;
     color: var(--text-primary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
     transition: opacity var(--transition-fast);
 }
 
@@ -85,30 +89,4 @@
     font-size: 13px;
     color: var(--text-tertiary);
     letter-spacing: 0.02em;
-}
-
-.backToTop {
-    display: none;
-    width: 44px;
-    height: 44px;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-tertiary);
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-@media (min-width: 768px) {
-    .backToTop {
-        display: flex;
-    }
-}
-
-.backToTop:hover {
-    color: var(--text-primary);
-    border-color: var(--border-hover);
-    background: var(--bg-card-hover);
 }

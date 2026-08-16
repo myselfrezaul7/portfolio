@@ -19,13 +19,13 @@ export default function About() {
                     <ScrollReveal delay={0.1}>
                         <div className={styles.bioSection}>
                             <p className={styles.bio}>
-                                I bridge the gap between business operations and technology. My goal is simple: make organisations run smarter by combining process thinking with the right technical tools. I am currently pursuing an M.A. in International Management and Information Systems (IMIS), where I focus on supply chain management, process analytics, and how information systems can transform everyday operations. The programme sits right at the crossroads of business and tech, which is exactly where I work best.
+                                I bridge the gap between business operations and technology. My goal is simple: make organisations run smarter by combining process thinking with the right technical tools. As a 3rd-semester Master's student in International Management and Information Systems (IMIS) at Fachhochschule Südwestfalen, I focus on SAP-integrated management, data analysis, digital transformation, and information systems. The programme sits right at the crossroads of business and tech, which is exactly where I work best.
                             </p>
                             <p className={styles.bio}>
-                                Alongside my studies, I founded two ventures: <strong>NexTep Edu</strong>, an education consultancy where I designed operational workflows and built the platform from the ground up, and <strong>PetBhai</strong>, a fully functional e-commerce platform currently in prototype stage, preparing to launch in Bangladesh soon. Before this, I spent two years as an Assistant Manager at a diagnostic clinic, where I managed the lab supply chain (procurement, inventory, vendor coordination) and redesigned patient workflows to improve service delivery across the board.
+                                Alongside my studies, I served as Technical Project Lead at <strong>NexTep Edu</strong>, where I built digital infrastructure, automated workflows with BPMN 2.0, and designed a self-service client tracking model. I also founded <strong>PetBhai</strong>, an e-commerce platform prototype. Previously, as a Data & Operations Analyst at Renaissance Diagnostic Care, I extracted and cleaned demographic data via ETL pipelines, built visual dashboards, redesigned appointment booking systems, and tracked daily KPIs for supply chain logistics.
                             </p>
                             <p className={styles.bio}>
-                                I work through the lens of People, Process, and Technology. I understand stakeholders first, then design efficient workflows, and finally select the right tools to support them. I am deeply comfortable leveraging AI to accelerate everything I do, from data analysis and process mapping to development and content creation. I adapt quickly, pick up new systems with minimal onboarding, and consistently look for ways to work smarter, not harder.
+                                I work through the lens of People, Process, and Technology (PPT). I understand stakeholders first, design efficient workflows, and select the right tools to support them. I am deeply comfortable leveraging AI tools to accelerate everything I do, from data analysis and process mapping to web deployment and presentation design. I adapt quickly, pick up new systems with minimal onboarding, and consistently look for ways to work smarter, not harder.
                             </p>
                         </div>
                     </ScrollReveal>
@@ -57,7 +57,7 @@ export default function About() {
                             <GraduationCap size={20} />
                             <div>
                                 <span className={styles.infoLabel}>Education</span>
-                                <span className={styles.infoValue}>M.A. IMIS, South Westphalia University</span>
+                                <span className={styles.infoValue}>M.A. IMIS, Fachhochschule Südwestfalen</span>
                             </div>
                         </motion.div>
 
@@ -72,7 +72,7 @@ export default function About() {
                             <Briefcase size={20} />
                             <div>
                                 <span className={styles.infoLabel}>Experience</span>
-                                <span className={styles.infoValue}>2+ Years in Operations & Supply Chain</span>
+                                <span className={styles.infoValue}>Data & Operations Analysis</span>
                             </div>
                         </motion.div>
                     </div>
@@ -91,7 +91,7 @@ export default function About() {
                                 </div>
                                 <div className={styles.languageItem}>
                                     <span className={styles.languageName}>German</span>
-                                    <span className={styles.languageLevel}>A1 to A2</span>
+                                    <span className={styles.languageLevel}>A1 (Learning A2)</span>
                                 </div>
                             </div>
                         </div>

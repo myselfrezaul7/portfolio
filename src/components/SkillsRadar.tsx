@@ -16,30 +16,41 @@ const skills = [
 
 const skillCategories = [
     {
-        title: 'Operations',
+        title: 'Product & Process Management',
         skills: [
-            { name: 'Supply Chain Optimization', level: 4 },
-            { name: 'Process Design (BPMN 2.0)', level: 4 },
-            { name: 'Project Management', level: 3 },
-            { name: 'Lean Management', level: 3 },
+            { name: 'Agile Product Management', level: 4 },
+            { name: 'PPT Framework', level: 4 },
+            { name: 'SAP Signavio', level: 4 },
+            { name: 'BPMN 2.0', level: 4 },
+            { name: 'Jira & Confluence', level: 3 },
         ]
     },
     {
-        title: 'Technology & Data',
+        title: 'Data & ERP',
         skills: [
-            { name: 'Data Analytics', level: 4 },
-            { name: 'Tech Integration', level: 4 },
-            { name: 'SAP Signavio / B/W', level: 3 },
-            { name: 'Power BI / SQL', level: 3 },
+            { name: 'SAP BW/4HANA', level: 4 },
+            { name: 'Power BI', level: 4 },
+            { name: 'KPI Tracking & Dashboards', level: 4 },
+            { name: 'KNIME', level: 3 },
+            { name: 'ETL Pipelines', level: 3 },
         ]
     },
     {
-        title: 'AI & Adaptability',
+        title: 'Tech, AI & Deployment',
         skills: [
+            { name: 'AI-Assisted Workflows', level: 5 },
+            { name: 'Prompt Engineering', level: 4 },
+            { name: 'Vercel / CI/CD', level: 4 },
             { name: 'Rapid Tool Adoption', level: 5 },
-            { name: 'AI-Augmented Workflows', level: 4 },
-            { name: 'Agile / Scrum', level: 3 },
-            { name: 'AI-Powered Development', level: 3 },
+        ]
+    },
+    {
+        title: 'Productivity & Design',
+        skills: [
+            { name: 'Microsoft PowerPoint', level: 4 },
+            { name: 'Google Slides', level: 4 },
+            { name: 'MS Office 365', level: 4 },
+            { name: 'Canva', level: 3 },
         ]
     }
 ];

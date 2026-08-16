@@ -10,19 +10,19 @@ const services = [
         icon: Settings,
         title: 'Supply Chain & Process Optimization',
         description: 'I map and improve supply chain workflows, identify operational bottlenecks, and design repeatable systems that keep things moving smoothly.',
-        skills: ['SAP Signavio', 'BPMN 2.0', 'Lean Management'],
+        skills: ['SAP Signavio', 'BPMN 2.0', 'PPT Framework', 'Jira & Confluence'],
     },
     {
         icon: BarChart3,
         title: 'Data Analytics & Business Intelligence',
         description: 'I turn operational data into actionable insights by building dashboards for supply chain KPIs, process performance, and data-driven decision support.',
-        skills: ['SAP B/W', 'Power BI', 'KNIME', 'SQL'],
+        skills: ['SAP BW/4HANA', 'Power BI', 'KNIME', 'ETL & KPIs'],
     },
     {
         icon: Code2,
         title: 'Digital Transformation & Tech Integration',
         description: 'I translate business requirements into technical solutions, from automating workflows with AI to deploying web platforms that support day-to-day operations. I use AI tools to accelerate development, content generation, and process mapping.',
-        skills: ['ERP Systems', 'AI Automation', 'Vercel/GitHub', 'Prompt Engineering'],
+        skills: ['AI-Assisted Workflows', 'Prompt Engineering', 'Vercel / CI/CD', 'ERP Systems'],
     },
 ];
 

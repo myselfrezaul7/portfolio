@@ -5,6 +5,8 @@
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     background: var(--bg-secondary);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
 }
 
 .marqueeTrack {
@@ -14,6 +16,26 @@
     will-change: transform;
     backface-visibility: hidden;
     transform: translateZ(0);
+    animation: marqueeScroll var(--speed, 35s) linear infinite;
+}
+
+.marqueeContainer:hover .marqueeTrack {
+    animation-play-state: paused;
+}
+
+@keyframes marqueeScroll {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .marqueeTrack {
+        animation: none;
+    }
 }
 
 .marqueeItem {

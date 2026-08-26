@@ -27,7 +27,7 @@ export default function Hero() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        Karim
+                        Md Rezaul Karim
                     </motion.h1>
 
                     {/* Title */}
@@ -37,7 +37,7 @@ export default function Hero() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        Operations × Technology
+                        Data Analytics · Supply Chain Operations · IT Project Management
                     </motion.h2>
 
                     {/* Description */}
@@ -47,7 +47,7 @@ export default function Hero() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        Optimizing operations through data, technology, and AI. I bridge the gap between business processes and technical systems, using AI-driven automation to help organisations run smarter, faster.
+                        Master's student in International Management & Information Systems (IMIS) in Germany. I bridge business operations and technology, transforming complex workflows into automated, data-driven systems using SAP, Power BI, and modern digital tools.
                     </motion.p>
 
                     {/* Availability Badge */}
@@ -58,7 +58,7 @@ export default function Hero() {
                         transition={{ duration: 0.5, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
                     >
                         <span className={styles.statusDot} />
-                        <span className={styles.statusText}>Open to Opportunities</span>
+                        <span className={styles.statusText}>Available for Working Student & Master Thesis Roles</span>
                     </motion.div>
 
                     {/* CTA Buttons */}

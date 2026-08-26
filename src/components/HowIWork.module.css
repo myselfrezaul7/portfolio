@@ -38,6 +38,7 @@
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
+    scroll-padding-left: 24px;
     gap: 20px;
     padding-bottom: 24px;
     margin: 0 -24px; /* edge-to-edge on mobile */
@@ -45,6 +46,8 @@
     padding-right: 24px;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    mask-image: linear-gradient(to right, black calc(100% - 40px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black calc(100% - 40px), transparent 100%);
 }
 
 .stepsHorizontal::-webkit-scrollbar {
@@ -59,11 +62,13 @@
         padding-right: 0;
         overflow-x: visible;
         padding-bottom: 0;
+        mask-image: none;
+        -webkit-mask-image: none;
     }
 }
 
 .snapItem {
-    scroll-snap-align: center;
+    scroll-snap-align: start;
     flex: 0 0 85vw; /* visible preview of next card */
     max-width: 400px;
     display: flex;
@@ -93,12 +98,30 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     transition: all var(--transition-normal);
+}
+
+.stepCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-accent);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
 }
 
 .stepCard:hover {
     background: var(--bg-card-hover);
     border-color: var(--border-hover);
+    box-shadow: var(--shadow-lg);
+}
+
+.stepCard:hover::before {
+    opacity: 1;
 }
 
 .stepNumber {

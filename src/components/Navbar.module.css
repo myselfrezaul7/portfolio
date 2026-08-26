@@ -11,6 +11,7 @@
 }
 
 .navbarInner {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -45,8 +46,10 @@
     }
 }
 
-/* Scrolled Logo - appears on scroll */
+/* Scrolled Logo - appears on scroll without layout shift */
 .scrolledLogo {
+    position: absolute;
+    left: 28px;
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -55,7 +58,6 @@
     border: none;
     cursor: pointer;
     padding: 6px 0;
-    margin-right: auto;
     transition: opacity var(--transition-fast);
 }
 
@@ -193,6 +195,15 @@
     .mobileMenuToggle {
         display: none;
     }
+}
+
+.mobileBackdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 98;
 }
 
 .mobileMenu {

@@ -41,6 +41,7 @@
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
+    scroll-padding-left: 24px;
     gap: 20px;
     padding-bottom: 24px;
     margin: 0 -24px;
@@ -48,6 +49,8 @@
     padding-right: 24px;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    mask-image: linear-gradient(to right, black calc(100% - 40px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black calc(100% - 40px), transparent 100%);
 }
 
 .projectsList::-webkit-scrollbar {
@@ -63,49 +66,60 @@
         overflow-x: visible;
         padding-bottom: 0;
         flex-wrap: wrap;
+        mask-image: none;
+        -webkit-mask-image: none;
     }
 }
 
 .snapItem {
-    scroll-snap-align: center;
+    scroll-snap-align: start;
     flex: 0 0 85vw;
     max-width: 400px;
 }
 
 @media (min-width: 768px) {
     .snapItem {
-        flex: 0 0 calc(50% - 12px);
+        flex: 1 1 calc(50% - 12px);
         max-width: none;
     }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1024px) {
     .snapItem {
-        flex: 0 0 calc(33.333% - 16px);
+        flex: 1 1 calc(33.333% - 16px);
     }
 }
 
 .projectCard {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 24px;
+    border-radius: 20px;
     overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
     transition: all var(--transition-normal);
 }
 
+@media (min-width: 768px) {
+    .projectCard {
+        border-radius: 24px;
+    }
+}
+
 .projectCard:hover {
+    background: var(--bg-card-hover);
     border-color: var(--border-hover);
     box-shadow: var(--shadow-lg);
 }
 
 .imageWrapper {
     position: relative;
-    height: 200px;
+    width: 100%;
+    height: 220px;
     overflow: hidden;
-    flex-shrink: 0;
+    border-bottom: 1px solid var(--border);
 }
 
 @media (min-width: 768px) {
@@ -114,17 +128,27 @@
     }
 }
 
-.gradientBg {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.projectImage {
     transition: transform var(--transition-slow);
 }
 
-.projectCard:hover .gradientBg {
+.projectCard:hover .projectImage {
     transform: scale(1.05);
+}
+
+.placeholderImage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.gradientBg {
+    position: absolute;
+    inset: 0;
+    opacity: 0.9;
 }
 
 :global([data-theme="light"]) .gradientBg {
@@ -147,7 +171,8 @@
     transition: opacity var(--transition-normal);
 }
 
-.projectCard:hover .imageOverlay {
+.projectCard:hover .imageOverlay,
+.projectCard:focus-within .imageOverlay {
     opacity: 1;
 }
 
@@ -159,13 +184,14 @@
     font-size: 14px;
     font-weight: 600;
     color: white;
-    background: var(--gradient-primary);
+    background: var(--gradient-accent);
     border-radius: 10px;
     transform: translateY(20px);
     transition: all var(--transition-normal);
 }
 
-.projectCard:hover .viewButton {
+.projectCard:hover .viewButton,
+.projectCard:focus-within .viewButton {
     transform: translateY(0);
 }
 

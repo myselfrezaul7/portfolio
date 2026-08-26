@@ -9,33 +9,33 @@ const services = [
     {
         icon: Settings,
         title: 'Supply Chain & Process Optimization',
-        description: 'I map and improve supply chain workflows, identify operational bottlenecks, and design repeatable systems that keep things moving smoothly.',
+        description: 'I map end-to-end operational workflows, eliminate process bottlenecks, and design repeatable systems using BPMN 2.0 and the People, Process, and Technology (PPT) framework.',
         skills: ['SAP Signavio', 'BPMN 2.0', 'PPT Framework', 'Jira & Confluence'],
     },
     {
         icon: BarChart3,
         title: 'Data Analytics & Business Intelligence',
-        description: 'I turn operational data into actionable insights by building dashboards for supply chain KPIs, process performance, and data-driven decision support.',
+        description: 'I transform operational data into actionable executive dashboards, architect data warehousing models, and monitor supply chain KPIs for data-driven decision making.',
         skills: ['SAP BW/4HANA', 'Power BI', 'KNIME', 'ETL & KPIs'],
     },
     {
         icon: Code2,
-        title: 'Digital Transformation & Tech Integration',
-        description: 'I translate business requirements into technical solutions, from automating workflows with AI to deploying web platforms that support day-to-day operations. I use AI tools to accelerate development, content generation, and process mapping.',
-        skills: ['AI-Assisted Workflows', 'Prompt Engineering', 'Vercel / CI/CD', 'ERP Systems'],
+        title: 'IT Project Management & Systems Integration',
+        description: 'I translate business requirements into agile technical deliverables, manage cross-functional sprint workflows, and integrate modern digital tools to streamline day-to-day operations.',
+        skills: ['Agile / Scrum', 'ERP Systems', 'Workflow Automation', 'Vercel / CI/CD'],
     },
 ];
 
 export default function Services() {
     return (
-        <section id="services" className={styles.services} aria-label="What I do">
+        <section id="services" className={styles.services} aria-label="Core competencies">
             <div className={styles.container}>
                 {/* Section Header */}
                 <ScrollReveal>
                     <div className={styles.header}>
-                        <h2 className={styles.sectionTitle}>What I do</h2>
+                        <h2 className={styles.sectionTitle}>Core Competencies</h2>
                         <p className={styles.sectionDescription}>
-                            I sit at the intersection of operations and technology, turning complex business challenges into streamlined, data-driven systems.
+                            I sit at the intersection of business operations, data analytics, and digital technology, turning complex challenges into streamlined, scalable systems.
                         </p>
                     </div>
                 </ScrollReveal>

@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import styles from './Marquee.module.css';
 
 interface MarqueeProps {
@@ -8,28 +7,24 @@ interface MarqueeProps {
     speed?: number;
 }
 
-export default function Marquee({ items, speed = 30 }: MarqueeProps) {
+export default function Marquee({ items, speed = 35 }: MarqueeProps) {
     // Duplicate items for seamless loop
     const duplicatedItems = [...items, ...items];
 
     return (
-        <div className={styles.marqueeContainer}>
-            <motion.div
-                className={styles.marqueeTrack}
-                animate={{ x: ['0%', '-50%'] }}
-                transition={{
-                    duration: speed,
-                    ease: 'linear',
-                    repeat: Infinity,
-                }}
-            >
+        <div
+            className={styles.marqueeContainer}
+            style={{ '--speed': `${speed}s` } as React.CSSProperties}
+            aria-label="Skill highlights ticker"
+        >
+            <div className={styles.marqueeTrack}>
                 {duplicatedItems.map((item, index) => (
                     <span key={index} className={styles.marqueeItem}>
                         {item}
                         <span className={styles.separator}>•</span>
                     </span>
                 ))}
-            </motion.div>
+            </div>
         </div>
     );
 }

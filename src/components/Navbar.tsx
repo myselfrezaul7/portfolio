@@ -7,7 +7,7 @@ import ThemeToggle from './ThemeToggle';
 import styles from './Navbar.module.css';
 
 const navLinks = [
-    { name: 'Services', href: '#services' },
+    { name: 'Competencies', href: '#services' },
     { name: 'Projects', href: '#work' },
     { name: 'Blog', href: '/blog' },
     { name: 'About', href: '#about' },
@@ -16,8 +16,9 @@ const navLinks = [
 export default function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [activeSection, setActiveSection] = useState<string>('');
 
-    // Detect scroll for showing logo
+    // Detect scroll for showing logo and active section
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 100);
@@ -26,8 +27,58 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // IntersectionObserver for ScrollSpy
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+
+        const sectionIds = ['services', 'work', 'skills', 'about', 'contact'];
+        const sectionMap: Record<string, string> = {
+            services: '#services',
+            work: '#work',
+            skills: '#skills',
+            about: '#about',
+            contact: '#contact',
+        };
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const matchedHref = sectionMap[entry.target.id];
+                        if (matchedHref) {
+                            setActiveSection(matchedHref);
+                        }
+                    }
+                });
+            },
+            {
+                rootMargin: '-20% 0px -60% 0px',
+                threshold: 0,
+            }
+        );
+
+        sectionIds.forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) observer.observe(el);
+        });
+
+        return () => observer.disconnect();
+    }, []);
+
+    // Escape key listener for mobile menu
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                setIsMobileMenuOpen(false);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
     const handleNavClick = (href: string) => {
         setIsMobileMenuOpen(false);
+        setActiveSection(href);
         if (href.startsWith('#')) {
             if (typeof window !== 'undefined' && window.location.pathname !== '/') {
                 window.location.href = `/${href}`;
@@ -74,16 +125,16 @@ export default function Navbar() {
                 transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
             >
                 <div className={styles.navbarInner}>
-                    {/* Scrolled Logo - appears on scroll */}
+                    {/* Scrolled Logo - appears on scroll without layout shift */}
                     <AnimatePresence>
                         {isScrolled && (
                             <motion.button
                                 onClick={scrollToTop}
                                 className={styles.scrolledLogo}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -20 }}
-                                transition={{ duration: 0.3 }}
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                transition={{ duration: 0.25 }}
                                 whileTap={{ scale: 0.95 }}
                                 aria-label="Scroll to top"
                             >
@@ -98,7 +149,7 @@ export default function Navbar() {
                             <button
                                 key={link.name}
                                 onClick={() => handleNavClick(link.href)}
-                                className={styles.navLink}
+                                className={`${styles.navLink} ${activeSection === link.href ? styles.navLinkActive : ''}`}
                             >
                                 {link.name}
                             </button>
@@ -133,31 +184,41 @@ export default function Navbar() {
                 </div>
             </motion.nav>
 
-            {/* Mobile Menu */}
+            {/* Mobile Menu & Backdrop */}
             <AnimatePresence>
                 {isMobileMenuOpen && (
-                    <motion.div
-                        className={styles.mobileMenu}
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        <div className={styles.mobileMenuContent}>
-                            {navLinks.map((link, index) => (
-                                <motion.button
-                                    key={link.name}
-                                    onClick={() => handleNavClick(link.href)}
-                                    className={styles.mobileNavLink}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: index * 0.1 }}
-                                    whileTap={{ scale: 0.96 }}
-                                >
-                                    {link.name}
-                                </motion.button>
-                            ))}
-                            <div className={styles.mobileActionsMenu}>
+                    <>
+                        <motion.div
+                            className={styles.mobileBackdrop}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            aria-hidden="true"
+                        />
+                        <motion.div
+                            className={styles.mobileMenu}
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <div className={styles.mobileMenuContent}>
+                                {navLinks.map((link, index) => (
+                                    <motion.button
+                                        key={link.name}
+                                        onClick={() => handleNavClick(link.href)}
+                                        className={styles.mobileNavLink}
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: index * 0.1 }}
+                                        whileTap={{ scale: 0.96 }}
+                                    >
+                                        {link.name}
+                                    </motion.button>
+                                ))}
+                                <div className={styles.mobileActionsMenu}>
                                 <motion.a href="/resume.pdf" download className={styles.mobileResumeLink} whileTap={{ scale: 0.96 }}>
                                     <Download size={18} />
                                     Download Resume
@@ -166,9 +227,10 @@ export default function Navbar() {
                                     Let's Talk
                                     <ArrowUpRight size={18} />
                                 </motion.a>
+                                </div>
                             </div>
-                        </div>
-                    </motion.div>
+                        </motion.div>
+                    </>
                 )}
             </AnimatePresence>
         </>

@@ -85,19 +85,22 @@ const jsonLd = {
     "https://linkedin.com/in/myselfkarim",
     "https://github.com/myselfrezaul7",
   ],
-  jobTitle: "IMIS Master's Student | Data & Operations Analyst | Technical Project Lead",
-  worksFor: {
-    "@type": "Organization",
+  jobTitle: "Data & Operations Analyst | IT Project Management | IMIS Master's Student",
+  affiliation: {
+    "@type": "CollegeOrUniversity",
     name: "Fachhochschule Südwestfalen",
+    url: "https://www.fh-swf.de",
   },
   alumniOf: [
     {
       "@type": "CollegeOrUniversity",
-      name: "Fachhochschule Südwestfalen",
+      name: "Daffodil International University",
+      url: "https://daffodilvarsity.edu.bd",
     },
     {
       "@type": "CollegeOrUniversity",
-      name: "Govt. Haraganga College, Munshiganj",
+      name: "Fachhochschule Südwestfalen",
+      url: "https://www.fh-swf.de",
     },
   ],
   knowsAbout: [

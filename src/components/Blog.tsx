@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Calendar, Clock, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { blogPosts } from '@/data/blogPosts';
 import ScrollReveal from './animations/ScrollReveal';
 import styles from './Blog.module.css';
@@ -46,6 +46,7 @@ export default function Blog() {
                                 >
                                     <div className={styles.cardTop}>
                                         <span className={styles.category}>{post.category}</span>
+                                        <ArrowUpRight size={18} className={styles.arrow} />
                                     </div>
 
                                     <h3 className={styles.cardTitle}>{post.title}</h3>

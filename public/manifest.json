@@ -1,11 +1,11 @@
 {
     "name": "Md Rezaul Karim",
     "short_name": "M•K",
-    "description": "Business Strategy & Technical Execution Professional",
+    "description": "Operations, Data Analytics & Technology Integration Professional",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#0a0a0a",
-    "theme_color": "#3b82f6",
+    "theme_color": "#4a9b9b",
     "icons": [
         {
             "src": "/icons/icon-192.png",

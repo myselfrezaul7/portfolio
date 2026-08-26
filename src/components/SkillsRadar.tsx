@@ -123,7 +123,23 @@ export default function SkillsRadar() {
                                             key={level}
                                             points={points}
                                             className={styles.gridLevel}
+                                            fill={level % 2 === 1 ? 'rgba(74, 155, 155, 0.035)' : 'none'}
                                         />
+                                    );
+                                })}
+
+                                {/* Axis scale percentage ticks */}
+                                {Array.from({ length: levels }).map((_, level) => {
+                                    const r = ((level + 1) / levels) * maxR;
+                                    return (
+                                        <text
+                                            key={`tick-${level}`}
+                                            x={cx + 4}
+                                            y={cy - r + 3}
+                                            className={styles.scaleTick}
+                                        >
+                                            {(level + 1) * 20}%
+                                        </text>
                                     );
                                 })}
 
@@ -158,12 +174,21 @@ export default function SkillsRadar() {
                                     const pt = polarToCartesian(cx, cy, r, i * angleStep);
                                     const labelPt = polarToCartesian(cx, cy, maxR + 20, i * angleStep);
                                     const isHovered = hoveredIndex === i;
-                                    const tooltipY = pt.y < 65 ? pt.y + 18 : pt.y - 14;
+                                    const tooltipY = pt.y < 65 ? pt.y + 20 : pt.y - 14;
 
                                     return (
                                         <g
                                             key={skill.name}
+                                            tabIndex={0}
+                                            role="button"
+                                            aria-label={`${skill.name}: ${skill.value}% competency`}
                                             onClick={(e) => handleToggle(e, i)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter' || e.key === ' ') {
+                                                    e.preventDefault();
+                                                    handleToggle(e as unknown as React.MouseEvent, i);
+                                                }
+                                            }}
                                             onMouseEnter={() => {
                                                 if (typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches) {
                                                     setHoveredIndex(i);
@@ -199,14 +224,24 @@ export default function SkillsRadar() {
                                                 {skill.name}
                                             </text>
                                             {isHovered && (
-                                                <text
-                                                    x={pt.x}
-                                                    y={tooltipY}
-                                                    textAnchor="middle"
-                                                    className={styles.valueTooltip}
-                                                >
-                                                    {skill.value}%
-                                                </text>
+                                                <g>
+                                                    <rect
+                                                        x={pt.x - 20}
+                                                        y={tooltipY - 11}
+                                                        width={40}
+                                                        height={18}
+                                                        rx={5}
+                                                        className={styles.tooltipPill}
+                                                    />
+                                                    <text
+                                                        x={pt.x}
+                                                        y={tooltipY + 2}
+                                                        textAnchor="middle"
+                                                        className={styles.valueTooltip}
+                                                    >
+                                                        {skill.value}%
+                                                    </text>
+                                                </g>
                                             )}
                                         </g>
                                     );

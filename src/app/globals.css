@@ -18,6 +18,7 @@
 
   /* Gradients - Teal */
   --gradient-primary: linear-gradient(135deg, #4a9b9b 0%, #3d8585 100%);
+  --gradient-accent: linear-gradient(135deg, #4a9b9b 0%, #3d8585 100%);
   --gradient-subtle: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
 
   /* Shadows */
@@ -36,7 +37,7 @@
   --transition-slow: 500ms ease;
 }
 
-/* Light Theme - Matching lorenzobrandimarte.it exactly */
+/* Light Theme */
 [data-theme="light"] {
   --bg-primary: #f0f0f0;
   --bg-secondary: #e8e8e8;
@@ -48,18 +49,19 @@
   --text-secondary: #3d3d3d;
   --text-tertiary: #5a5a5a;
 
-  --accent: #4a9b9b;
-  --accent-hover: #3d8585;
+  --accent: #1e7b78;
+  --accent-hover: #15615f;
 
   --border: #d0d0d0;
   --border-hover: #b0b0b0;
 
   --gradient-primary: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+  --gradient-accent: linear-gradient(135deg, #1e7b78 0%, #16605e 100%);
 
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
-  --shadow-glow: 0 0 40px rgba(74, 155, 155, 0.08);
+  --shadow-glow: 0 0 40px rgba(30, 123, 120, 0.12);
 }
 
 * {

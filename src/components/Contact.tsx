@@ -11,15 +11,16 @@ export default function Contact() {
             <div className={styles.container}>
                 <ScrollReveal>
                     <div className={styles.card}>
-                        <span className={styles.label}>Have an operations challenge?</span>
-                        <h2 className={styles.title}>Let's talk</h2>
+                        <span className={styles.label}>Get in Touch</span>
+                        <h2 className={styles.title}>Let's Connect</h2>
                         <p className={styles.description}>
-                            Book a free 30-minute intro call to discuss your supply chain, process, or operational challenges
-                            and discover how we can turn them into efficient, data-driven systems.
+                            I am actively seeking Working Student (Werkstudent), Master Thesis, and Graduate positions in
+                            Data Analytics, Supply Chain Operations, and IT Project Management across Germany.
+                            Let's schedule an introductory chat or connect directly via email.
                         </p>
 
                         <div className={styles.actions}>
-                            {/* Primary CTA - Book a Call (Outline Style) */}
+                            {/* Primary CTA - Schedule Intro Chat */}
                             <motion.a
                                 href="https://cal.eu/myself-karim/30min"
                                 target="_blank"
@@ -28,7 +29,7 @@ export default function Contact() {
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.95 }}
                             >
-                                BOOK A CALL
+                                Schedule Intro Chat
                                 <Calendar size={18} strokeWidth={1.5} />
                             </motion.a>
 

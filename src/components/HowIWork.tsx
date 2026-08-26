@@ -10,19 +10,19 @@ const steps = [
         icon: Search,
         number: '01',
         title: 'Diagnose & Analyse',
-        description: 'Understand current operations through data collection, stakeholder interviews, and AI-assisted process mapping to identify bottlenecks and inefficiencies faster.',
+        description: 'Understand existing operational workflows through data audits, stakeholder interviews, and BPMN 2.0 process mapping to uncover root-cause bottlenecks and resource waste.',
     },
     {
         icon: FileText,
         number: '02',
         title: 'Design & Optimise',
-        description: 'Develop improved workflows, build data models, and rapidly prototype solutions using SAP Signavio, Power BI, and AI-powered development tools.',
+        description: 'Design future-state process models and data structures. Rapidly prototype interactive dashboards in Power BI and configure SAP data flows.',
     },
     {
         icon: Rocket,
         number: '03',
         title: 'Implement & Scale',
-        description: 'Deploy solutions, integrate with existing systems, and leverage AI-driven monitoring to ensure continuous improvement at scale.',
+        description: 'Deploy solutions with clear documentation, establish KPI tracking governance, and run agile review cycles to ensure sustainable operational performance.',
     },
 ];
 

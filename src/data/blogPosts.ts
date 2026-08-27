@@ -14,7 +14,7 @@ export const blogPosts: BlogPost[] = [
         id: 1,
         slug: 'lab-supply-chain',
         title: 'What Managing a Clinical Lab Supply Chain Actually Taught Me',
-        excerpt: 'Two years managing clinical procurement and inventory in Dhaka taught me how variance, safety stock formulas, and vendor SLAs turn operational chaos into predictable healthcare delivery.',
+        excerpt: 'Over a year managing clinical procurement and inventory in Dhaka taught me how variance, safety stock formulas, and vendor SLAs turn operational chaos into predictable healthcare delivery.',
         content: `When I joined Renaissance Diagnostic Care in Dhaka, the clinical supply chain operated through fragmented communication channels and outdated spreadsheets. Laboratory technicians frequently experienced stockouts on critical diagnostic reagents, while perishable chemical assays expired unused on storage shelves. In a healthcare facility running over 500 patient tests daily, procurement delays directly impacted patient care.
 
 My first initiative was establishing a centralized inventory ledger. I categorized reagents into high-velocity routine panels (such as Complete Blood Counts and lipid profiles) and specialized low-frequency assays. By tracking daily test consumption distributions and supplier lead times, I calculated dynamic safety stock levels and automated reorder points.

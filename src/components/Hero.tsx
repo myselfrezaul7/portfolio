@@ -58,7 +58,7 @@ export default function Hero() {
                         transition={{ duration: 0.5, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
                     >
                         <span className={styles.statusDot} />
-                        <span className={styles.statusText}>Available for Working Student & Master Thesis Roles</span>
+                        <span className={styles.statusText}>Available for Internship, Working Student & Master Thesis Roles</span>
                     </motion.div>
 
                     {/* CTA Buttons */}

@@ -55,7 +55,7 @@ export default function Footer() {
 
                     {/* Copyright */}
                     <p className={styles.copyright}>
-                        © {new Date().getFullYear()} Md Rezaul Karim
+                        © 2025 Md Rezaul Karim
                     </p>
                 </div>
             </div>

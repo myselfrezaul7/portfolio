@@ -125,7 +125,7 @@ export default function Navbar() {
                 transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
             >
                 <div className={styles.navbarInner}>
-                    {/* Scrolled Logo - appears on scroll without layout shift */}
+                    {/* Scrolled Logo - appears on scroll as flex child */}
                     <AnimatePresence>
                         {isScrolled && (
                             <motion.button

@@ -136,6 +136,7 @@ export default function Projects() {
                                             src={project.image}
                                             alt={`${project.title} screenshot`}
                                             fill
+                                            className={styles.projectImage}
                                             style={{ objectFit: 'cover', objectPosition: 'top' }}
                                             sizes="(max-width: 767px) 85vw, (max-width: 1199px) 50vw, 33vw"
                                             placeholder={project.blur ? 'blur' : 'empty'}

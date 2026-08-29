@@ -129,6 +129,7 @@
     color: var(--bg-primary);
     background: var(--text-primary);
     border-radius: 50px;
+    border: 1px solid transparent;
     transition: all var(--transition-normal);
 }
 

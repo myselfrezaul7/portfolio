@@ -31,7 +31,7 @@ export default function HowIWork() {
         <section className={styles.howIWork} aria-label="How I work">
             <div className={styles.container}>
                 <ScrollReveal>
-                    <h2 className={styles.sectionTitle}>How I work.</h2>
+                    <h2 className={styles.sectionTitle}>How I Work</h2>
                 </ScrollReveal>
 
                 <div className={styles.stepsHorizontal}>

@@ -97,7 +97,7 @@
     border: 1px solid var(--border);
     border-radius: 12px;
     transition: all var(--transition-normal);
-    scroll-snap-align: center;
+    scroll-snap-align: start;
     flex: 0 0 75vw;
     max-width: 280px;
 }

@@ -97,11 +97,6 @@ const jsonLd = {
       name: "Daffodil International University",
       url: "https://daffodilvarsity.edu.bd",
     },
-    {
-      "@type": "CollegeOrUniversity",
-      name: "Fachhochschule Südwestfalen",
-      url: "https://www.fh-swf.de",
-    },
   ],
   knowsAbout: [
     "Supply Chain Optimization",

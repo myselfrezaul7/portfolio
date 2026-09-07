@@ -20,3 +20,6 @@
 - Maintain existing component architecture. Do not refactor structure without approval.
 - All interactive elements must have `whileTap` feedback for mobile touch devices.
 - Use the project's design tokens from `globals.css` (e.g. `var(--accent)`, `var(--bg-card)`) instead of hardcoded colour values.
+
+## Agent Swarming & Execution Workflow
+- **Multi-Phase & Complex Tasks**: All multi-phase and complex tasks must always be dispatched and executed using swarming specialist agents (`invoke_subagent`). Decompose complex workflows and audits into dedicated specialist roles (e.g. component specialists, research auditors, style/SEO specialists) to ensure deep, parallel execution and zero regressions.

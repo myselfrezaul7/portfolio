@@ -51,9 +51,9 @@ If we strictly followed FIFO, we pushed the July arrival behind the June arrival
 
 We threw out the textbook rule and switched strictly to FEFO: First-Expired, First-Out.
 
-We didn't buy expensive software for this. We reorganized our cold room bins with clear color-coded physical tags based on expiry month—red for less than 60 days, yellow for 90 days, green for six months plus. Every technician who grabbed a bottle was trained to take from the front-left bin, regardless of when it had arrived at the loading dock.
+We didn't buy expensive software for this. We reorganized our cold room bins with clear color-coded physical tags based on expiry month: red for less than 60 days, yellow for 90 days, green for six months plus. Every technician who grabbed a bottle was trained to take from the front-left bin, regardless of when it had arrived at the loading dock.
 
-That single operational change—pairing physical bin discipline with FEFO tracking—cut our expired reagent waste by 18% over the next four months.
+That single operational change, pairing physical bin discipline with FEFO tracking, cut our expired reagent waste by 18% over the next four months.
 
 The second challenge was figuring out when to reorder.
 

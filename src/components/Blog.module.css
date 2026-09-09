@@ -88,6 +88,8 @@
     .snapItem {
         flex: 1;
         max-width: none;
+        display: flex;
+        flex-direction: column;
     }
 }
 
@@ -95,7 +97,9 @@
 .cardLink {
     text-decoration: none;
     color: inherit;
-    display: block;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .card {
@@ -114,8 +118,8 @@
 
 .card:hover {
     background: var(--bg-card-hover);
-    border-color: var(--border-hover);
-    box-shadow: var(--shadow-lg);
+    border-color: rgba(74, 155, 155, 0.4);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35), 0 0 28px rgba(74, 155, 155, 0.12);
 }
 
 .cardTop {
@@ -123,6 +127,13 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
+}
+
+.badgeGroup {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .category {
@@ -134,19 +145,53 @@
     letter-spacing: 0.06em;
     color: var(--accent);
     background: rgba(74, 155, 155, 0.08);
+    border: 1px solid rgba(74, 155, 155, 0.15);
+    border-radius: 20px;
+    transition: all var(--transition-fast);
+}
+
+/* Semantic Category Color Classes */
+.categoryOperations {
+    color: #06b6d4;
+    background: rgba(6, 182, 212, 0.1);
+    border-color: rgba(6, 182, 212, 0.25);
+}
+
+.categoryEntrepreneurship {
+    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.25);
+}
+
+.categoryProductivity {
+    color: #a855f7;
+    background: rgba(168, 85, 247, 0.1);
+    border-color: rgba(168, 85, 247, 0.25);
+}
+
+.readTimeBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
     border-radius: 20px;
 }
 
 .arrow {
     color: var(--text-tertiary);
-    transition: all var(--transition-fast);
-    opacity: 0;
-    transform: translate(-4px, 4px);
+    transition: transform var(--transition-normal), color var(--transition-fast), opacity var(--transition-fast);
+    opacity: 0.6;
+    transform: translate(0, 0);
 }
 
 .card:hover .arrow {
     opacity: 1;
-    transform: translate(0, 0);
+    transform: translate(3px, -3px);
     color: var(--accent);
 }
 
@@ -169,7 +214,8 @@
 
 .cardMeta {
     display: flex;
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: 8px 16px;
     padding-top: 16px;
     border-top: 1px solid var(--border);
 }

@@ -1,3 +1,15 @@
+/* Reading Progress Bar */
+.progressBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-accent);
+    transform-origin: 0% 50%;
+    z-index: 9999;
+}
+
 .page {
     padding-top: 120px;
     padding-bottom: 80px;
@@ -28,7 +40,7 @@
 }
 
 .header {
-    margin-bottom: 56px;
+    margin-bottom: 40px;
 }
 
 .pageTitle {
@@ -43,6 +55,91 @@
     font-size: 18px;
     color: var(--text-secondary);
     line-height: 1.6;
+}
+
+/* Table of Contents Quick Jump Bar */
+.tocNav {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 48px;
+}
+
+.tocHeader {
+    margin-bottom: 12px;
+}
+
+.tocLabel {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+}
+
+.tocPills {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.tocPills::-webkit-scrollbar {
+    display: none;
+}
+
+.tocPill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 9999px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    text-align: left;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.tocPill:hover {
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+    background: var(--bg-card-hover);
+}
+
+.tocPillActive {
+    background: rgba(74, 155, 155, 0.12);
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.tocIndex {
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.6;
+}
+
+.tocTitleText {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+    .tocTitleText {
+        max-width: 260px;
+    }
 }
 
 /* Posts */
@@ -70,8 +167,15 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 16px;
     margin-bottom: 20px;
+}
+
+.headerBadges {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
 }
 
 .category {
@@ -83,7 +187,27 @@
     letter-spacing: 0.06em;
     color: var(--accent);
     background: rgba(74, 155, 155, 0.1);
+    border: 1px solid rgba(74, 155, 155, 0.15);
     border-radius: 20px;
+}
+
+/* Semantic Category Color Classes */
+.categoryOperations {
+    color: #06b6d4;
+    background: rgba(6, 182, 212, 0.1);
+    border-color: rgba(6, 182, 212, 0.25);
+}
+
+.categoryEntrepreneurship {
+    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.25);
+}
+
+.categoryProductivity {
+    color: #a855f7;
+    background: rgba(168, 85, 247, 0.1);
+    border-color: rgba(168, 85, 247, 0.25);
 }
 
 .postMeta {
@@ -98,6 +222,59 @@
     font-size: 13px;
     font-weight: 500;
     color: var(--text-tertiary);
+}
+
+/* Copy Link to Section */
+.copyWrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.copyButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.copyButton:hover {
+    color: var(--text-primary);
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+}
+
+.copyButtonText {
+    font-size: 12px;
+}
+
+.copiedIcon {
+    color: var(--accent);
+}
+
+.copiedToast {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--accent);
+    color: var(--text-primary);
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 6px;
+    white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    pointer-events: none;
 }
 
 .postTitle {
@@ -121,6 +298,113 @@
     text-align: justify;
 }
 
+/* Technical Formula Callout Card */
+.formulaWrapper {
+    margin: 32px 0;
+}
+
+.formulaCard {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.formulaHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.formulaBadge {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: rgba(74, 155, 155, 0.12);
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.formulaType {
+    font-size: 12px;
+    color: var(--text-tertiary);
+}
+
+.formulaDisplay {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    text-align: center;
+}
+
+.formulaMath {
+    font-family: monospace, Courier, monospace;
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+}
+
+.legendContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+}
+
+.legendHeading {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.legendList {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+@media (min-width: 640px) {
+    .legendList {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.legendItem {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+}
+
+.legendTerm {
+    font-family: monospace, Courier, monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.legendDef {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
 /* Mobile */
 @media (max-width: 640px) {
     .page {
@@ -135,5 +419,14 @@
     .postHeader {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .copyWrapper {
+        align-self: flex-start;
+    }
+
+    .copiedToast {
+        left: 0;
+        right: auto;
     }
 }

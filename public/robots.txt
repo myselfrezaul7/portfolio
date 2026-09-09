@@ -1,9 +1,7 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
+Disallow: /api/
 
 # Sitemap
 Sitemap: https://mdkarim.vercel.app/sitemap.xml
-
-# Disallow admin/api routes
-Disallow: /api/

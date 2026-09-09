@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Linkedin, Github, Mail } from 'lucide-react';
+import { Linkedin, Github, Mail, ArrowUp } from 'lucide-react';
 import styles from './Footer.module.css';
 
 const socialLinks = [
@@ -27,7 +27,8 @@ export default function Footer() {
                         className={styles.logo}
                         aria-label="Scroll to top"
                     >
-                        M•K
+                        <span>M•K</span>
+                        <ArrowUp size={14} className={styles.logoArrow} strokeWidth={2} />
                     </button>
 
                     {/* Social Links */}
@@ -39,8 +40,9 @@ export default function Footer() {
                                 target={social.href.startsWith('mailto') ? undefined : '_blank'}
                                 rel={social.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
                                 className={styles.socialLink}
-                                whileHover={{ y: -3 }}
-                                whileTap={{ scale: 0.9 }}
+                                whileHover={{ y: -4, scale: 1.08 }}
+                                whileTap={{ scale: 0.92 }}
+                                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                                 aria-label={social.label}
                             >
                                 <social.icon size={20} />
@@ -55,7 +57,7 @@ export default function Footer() {
 
                     {/* Copyright */}
                     <p className={styles.copyright}>
-                        © 2025 Md Rezaul Karim
+                        © {new Date().getFullYear()} Md Rezaul Karim
                     </p>
                 </div>
             </div>

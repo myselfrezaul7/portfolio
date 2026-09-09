@@ -18,6 +18,19 @@ function formatDate(dateStr: string) {
     });
 }
 
+function getCategoryClass(category: string) {
+    switch (category.toLowerCase()) {
+        case 'operations':
+            return styles.categoryOperations;
+        case 'entrepreneurship':
+            return styles.categoryEntrepreneurship;
+        case 'productivity':
+            return styles.categoryProductivity;
+        default:
+            return '';
+    }
+}
+
 export default function Blog() {
     return (
         <section id="blog" className={styles.blog} aria-label="Blog and insights">
@@ -45,7 +58,15 @@ export default function Blog() {
                                     transition={{ duration: 0.4, delay: index * 0.1 }}
                                 >
                                     <div className={styles.cardTop}>
-                                        <span className={styles.category}>{post.category}</span>
+                                        <div className={styles.badgeGroup}>
+                                            <span className={`${styles.category} ${getCategoryClass(post.category)}`}>
+                                                {post.category}
+                                            </span>
+                                            <span className={styles.readTimeBadge}>
+                                                <Clock size={12} />
+                                                {post.readTime}
+                                            </span>
+                                        </div>
                                         <ArrowUpRight size={18} className={styles.arrow} />
                                     </div>
 
@@ -57,10 +78,6 @@ export default function Blog() {
                                             <Calendar size={14} />
                                             {formatDate(post.date)}
                                         </span>
-                                        <span className={styles.metaItem}>
-                                            <Clock size={14} />
-                                            {post.readTime}
-                                        </span>
                                     </div>
                                 </motion.div>
                             </Link>
@@ -69,12 +86,14 @@ export default function Blog() {
                 </div>
 
                 <ScrollReveal delay={0.3}>
-                    <motion.div className={styles.viewAll} whileTap={{ scale: 0.97 }}>
-                        <Link href="/blog" className={styles.viewAllLink}>
-                            Read All Posts
-                            <ArrowRight size={16} />
-                        </Link>
-                    </motion.div>
+                    <div className={styles.viewAll}>
+                        <motion.div whileTap={{ scale: 0.97 }} style={{ display: 'inline-block' }}>
+                            <Link href="/blog" className={styles.viewAllLink}>
+                                Read All Posts
+                                <ArrowRight size={16} />
+                            </Link>
+                        </motion.div>
+                    </div>
                 </ScrollReveal>
             </div>
         </section>

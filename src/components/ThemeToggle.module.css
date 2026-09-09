@@ -17,3 +17,24 @@
     border-color: var(--border-hover);
     color: var(--text-primary);
 }
+
+.toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.sunIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f59e0b;
+    filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.65));
+}
+
+.moonIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #38bdf8;
+    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.65));
+}

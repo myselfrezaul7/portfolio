@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useContext, useSyncExternalStore, useCallback, ReactNode } from 'react';
 
 type Theme = 'dark' | 'light';
 
@@ -14,32 +14,69 @@ const ThemeContext = createContext<ThemeContextType>({
     toggleTheme: () => { },
 });
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-    const [theme, setTheme] = useState<Theme>('dark');
-    const [mounted, setMounted] = useState(false);
+const themeListeners = new Set<() => void>();
+function notifyThemeListeners() {
+    themeListeners.forEach((listener) => listener());
+}
 
-    useEffect(() => {
-        setMounted(true);
-        const savedTheme = localStorage.getItem('theme') as Theme | null;
-        if (savedTheme) {
-            setTheme(savedTheme);
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-            setTheme('light');
-            document.documentElement.setAttribute('data-theme', 'light');
+function subscribe(callback: () => void) {
+    themeListeners.add(callback);
+    window.addEventListener('storage', callback);
+    return () => {
+        themeListeners.delete(callback);
+        window.removeEventListener('storage', callback);
+    };
+}
+
+function getSnapshot(): Theme {
+    if (typeof window === 'undefined') return 'dark';
+    try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark' || saved === 'light') return saved;
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
+    } catch {
+        // Fallback for restricted storage environments
+    }
+    return 'dark';
+}
+
+function getServerSnapshot(): Theme {
+    return 'dark';
+}
+
+export function ThemeProvider({ children }: { children: ReactNode }) {
+    const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+
+    const applyTheme = useCallback((newTheme: Theme) => {
+        try {
+            localStorage.setItem('theme', newTheme);
+            document.documentElement.setAttribute('data-theme', newTheme);
+        } catch {
+            // Storage quota fallback
         }
+        notifyThemeListeners();
     }, []);
 
-    const toggleTheme = () => {
-        const newTheme = theme === 'dark' ? 'light' : 'dark';
-        setTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
-        document.documentElement.setAttribute('data-theme', newTheme);
-    };
+    const toggleTheme = useCallback(() => {
+        const nextTheme: Theme = theme === 'dark' ? 'light' : 'dark';
 
-    // Always render children, but provide default values during SSR
+        if (typeof document !== 'undefined' && 'startViewTransition' in document && typeof (document as unknown as { startViewTransition: unknown }).startViewTransition === 'function') {
+            (document as unknown as { startViewTransition: (cb: () => void) => void }).startViewTransition(() => {
+                applyTheme(nextTheme);
+            });
+        } else if (typeof document !== 'undefined') {
+            document.documentElement.classList.add('theme-transitioning');
+            applyTheme(nextTheme);
+            window.setTimeout(() => {
+                document.documentElement.classList.remove('theme-transitioning');
+            }, 400);
+        } else {
+            applyTheme(nextTheme);
+        }
+    }, [theme, applyTheme]);
+
     return (
-        <ThemeContext.Provider value={{ theme: mounted ? theme : 'dark', toggleTheme }}>
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
             {children}
         </ThemeContext.Provider>
     );

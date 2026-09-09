@@ -5,6 +5,12 @@ import { Download, MapPin, GraduationCap, Briefcase } from 'lucide-react';
 import ScrollReveal from './animations/ScrollReveal';
 import styles from './About.module.css';
 
+const languages = [
+    { name: 'Bengali', level: 'Native', percentage: 100 },
+    { name: 'English', level: 'IELTS 7.0', percentage: 90 },
+    { name: 'German', level: 'A1 (Learning A2)', percentage: 35 },
+];
+
 export default function About() {
     return (
         <section id="about" className={styles.about} aria-label="About me">
@@ -19,7 +25,7 @@ export default function About() {
                     <ScrollReveal delay={0.1}>
                         <div className={styles.bioSection}>
                             <p className={styles.bio}>
-                                I bridge the gap between business operations and technology. My goal is simple: make organisations run smarter by combining process thinking with the right technical tools. As a 3rd-semester Master's student in International Management and Information Systems (IMIS) at Fachhochschule Südwestfalen, I focus on SAP-integrated management, data analysis, digital transformation, and information systems. The programme sits right at the crossroads of business and tech, which is exactly where I work best.
+                                I bridge the gap between business operations and technology. My goal is simple: make organisations run smarter by combining process thinking with the right technical tools. As a 3rd-semester Master&apos;s student in International Management and Information Systems (IMIS) at Fachhochschule Südwestfalen, I focus on SAP-integrated management, data analysis, digital transformation, and information systems. The programme sits right at the crossroads of business and tech, which is exactly where I work best.
                             </p>
                             <p className={styles.bio}>
                                 Alongside my studies, I served as Technical Project Lead at <strong>NexTep Edu</strong>, where I built digital infrastructure, automated workflows with BPMN 2.0, and designed a self-service client tracking model. I also founded <strong>PetBhai</strong>, an e-commerce platform prototype. Previously, as a Data & Operations Analyst at Renaissance Diagnostic Care, I extracted and cleaned demographic data via ETL pipelines, built visual dashboards, redesigned appointment booking systems, and tracked daily KPIs for supply chain logistics.
@@ -37,6 +43,8 @@ export default function About() {
                             initial={{ opacity: 0, y: 15 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
+                            whileHover={{ y: -3 }}
+                            whileTap={{ scale: 0.98 }}
                             transition={{ duration: 0.4, delay: 0.1 }}
                         >
                             <MapPin size={20} />
@@ -52,6 +60,8 @@ export default function About() {
                             initial={{ opacity: 0, y: 15 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
+                            whileHover={{ y: -3 }}
+                            whileTap={{ scale: 0.98 }}
                             transition={{ duration: 0.4, delay: 0.2 }}
                         >
                             <GraduationCap size={20} />
@@ -67,6 +77,8 @@ export default function About() {
                             initial={{ opacity: 0, y: 15 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
+                            whileHover={{ y: -3 }}
+                            whileTap={{ scale: 0.98 }}
                             transition={{ duration: 0.4, delay: 0.3 }}
                         >
                             <Briefcase size={20} />
@@ -81,26 +93,36 @@ export default function About() {
                         <div className={styles.languagesSection}>
                             <h3 className={styles.languagesTitle}>Languages</h3>
                             <div className={styles.languagesGrid}>
-                                <div className={styles.languageItem}>
-                                    <span className={styles.languageName}>Bengali</span>
-                                    <span className={styles.languageLevel}>Native</span>
-                                </div>
-                                <div className={styles.languageItem}>
-                                    <span className={styles.languageName}>English</span>
-                                    <span className={styles.languageLevel}>IELTS 7.0</span>
-                                </div>
-                                <div className={styles.languageItem}>
-                                    <span className={styles.languageName}>German</span>
-                                    <span className={styles.languageLevel}>A1 (Learning A2)</span>
-                                </div>
+                                {languages.map((lang) => (
+                                    <div key={lang.name} className={styles.languageCard}>
+                                        <div className={styles.languageHeader}>
+                                            <span className={styles.languageName}>{lang.name}</span>
+                                            <span className={styles.languageLevel}>{lang.level}</span>
+                                        </div>
+                                        <div className={styles.progressTrack}>
+                                            <motion.div
+                                                className={styles.progressFill}
+                                                initial={{ width: 0 }}
+                                                whileInView={{ width: `${lang.percentage}%` }}
+                                                viewport={{ once: true }}
+                                                transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </ScrollReveal>
 
                     <ScrollReveal delay={0.45}>
-                        <motion.a href="/resume.pdf" download className={styles.resumeButton} whileTap={{ scale: 0.95 }}>
-                            <Download size={18} />
-                            Download Resume
+                        <motion.a 
+                            href="/resume.pdf" 
+                            download 
+                            className={styles.resumeButton} 
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <Download size={18} className={styles.downloadIcon} />
+                            <span>Download Resume</span>
                         </motion.a>
                     </ScrollReveal>
                 </div>

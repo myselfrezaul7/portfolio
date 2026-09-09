@@ -110,14 +110,27 @@
 }
 
 .infoCard:hover {
-    border-color: var(--border-hover);
+    border-color: rgba(74, 155, 155, 0.4);
     background: var(--bg-card-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 0 16px rgba(74, 155, 155, 0.15);
+}
+
+:global([data-theme="light"]) .infoCard:hover {
+    border-color: rgba(30, 123, 120, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 0 16px rgba(30, 123, 120, 0.15);
 }
 
 .infoCard svg {
     color: var(--accent);
     flex-shrink: 0;
     margin-top: 2px;
+    transition: transform var(--transition-normal), color var(--transition-normal);
+}
+
+.infoCard:hover svg {
+    transform: scale(1.18);
+    color: var(--accent-hover);
 }
 
 .infoLabel {
@@ -152,39 +165,67 @@
 
 .languagesGrid {
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
+    flex-direction: column;
+    gap: 14px;
 }
 
-.languageItem {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
+.languageCard {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 12px;
+    padding: 16px 20px;
+    transition: all var(--transition-normal);
+}
+
+.languageCard:hover {
+    border-color: rgba(74, 155, 155, 0.35);
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.languageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .languageName {
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 600;
     color: var(--text-primary);
 }
 
 .languageLevel {
     font-size: 12px;
+    font-weight: 500;
     color: var(--accent);
     background: rgba(74, 155, 155, 0.1);
-    padding: 2px 8px;
-    border-radius: 4px;
+    padding: 3px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(74, 155, 155, 0.2);
 }
 
+.progressTrack {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: var(--gradient-accent);
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(74, 155, 155, 0.4);
+}
 
 .resumeButton {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     padding: 16px 28px;
     font-size: 15px;
     font-weight: 600;
@@ -198,4 +239,12 @@
 .resumeButton:hover {
     transform: translateY(-3px);
     box-shadow: 0 0 40px rgba(74, 155, 155, 0.4);
+}
+
+.downloadIcon {
+    transition: transform var(--transition-fast);
+}
+
+.resumeButton:hover .downloadIcon {
+    transform: translateY(3px);
 }

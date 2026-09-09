@@ -1,10 +1,22 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { ArrowUpRight, ExternalLink, GraduationCap, ShoppingBag, Heart, Dog, Cat, Database, CalendarCheck, Newspaper } from 'lucide-react';
 import ScrollReveal from './animations/ScrollReveal';
 import styles from './Projects.module.css';
+
+const categoryList = [
+    'All',
+    'Healthcare Operations',
+    'Education Consulting',
+    'Digital Operations',
+    'Data Warehousing',
+    'Project Management',
+    'E-commerce Logistics',
+    'Non-Profit Operations',
+] as const;
 
 const projects = [
     {
@@ -106,6 +118,17 @@ const projects = [
 ];
 
 export default function Projects() {
+    const [activeCategory, setActiveCategory] = useState<string>('All');
+    const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
+
+    const handleImageLoad = (id: number) => {
+        setLoadedImages((prev) => ({ ...prev, [id]: true }));
+    };
+
+    const filteredProjects = activeCategory === 'All'
+        ? projects
+        : projects.filter((project) => project.category === activeCategory);
+
     return (
         <section id="work" className={styles.projects} aria-label="Recent projects">
             <div className={styles.container}>
@@ -116,87 +139,133 @@ export default function Projects() {
                     </div>
                 </ScrollReveal>
 
-                {/* Projects Carousel */}
-                <div className={styles.projectsList}>
-                    {projects.map((project, index) => (
-                        <div key={project.id} className={styles.snapItem}>
-                            <motion.article
-                                className={styles.projectCard}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                whileHover={{ y: -6 }}
-                                whileTap={{ scale: 0.97 }}
-                                transition={{ duration: 0.4, delay: index * 0.1 }}
+                {/* Category Filter Chip Bar */}
+                <div className={styles.filterBar} role="tablist" aria-label="Filter projects by category">
+                    {categoryList.map((category) => {
+                        const count = category === 'All'
+                            ? projects.length
+                            : projects.filter((p) => p.category === category).length;
+                        const isActive = activeCategory === category;
+
+                        return (
+                            <motion.button
+                                key={category}
+                                type="button"
+                                role="tab"
+                                aria-selected={isActive}
+                                onClick={() => setActiveCategory(category)}
+                                className={`${styles.filterChip} ${isActive ? styles.filterChipActive : ''}`}
+                                whileTap={{ scale: 0.96 }}
                             >
-                                {/* Project Visual */}
-                                <div className={styles.imageWrapper}>
-                                    {project.image ? (
-                                        <Image
-                                            src={project.image}
-                                            alt={`${project.title} screenshot`}
-                                            fill
-                                            className={styles.projectImage}
-                                            style={{ objectFit: 'cover', objectPosition: 'top' }}
-                                            sizes="(max-width: 767px) 85vw, (max-width: 1199px) 50vw, 33vw"
-                                            placeholder={project.blur ? 'blur' : 'empty'}
-                                            blurDataURL={project.blur || undefined}
-                                        />
-                                    ) : (
-                                        <div
-                                            className={styles.gradientBg}
-                                            style={{ background: project.gradient }}
-                                        >
-                                            <project.icon size={64} strokeWidth={1} className={styles.projectIcon} />
-                                        </div>
-                                    )}
-                                    <span className={styles.category}>{project.category}</span>
-                                    {project.link && (
-                                        <div className={styles.imageOverlay}>
-                                            <a
-                                                href={project.link}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className={styles.viewButton}
-                                                aria-label={`View live site for ${project.title}`}
-                                            >
-                                                <ExternalLink size={20} />
-                                                View Live
-                                            </a>
-                                        </div>
-                                    )}
-                                </div>
+                                {isActive && (
+                                    <motion.span
+                                        layoutId="activeCategoryPill"
+                                        className={styles.activePill}
+                                        transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+                                    />
+                                )}
+                                <span className={styles.chipText}>
+                                    {category}
+                                    <span className={styles.chipCount}>{count}</span>
+                                </span>
+                            </motion.button>
+                        );
+                    })}
+                </div>
 
-                                {/* Project Content */}
-                                <div className={styles.content}>
-                                    <h3 className={styles.projectTitle}>
-                                        {project.title}
-                                        {project.link && (
-                                            <a
-                                                href={project.link}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className={styles.titleLink}
-                                                aria-label={`Visit ${project.title}`}
+                {/* Projects Carousel / Grid */}
+                <div className={styles.projectsList}>
+                    <AnimatePresence mode="popLayout">
+                        {filteredProjects.map((project) => (
+                            <motion.div
+                                layout
+                                key={project.id}
+                                className={styles.snapItem}
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 0.35 }}
+                            >
+                                <motion.article
+                                    className={styles.projectCard}
+                                    whileHover={{ y: -6 }}
+                                    whileTap={{ scale: 0.97 }}
+                                >
+                                    {/* Project Visual */}
+                                    <div className={styles.imageWrapper}>
+                                        {project.image ? (
+                                            <>
+                                                {!loadedImages[project.id] && (
+                                                    <div className={styles.imageSkeleton} aria-hidden="true" />
+                                                )}
+                                                <Image
+                                                    src={project.image}
+                                                    alt={`${project.title} screenshot`}
+                                                    fill
+                                                    className={`${styles.projectImage} ${loadedImages[project.id] ? styles.imageLoaded : styles.imageLoading}`}
+                                                    style={{ objectFit: 'cover', objectPosition: 'top' }}
+                                                    sizes="(max-width: 767px) 85vw, (max-width: 1199px) 50vw, 33vw"
+                                                    placeholder={project.blur ? 'blur' : 'empty'}
+                                                    blurDataURL={project.blur || undefined}
+                                                    onLoad={() => handleImageLoad(project.id)}
+                                                />
+                                            </>
+                                        ) : (
+                                            <div
+                                                className={styles.gradientBg}
+                                                style={{ background: project.gradient }}
                                             >
-                                                <ArrowUpRight size={24} />
-                                            </a>
+                                                <project.icon size={64} strokeWidth={1} className={styles.projectIcon} />
+                                            </div>
                                         )}
-                                    </h3>
-
-                                    <p className={styles.projectDescription}>
-                                        {project.description}
-                                    </p>
-
-                                    <div className={styles.tags}>
-                                        {project.tags.map((tag) => (
-                                            <span key={tag} className={styles.tag}>{tag}</span>
-                                        ))}
+                                        <span className={styles.category}>{project.category}</span>
+                                        {project.link && (
+                                            <div className={styles.imageOverlay}>
+                                                <a
+                                                    href={project.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className={styles.viewButton}
+                                                    aria-label={`View live site for ${project.title}`}
+                                                >
+                                                    <ExternalLink size={20} />
+                                                    View Live
+                                                </a>
+                                            </div>
+                                        )}
                                     </div>
-                                </div>
-                            </motion.article>
-                        </div>
-                    ))}
+
+                                    {/* Project Content */}
+                                    <div className={styles.content}>
+                                        <h3 className={styles.projectTitle}>
+                                            {project.title}
+                                            {project.link && (
+                                                <a
+                                                    href={project.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className={styles.titleLink}
+                                                    aria-label={`Visit ${project.title}`}
+                                                >
+                                                    <ArrowUpRight size={24} />
+                                                </a>
+                                            )}
+                                        </h3>
+
+                                        <p className={styles.projectDescription}>
+                                            {project.description}
+                                        </p>
+
+                                        <div className={styles.tags}>
+                                            {project.tags.map((tag) => (
+                                                <span key={tag} className={styles.tag}>{tag}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </motion.article>
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
                 </div>
             </div>
         </section>

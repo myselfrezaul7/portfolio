@@ -59,6 +59,8 @@
     margin-right: 4px;
     transition: opacity var(--transition-fast);
     white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
 }
 
 .scrolledLogo:hover {
@@ -78,6 +80,10 @@
 }
 
 .navLink {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: none;
     border: none;
     color: var(--text-secondary);
@@ -87,8 +93,14 @@
     text-transform: uppercase;
     padding: 8px 16px;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    text-decoration: none;
+    transition: color var(--transition-fast);
     border-radius: 100px;
+}
+
+.navLinkText {
+    position: relative;
+    z-index: 1;
 }
 
 .navLink:hover {
@@ -97,11 +109,19 @@
 
 .navLinkActive {
     color: var(--text-primary);
-    background: var(--bg-card);
-    box-shadow: var(--shadow-sm);
 }
 
-:global([data-theme="light"]) .navLinkActive {
+.activePill {
+    position: absolute;
+    inset: 0;
+    background: var(--bg-card);
+    border-radius: 100px;
+    box-shadow: var(--shadow-sm);
+    z-index: 0;
+    pointer-events: none;
+}
+
+:global([data-theme="light"]) .activePill {
     background: rgba(0, 0, 0, 0.05);
 }
 
@@ -192,6 +212,7 @@
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     z-index: 98;
+    touch-action: none;
 }
 
 .mobileMenu {
@@ -215,14 +236,32 @@
     border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
+.dragHandleBar {
+    width: 36px;
+    height: 4px;
+    background: var(--text-tertiary);
+    border-radius: 2px;
+    margin: 12px auto 0 auto;
+    opacity: 0.5;
+    cursor: grab;
+    touch-action: none;
+}
+
+.dragHandleBar:active {
+    cursor: grabbing;
+}
+
 .mobileMenuContent {
-    padding: 24px;
+    padding: 16px 24px 24px 24px;
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
 .mobileNavLink {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background: none;
     border: none;
     color: var(--text-primary);
@@ -231,12 +270,26 @@
     text-align: left;
     padding: 16px 0;
     cursor: pointer;
+    text-decoration: none;
     border-bottom: 1px solid var(--border);
     transition: color var(--transition-fast);
 }
 
 .mobileNavLink:hover {
     color: var(--text-secondary);
+}
+
+.mobileNavLinkActive {
+    color: var(--accent);
+}
+
+.mobileActiveDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    flex-shrink: 0;
 }
 
 .mobileActionsMenu {
@@ -271,4 +324,17 @@
     color: var(--bg-primary);
     background: var(--text-primary);
     border-radius: 50px;
+}
+
+/* Focus Visible Enhancements */
+.navLink:focus-visible,
+.scrolledLogo:focus-visible,
+.resumeLink:focus-visible,
+.ctaButton:focus-visible,
+.mobileMenuToggle:focus-visible,
+.mobileNavLink:focus-visible,
+.mobileResumeLink:focus-visible,
+.mobileCta:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
 }

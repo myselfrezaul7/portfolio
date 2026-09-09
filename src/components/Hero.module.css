@@ -122,7 +122,7 @@
 .availabilityBadge {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     padding: 10px 20px;
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -134,16 +134,36 @@
 
 .availabilityBadge:hover {
     border-color: rgba(34, 197, 94, 0.4);
-    box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.15);
     transform: translateY(-2px);
 }
 
+.statusDotWrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+}
+
+.statusDotRipple {
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: rgba(34, 197, 94, 0.5);
+    animation: sonarRipple 2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    pointer-events: none;
+}
+
 .statusDot {
+    position: relative;
     width: 8px;
     height: 8px;
     border-radius: 50%;
     background: #22c55e;
-    box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
     animation: pulse 2s ease-in-out infinite;
 }
 
@@ -156,6 +176,17 @@
 :global([data-theme="light"]) .statusText {
     color: #15803d;
     font-weight: 600;
+}
+
+@keyframes sonarRipple {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(2.6);
+        opacity: 0;
+    }
 }
 
 @keyframes pulse {
@@ -182,6 +213,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
     padding: 16px 32px;
     font-size: 14px;
     font-weight: 600;
@@ -194,7 +226,15 @@
 
 .primaryBtn:hover {
     transform: translateY(-3px);
-    opacity: 0.85;
+    opacity: 0.88;
+}
+
+.btnIcon {
+    transition: transform var(--transition-fast);
+}
+
+.primaryBtn:hover .btnIcon {
+    transform: translateX(4px);
 }
 
 .secondaryBtn {
@@ -214,7 +254,8 @@
 
 .secondaryBtn:hover {
     background: var(--bg-tertiary);
-    border-color: var(--border-hover);
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(74, 155, 155, 0.35);
     transform: translateY(-3px);
 }
 
@@ -223,6 +264,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 @media (min-width: 768px) {
@@ -231,8 +273,50 @@
     }
 }
 
+.imageGlowBackdrop {
+    position: absolute;
+    width: 220px;
+    height: 260px;
+    border-radius: 36px;
+    background: radial-gradient(circle, rgba(74, 155, 155, 0.35) 0%, rgba(74, 155, 155, 0.08) 55%, transparent 70%);
+    filter: blur(28px);
+    pointer-events: none;
+    z-index: 0;
+    animation: breathingGlow 4s ease-in-out infinite alternate;
+}
+
+@media (min-width: 768px) {
+    .imageGlowBackdrop {
+        width: 320px;
+        height: 400px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .imageGlowBackdrop {
+        width: 360px;
+        height: 440px;
+    }
+}
+
+:global([data-theme="light"]) .imageGlowBackdrop {
+    background: radial-gradient(circle, rgba(30, 123, 120, 0.25) 0%, rgba(30, 123, 120, 0.05) 55%, transparent 70%);
+}
+
+@keyframes breathingGlow {
+    0% {
+        transform: scale(0.92);
+        opacity: 0.55;
+    }
+    100% {
+        transform: scale(1.08);
+        opacity: 0.95;
+    }
+}
+
 .imageContainer {
     position: relative;
+    z-index: 1;
     width: 200px;
     height: 240px;
     border-radius: 24px;

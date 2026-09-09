@@ -57,6 +57,7 @@
 
   --gradient-primary: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
   --gradient-accent: linear-gradient(135deg, #1e7b78 0%, #16605e 100%);
+  --gradient-subtle: linear-gradient(180deg, rgba(0, 0, 0, 0.03) 0%, rgba(0, 0, 0, 0) 100%);
 
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -269,11 +270,38 @@ body {
   }
 }
 
+/* Theme Transitioning Fallback Rules */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 300ms ease,
+              border-color 300ms ease,
+              color 300ms ease,
+              fill 300ms ease,
+              stroke 300ms ease,
+              box-shadow 300ms ease !important;
+  transition-delay: 0s !important;
+}
+
+/* View Transition API Timings */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 300ms;
+  animation-timing-function: ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }

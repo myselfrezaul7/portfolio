@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
 import styles from './Hero.module.css';
 
 export default function Hero() {
@@ -47,7 +48,7 @@ export default function Hero() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        Master's student in International Management & Information Systems (IMIS) in Germany. I bridge business operations and technology, transforming complex workflows into automated, data-driven systems using SAP, Power BI, and modern digital tools.
+                        Master&apos;s student in International Management & Information Systems (IMIS) in Germany. I bridge business operations and technology, transforming complex workflows into automated, data-driven systems using SAP, Power BI, and modern digital tools.
                     </motion.p>
 
                     {/* Availability Badge */}
@@ -57,7 +58,10 @@ export default function Hero() {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        <span className={styles.statusDot} />
+                        <span className={styles.statusDotWrapper}>
+                            <span className={styles.statusDotRipple} />
+                            <span className={styles.statusDot} />
+                        </span>
                         <span className={styles.statusText}>Available for Internship, Working Student & Master Thesis Roles</span>
                     </motion.div>
 
@@ -71,14 +75,15 @@ export default function Hero() {
                         <motion.a 
                             href="mailto:myselfrezaul@gmail.com" 
                             className={styles.primaryBtn}
-                            whileTap={{ scale: 0.95 }}
+                            whileTap={{ scale: 0.96 }}
                         >
-                            Get in Touch
+                            <span>Get in Touch</span>
+                            <ArrowRight size={16} className={styles.btnIcon} strokeWidth={2} />
                         </motion.a>
                         <motion.a 
                             href="#work" 
                             className={styles.secondaryBtn}
-                            whileTap={{ scale: 0.95 }}
+                            whileTap={{ scale: 0.96 }}
                         >
                             View My Work
                         </motion.a>
@@ -92,6 +97,7 @@ export default function Hero() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 >
+                    <div className={styles.imageGlowBackdrop} aria-hidden="true" />
                     <div className={styles.imageContainer}>
                         <Image
                             src="/images/profile.jpg"

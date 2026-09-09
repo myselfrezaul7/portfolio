@@ -34,10 +34,12 @@ export default function HowIWork() {
                     <h2 className={styles.sectionTitle}>How I Work</h2>
                 </ScrollReveal>
 
-                <div className={styles.stepsHorizontal}>
-                    {steps.map((step, index) => (
-                        <div key={step.title} className={styles.snapItem}>
-                            <ScrollReveal delay={index * 0.15} className={styles.revealWrapper}>
+                <div className={styles.stepsContainer}>
+                    <div className={styles.pipelineTrack} aria-hidden="true" />
+                    <div className={styles.stepsHorizontal}>
+                        {steps.map((step, index) => (
+                            <div key={step.title} className={styles.snapItem}>
+                                <ScrollReveal delay={index * 0.15} className={styles.revealWrapper}>
                                 <motion.div
                                     className={styles.stepCard}
                                     whileHover={{ y: -4 }}
@@ -54,6 +56,7 @@ export default function HowIWork() {
                             </ScrollReveal>
                         </div>
                     ))}
+                    </div>
                 </div>
             </div>
         </section>

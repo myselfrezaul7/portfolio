@@ -75,7 +75,8 @@ export default function SkillsRadar() {
 
     const radarPoints = skills
         .map((skill, i) => {
-            const r = (skill.value / 100) * maxR;
+            const boost = hoveredIndex === i ? 1.06 : 1;
+            const r = (skill.value / 100) * maxR * boost;
             const pt = polarToCartesian(cx, cy, r, i * angleStep);
             return `${pt.x},${pt.y}`;
         })
@@ -84,6 +85,20 @@ export default function SkillsRadar() {
     const handleToggle = (e: React.MouseEvent, index: number) => {
         e.stopPropagation();
         setHoveredIndex((prev) => (prev === index ? null : index));
+    };
+
+    const handleTouchScrub = (e: React.TouchEvent<SVGSVGElement>) => {
+        const touch = e.touches[0];
+        if (!touch) return;
+        const rect = e.currentTarget.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const dx = touch.clientX - centerX;
+        const dy = touch.clientY - centerY;
+        let deg = (Math.atan2(dy, dx) * 180) / Math.PI + 90;
+        if (deg < 0) deg += 360;
+        const closestIndex = Math.round(deg / 60) % 6;
+        setHoveredIndex(closestIndex);
     };
 
     return (
@@ -107,7 +122,13 @@ export default function SkillsRadar() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.6 }}
                         >
-                            <svg viewBox="-40 -20 380 340" className={styles.radarSvg} aria-label="Skills competency radar chart">
+                            <svg
+                                viewBox="-40 -20 380 340"
+                                className={styles.radarSvg}
+                                aria-label="Skills competency radar chart"
+                                onTouchStart={handleTouchScrub}
+                                onTouchMove={handleTouchScrub}
+                            >
                                 <title>Radar chart showing competency levels across 6 skill areas</title>
                                 {/* Grid levels */}
                                 {Array.from({ length: levels }).map((_, level) => {
@@ -170,10 +191,11 @@ export default function SkillsRadar() {
 
                                 {/* Data points + labels */}
                                 {skills.map((skill, i) => {
-                                    const r = (skill.value / 100) * maxR;
+                                    const isHovered = hoveredIndex === i;
+                                    const boost = isHovered ? 1.06 : 1;
+                                    const r = (skill.value / 100) * maxR * boost;
                                     const pt = polarToCartesian(cx, cy, r, i * angleStep);
                                     const labelPt = polarToCartesian(cx, cy, maxR + 20, i * angleStep);
-                                    const isHovered = hoveredIndex === i;
                                     const tooltipY = pt.y < 65 ? pt.y + 20 : pt.y - 14;
 
                                     return (
@@ -208,6 +230,14 @@ export default function SkillsRadar() {
                                                 r={18}
                                                 fill="transparent"
                                             />
+                                            {/* Pulsing beacon ripple ring around active vertex */}
+                                            {isHovered && (
+                                                <circle
+                                                    cx={pt.x}
+                                                    cy={pt.y}
+                                                    className={styles.beaconRing}
+                                                />
+                                            )}
                                             <circle
                                                 cx={pt.x}
                                                 cy={pt.y}
@@ -232,6 +262,13 @@ export default function SkillsRadar() {
                                                         height={18}
                                                         rx={5}
                                                         className={styles.tooltipPill}
+                                                    />
+                                                    {/* Directional anchor pointer triangle */}
+                                                    <path
+                                                        d={pt.y < 65
+                                                            ? `M ${pt.x - 4} ${tooltipY - 11} L ${pt.x} ${tooltipY - 15} L ${pt.x + 4} ${tooltipY - 11} Z`
+                                                            : `M ${pt.x - 4} ${tooltipY + 7} L ${pt.x} ${tooltipY + 11} L ${pt.x + 4} ${tooltipY + 7} Z`}
+                                                        className={styles.tooltipArrow}
                                                     />
                                                     <text
                                                         x={pt.x}

@@ -96,7 +96,7 @@
 }
 
 .card {
-    background: var(--bg-card);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.025) 0%, rgba(255, 255, 255, 0) 100%), var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 20px;
@@ -114,9 +114,18 @@
 }
 
 .card:hover {
-    background: var(--bg-card-hover);
-    border-color: var(--border-hover);
-    box-shadow: var(--shadow-lg);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 100%), var(--bg-card-hover);
+    border-color: rgba(74, 155, 155, 0.4);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), 0 0 28px rgba(74, 155, 155, 0.18);
+}
+
+:global([data-theme="light"]) .card {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.015) 0%, rgba(0, 0, 0, 0) 100%), var(--bg-card);
+}
+
+:global([data-theme="light"]) .card:hover {
+    border-color: rgba(30, 123, 120, 0.4);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08), 0 0 28px rgba(30, 123, 120, 0.15);
 }
 
 .iconWrapper {
@@ -130,6 +139,12 @@
     color: white;
     margin-bottom: 24px;
     box-shadow: 0 4px 16px rgba(74, 155, 155, 0.2);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.card:hover .iconWrapper {
+    transform: scale(1.06) translateY(-2px);
+    box-shadow: 0 8px 24px rgba(74, 155, 155, 0.35);
 }
 
 .cardTitle {
@@ -160,5 +175,23 @@
     padding: 6px 12px;
     border-radius: 20px;
     background: rgba(74, 155, 155, 0.1);
+    border: 1px solid rgba(74, 155, 155, 0.2);
     color: var(--accent);
+    transition: all var(--transition-fast);
+    cursor: default;
+}
+
+.skillTag:hover {
+    color: #ffffff;
+    border-color: rgba(74, 155, 155, 0.5);
+    background: rgba(74, 155, 155, 0.22);
+    transform: translateY(-2px);
+    text-shadow: 0 0 8px rgba(74, 155, 155, 0.6);
+}
+
+:global([data-theme="light"]) .skillTag:hover {
+    color: #15615f;
+    background: rgba(30, 123, 120, 0.15);
+    border-color: rgba(30, 123, 120, 0.4);
+    text-shadow: none;
 }

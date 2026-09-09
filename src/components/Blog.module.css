@@ -55,10 +55,9 @@
     margin: 0 -24px;
     padding-left: 24px;
     padding-right: 24px;
+    -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    mask-image: linear-gradient(to right, black calc(100% - 40px), transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, black calc(100% - 40px), transparent 100%);
 }
 
 .scrollStrip::-webkit-scrollbar {
@@ -73,8 +72,6 @@
         padding-right: 0;
         overflow-x: visible;
         padding-bottom: 0;
-        mask-image: none;
-        -webkit-mask-image: none;
     }
 }
 
@@ -82,6 +79,8 @@
     scroll-snap-align: start;
     flex: 0 0 85vw;
     max-width: 400px;
+    display: flex;
+    flex-direction: column;
 }
 
 @media (min-width: 768px) {
@@ -97,7 +96,8 @@
 .cardLink {
     text-decoration: none;
     color: inherit;
-    height: 100%;
+    flex: 1 1 auto;
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -109,7 +109,8 @@
     border: 1px solid var(--border);
     border-radius: 20px;
     padding: 28px;
-    height: 100%;
+    flex: 1 1 auto;
+    width: 100%;
     text-decoration: none;
     color: inherit;
     transition: all var(--transition-normal);
@@ -210,6 +211,14 @@
     flex: 1;
     margin-bottom: 20px;
     text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+}
+
+@media (max-width: 767px) {
+    .cardExcerpt {
+        text-align: left;
+    }
 }
 
 .cardMeta {

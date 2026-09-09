@@ -182,10 +182,9 @@
     margin: 0 -24px;
     padding-left: 24px;
     padding-right: 24px;
+    -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    mask-image: linear-gradient(to right, black calc(100% - 40px), transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, black calc(100% - 40px), transparent 100%);
 }
 
 .scrollStrip::-webkit-scrollbar {
@@ -201,8 +200,6 @@
         overflow-x: visible;
         padding-bottom: 0;
         flex-wrap: wrap;
-        mask-image: none;
-        -webkit-mask-image: none;
     }
 }
 
@@ -210,18 +207,23 @@
     scroll-snap-align: start;
     flex: 0 0 85vw;
     max-width: 400px;
+    display: flex;
+    flex-direction: column;
 }
 
 @media (min-width: 768px) {
     .snapItem {
         flex: 1 1 calc(50% - 16px);
         max-width: none;
+        display: flex;
+        flex-direction: column;
     }
 }
 
 .categoryGroup {
     display: flex;
     flex-direction: column;
+    flex: 1;
     height: 100%;
 }
 

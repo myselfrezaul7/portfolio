@@ -77,14 +77,15 @@ export default function BlogPage() {
 
     useEffect(() => {
         const hash = window.location.hash;
-        if (hash) {
-            setTimeout(() => {
-                const element = document.querySelector(hash);
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }, 500);
-        }
+        if (!hash) return;
+        const targetId = decodeURIComponent(hash.replace(/^#/, ''));
+        const timer = setTimeout(() => {
+            const element = document.getElementById(targetId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 500);
+        return () => clearTimeout(timer);
     }, []);
 
     useEffect(() => {

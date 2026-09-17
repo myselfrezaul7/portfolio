@@ -15,18 +15,14 @@ const transition: Transition = {
 export default function PageTransition({ children }: PageTransitionProps) {
     const shouldReduceMotion = useReducedMotion();
 
-    if (shouldReduceMotion) {
-        return <>{children}</>;
-    }
-
     return (
         <AnimatePresence mode="wait">
             <motion.div
                 key="page"
-                initial={{ opacity: 0, y: 20 }}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={transition}
+                exit={shouldReduceMotion ? undefined : { opacity: 0, y: -20 }}
+                transition={shouldReduceMotion ? { duration: 0 } : transition}
             >
                 {children}
             </motion.div>

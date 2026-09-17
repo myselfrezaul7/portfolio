@@ -10,6 +10,7 @@ export default function ThemeToggle() {
 
     return (
         <motion.button
+            type="button"
             className={styles.toggle}
             onClick={toggleTheme}
             role="switch"

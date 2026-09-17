@@ -140,7 +140,7 @@ export default function Projects() {
                 </ScrollReveal>
 
                 {/* Category Filter Chip Bar */}
-                <div className={styles.filterBar} role="tablist" aria-label="Filter projects by category">
+                <div className={styles.filterBar} role="group" aria-label="Filter projects by category">
                     {categoryList.map((category) => {
                         const count = category === 'All'
                             ? projects.length
@@ -151,8 +151,7 @@ export default function Projects() {
                             <motion.button
                                 key={category}
                                 type="button"
-                                role="tab"
-                                aria-selected={isActive}
+                                aria-pressed={isActive}
                                 onClick={() => setActiveCategory(category)}
                                 className={`${styles.filterChip} ${isActive ? styles.filterChipActive : ''}`}
                                 whileTap={{ scale: 0.96 }}
@@ -225,8 +224,9 @@ export default function Projects() {
                                                     href={project.link}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
+                                                    tabIndex={-1}
+                                                    aria-hidden="true"
                                                     className={styles.viewButton}
-                                                    aria-label={`View live site for ${project.title}`}
                                                 >
                                                     <ExternalLink size={20} />
                                                     View Live

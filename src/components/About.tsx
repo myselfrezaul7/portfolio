@@ -99,7 +99,14 @@ export default function About() {
                                             <span className={styles.languageName}>{lang.name}</span>
                                             <span className={styles.languageLevel}>{lang.level}</span>
                                         </div>
-                                        <div className={styles.progressTrack}>
+                                        <div 
+                                            className={styles.progressTrack}
+                                            role="progressbar"
+                                            aria-valuenow={lang.percentage}
+                                            aria-valuemin={0}
+                                            aria-valuemax={100}
+                                            aria-label={`${lang.name} proficiency (${lang.level})`}
+                                        >
                                             <motion.div
                                                 className={styles.progressFill}
                                                 initial={{ width: 0 }}

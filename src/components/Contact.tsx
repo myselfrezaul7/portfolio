@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Mail, Check, Copy } from 'lucide-react';
 import ScrollReveal from './animations/ScrollReveal';
@@ -8,15 +8,41 @@ import styles from './Contact.module.css';
 
 export default function Contact() {
     const [copied, setCopied] = useState(false);
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+    useEffect(() => {
+        return () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
+    }, []);
 
     const handleCopyEmail = async () => {
+        const email = 'myselfrezaul@gmail.com';
         try {
-            await navigator.clipboard.writeText('myselfrezaul@gmail.com');
+            if (navigator?.clipboard?.writeText) {
+                await navigator.clipboard.writeText(email);
+            } else {
+                throw new Error('Clipboard API unavailable');
+            }
             setCopied(true);
-            setTimeout(() => setCopied(false), 2200);
-        } catch (err) {
-            console.error('Failed to copy email:', err);
+        } catch {
+            try {
+                const textarea = document.createElement('textarea');
+                textarea.value = email;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                setCopied(true);
+            } catch (err) {
+                console.error('Failed to copy email:', err);
+            }
         }
+
+        if (timerRef.current) clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => setCopied(false), 2200);
     };
 
     return (
@@ -87,6 +113,9 @@ export default function Contact() {
                                     </>
                                 )}
                             </motion.button>
+                        </div>
+                        <div className="sr-only" aria-live="polite">
+                            {copied ? 'Email address copied to clipboard.' : ''}
                         </div>
 
                         {/* Powered by Cal.com */}

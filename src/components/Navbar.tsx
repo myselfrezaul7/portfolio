@@ -26,17 +26,28 @@ export default function Navbar() {
     // Detect scroll for showing logo and active section with rAF throttling
     useEffect(() => {
         let ticking = false;
+        let rafId: number | null = null;
+
         const handleScroll = () => {
             if (!ticking) {
-                window.requestAnimationFrame(() => {
+                rafId = window.requestAnimationFrame(() => {
                     setIsScrolled(window.scrollY > 100);
                     ticking = false;
                 });
                 ticking = true;
             }
         };
+
+        // Initialize scroll state on mount via rAF
+        handleScroll();
+
         window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            if (rafId !== null) {
+                window.cancelAnimationFrame(rafId);
+            }
+        };
     }, []);
 
     // IntersectionObserver for ScrollSpy
@@ -83,13 +94,19 @@ export default function Navbar() {
 
         const previousActiveElement = document.activeElement as HTMLElement | null;
         const menuEl = mobileMenuRef.current;
-        if (menuEl) {
-            const focusableElements = menuEl.querySelectorAll<HTMLElement>(
+
+        const getFocusableElements = () => {
+            const menuItems = menuEl ? Array.from(menuEl.querySelectorAll<HTMLElement>(
                 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-            );
-            if (focusableElements.length > 0) {
-                focusableElements[0].focus();
-            }
+            )) : [];
+            const toggle = document.querySelector<HTMLElement>('[aria-controls="mobile-nav-menu"]');
+            return toggle ? [toggle, ...menuItems] : menuItems;
+        };
+
+        const focusableElements = getFocusableElements();
+        if (focusableElements.length > 1) {
+            // Focus first item inside menu
+            focusableElements[1].focus();
         }
 
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -99,10 +116,8 @@ export default function Navbar() {
                 return;
             }
 
-            if (e.key === 'Tab' && menuEl) {
-                const focusable = menuEl.querySelectorAll<HTMLElement>(
-                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-                );
+            if (e.key === 'Tab') {
+                const focusable = getFocusableElements();
                 if (focusable.length === 0) {
                     e.preventDefault();
                     return;
@@ -292,15 +307,6 @@ export default function Navbar() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
                             transition={{ duration: 0.3 }}
-                            drag="y"
-                            dragConstraints={{ top: 0, bottom: 0 }}
-                            dragElastic={{ top: 0, bottom: 0.5 }}
-                            dragSnapToOrigin
-                            onDragEnd={(_e, info) => {
-                                if (info.offset.y > 80 || info.velocity.y > 300) {
-                                    setIsMobileMenuOpen(false);
-                                }
-                            }}
                         >
                             <div className={styles.dragHandleBar} aria-hidden="true" />
                             <div className={styles.mobileMenuContent}>

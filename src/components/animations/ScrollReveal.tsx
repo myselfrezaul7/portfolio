@@ -18,7 +18,7 @@ export default function ScrollReveal({
     direction = 'up',
     duration = 0.6
 }: ScrollRevealProps) {
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement>(null);
     const shouldReduceMotion = useReducedMotion();
     const isInView = useInView(ref, { once: true, margin: "0px 0px -40px 0px" });
 
@@ -29,24 +29,20 @@ export default function ScrollReveal({
         right: { x: -50 }
     };
 
-    if (shouldReduceMotion) {
-        return <div className={className}>{children}</div>;
-    }
-
     return (
         <motion.div
             ref={ref}
             className={className}
-            initial={{
+            initial={shouldReduceMotion ? false : {
                 opacity: 0,
                 ...directions[direction]
             }}
-            animate={isInView ? {
+            animate={shouldReduceMotion ? { opacity: 1 } : (isInView ? {
                 opacity: 1,
                 x: 0,
                 y: 0
-            } : {}}
-            transition={{
+            } : {})}
+            transition={shouldReduceMotion ? { duration: 0 } : {
                 duration,
                 delay,
                 ease: [0.22, 1, 0.36, 1]

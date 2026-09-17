@@ -14,16 +14,29 @@ export default function ScrollToTop() {
     });
 
     useEffect(() => {
+        let ticking = false;
+        let rafId: number | null = null;
+
         const toggleVisibility = () => {
-            if (window.scrollY > 300) {
-                setIsVisible(true);
-            } else {
-                setIsVisible(false);
+            if (!ticking) {
+                rafId = window.requestAnimationFrame(() => {
+                    setIsVisible(window.scrollY > 300);
+                    ticking = false;
+                });
+                ticking = true;
             }
         };
 
+        // Check initial scroll state on mount via rAF
+        toggleVisibility();
+
         window.addEventListener('scroll', toggleVisibility, { passive: true });
-        return () => window.removeEventListener('scroll', toggleVisibility);
+        return () => {
+            window.removeEventListener('scroll', toggleVisibility);
+            if (rafId !== null) {
+                window.cancelAnimationFrame(rafId);
+            }
+        };
     }, []);
 
     const scrollToTop = () => {
@@ -36,6 +49,7 @@ export default function ScrollToTop() {
         <AnimatePresence>
             {isVisible && (
                 <motion.button
+                    type="button"
                     className={styles.scrollToTop}
                     onClick={scrollToTop}
                     initial={{ opacity: 0, scale: 0.6, y: 20 }}

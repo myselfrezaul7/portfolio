@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { Calendar, Clock, ArrowLeft, Link2, Check } from 'lucide-react';
@@ -74,6 +74,13 @@ export default function BlogPage() {
     const { scrollYProgress } = useScroll();
     const [activeSlug, setActiveSlug] = useState<string>(blogPosts[0]?.slug || '');
     const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
+    const copyTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+    useEffect(() => {
+        return () => {
+            if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+        };
+    }, []);
 
     useEffect(() => {
         const hash = window.location.hash;
@@ -114,14 +121,31 @@ export default function BlogPage() {
     const handleCopyLink = async (slug: string) => {
         const url = `${window.location.origin}/blog#${slug}`;
         try {
-            await navigator.clipboard.writeText(url);
+            if (navigator?.clipboard?.writeText) {
+                await navigator.clipboard.writeText(url);
+            } else {
+                throw new Error('Clipboard API unavailable');
+            }
             setCopiedSlug(slug);
-            setTimeout(() => {
-                setCopiedSlug(null);
-            }, 2000);
         } catch {
-            // Fallback if clipboard API is restricted
+            try {
+                const textarea = document.createElement('textarea');
+                textarea.value = url;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                setCopiedSlug(slug);
+            } catch {
+                // Ignore fallback error
+            }
         }
+        if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+        copyTimerRef.current = setTimeout(() => {
+            setCopiedSlug(null);
+        }, 2000);
     };
 
     return (
@@ -141,6 +165,8 @@ export default function BlogPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
+                            whileTap={{ scale: 0.96 }}
+                            style={{ display: 'inline-block' }}
                         >
                             <Link href="/" className={styles.backLink}>
                                 <ArrowLeft size={18} />
@@ -169,7 +195,7 @@ export default function BlogPage() {
                                 {blogPosts.map((post, idx) => {
                                     const isActive = activeSlug === post.slug;
                                     return (
-                                        <button
+                                        <motion.button
                                             key={post.slug}
                                             type="button"
                                             onClick={() => {
@@ -182,10 +208,12 @@ export default function BlogPage() {
                                             }}
                                             className={`${styles.tocPill} ${isActive ? styles.tocPillActive : ''}`}
                                             aria-current={isActive ? 'location' : undefined}
+                                            whileHover={{ scale: 1.02 }}
+                                            whileTap={{ scale: 0.95 }}
                                         >
                                             <span className={styles.tocIndex}>0{idx + 1}</span>
                                             <span className={styles.tocTitleText}>{post.title}</span>
-                                        </button>
+                                        </motion.button>
                                     );
                                 })}
                             </div>

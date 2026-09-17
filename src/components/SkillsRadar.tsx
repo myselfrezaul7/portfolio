@@ -82,7 +82,7 @@ export default function SkillsRadar() {
         })
         .join(' ');
 
-    const handleToggle = (e: React.MouseEvent, index: number) => {
+    const handleToggle = (e: React.SyntheticEvent, index: number) => {
         e.stopPropagation();
         setHoveredIndex((prev) => (prev === index ? null : index));
     };
@@ -127,7 +127,6 @@ export default function SkillsRadar() {
                                 className={styles.radarSvg}
                                 aria-label="Skills competency radar chart"
                                 onTouchStart={handleTouchScrub}
-                                onTouchMove={handleTouchScrub}
                             >
                                 <title>Radar chart showing competency levels across 6 skill areas</title>
                                 {/* Grid levels */}
@@ -208,7 +207,7 @@ export default function SkillsRadar() {
                                             onKeyDown={(e) => {
                                                 if (e.key === 'Enter' || e.key === ' ') {
                                                     e.preventDefault();
-                                                    handleToggle(e as unknown as React.MouseEvent, i);
+                                                    handleToggle(e, i);
                                                 }
                                             }}
                                             onMouseEnter={() => {
@@ -298,6 +297,7 @@ export default function SkillsRadar() {
                                         <motion.div
                                             key={skill.name}
                                             className={styles.skillChip}
+                                            aria-label={`${skill.name}: Level ${skill.level} of 5`}
                                             whileHover={{ y: -2 }}
                                             whileTap={{ scale: 0.98 }}
                                             initial={{ opacity: 0, y: 10 }}
@@ -306,7 +306,7 @@ export default function SkillsRadar() {
                                             transition={{ duration: 0.3, delay: (catIdx * 0.1) + (index * 0.05) }}
                                         >
                                             <span className={styles.skillName}>{skill.name}</span>
-                                            <div className={styles.dotMeter}>
+                                            <div className={styles.dotMeter} aria-hidden="true">
                                                 {[1, 2, 3, 4, 5].map((dot) => (
                                                     <span 
                                                         key={dot} 

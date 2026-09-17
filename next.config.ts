@@ -17,10 +17,10 @@ const nextConfig: NextConfig = {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
           },
-          // Enable XSS protection
+          // Disable legacy reflected XSS auditor (deprecated and vulnerable)
           {
             key: 'X-XSS-Protection',
-            value: '1; mode=block',
+            value: '0',
           },
           // Strict referrer policy
           {
@@ -30,22 +30,24 @@ const nextConfig: NextConfig = {
           // Permissions policy
           {
             key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+            value: 'camera=(), microphone=(), geolocation=(), browsing-topics=(), payment=(), usb=(), screen-wake-lock=()',
           },
           // Content Security Policy
           {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://va.vercel-scripts.com",
+              "script-src 'self' 'unsafe-inline' https://vercel.live https://va.vercel-scripts.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: blob: https:",
               "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com",
               "frame-src 'self' https://cal.com https://cal.eu https://vercel.live",
               "frame-ancestors 'none'",
+              "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",
+              "upgrade-insecure-requests",
             ].join('; '),
           },
           // Strict Transport Security (HTTPS only)
@@ -56,6 +58,16 @@ const nextConfig: NextConfig = {
         ],
       },
     ];
+  },
+
+  // Image optimization
+  images: {
+    formats: ['image/avif', 'image/webp'],
+  },
+
+  // Package tree-shaking & bundle size optimization
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
 
   // Powered by header removal

@@ -73,10 +73,9 @@
     margin: 0 -24px; /* edge-to-edge on mobile */
     padding-left: 24px;
     padding-right: 24px;
+    -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    mask-image: linear-gradient(to right, black calc(100% - 40px), transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, black calc(100% - 40px), transparent 100%);
 }
 
 .stepsHorizontal::-webkit-scrollbar {

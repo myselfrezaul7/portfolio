@@ -99,7 +99,7 @@ Fulfillment presented another challenge. Courier infrastructure outside major ur
 
 Building PetBhai demonstrated that technical platforms succeed or fail based on how accurately software architecture models real-world operational constraints.`,
         date: '2025-10-10',
-        readTime: '5 min read',
+        readTime: '1 min read',
         category: 'Entrepreneurship',
     },
     {
@@ -115,7 +115,7 @@ Each sprint begins with a backlog grooming session where deliverables are decomp
 
 At the end of each sprint, I conduct a structured retrospective auditing estimated vs actual velocity. This practice transforms vague ambitions into measurable execution, creating transparency and sustained momentum across complex technical projects.`,
         date: '2025-05-05',
-        readTime: '4 min read',
+        readTime: '1 min read',
         category: 'Productivity',
     },
 ];

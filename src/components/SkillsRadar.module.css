@@ -133,6 +133,17 @@
     filter: drop-shadow(0 0 8px rgba(74, 155, 155, 0.6));
 }
 
+g[role="button"]:focus-visible {
+    outline: none;
+}
+
+g[role="button"]:focus-visible .dataPoint {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    stroke: var(--accent);
+    stroke-width: 3px;
+}
+
 .label {
     font-size: 10px;
     font-weight: 500;

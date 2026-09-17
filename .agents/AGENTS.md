@@ -22,4 +22,8 @@
 - Use the project's design tokens from `globals.css` (e.g. `var(--accent)`, `var(--bg-card)`) instead of hardcoded colour values.
 
 ## Agent Swarming & Execution Workflow
-- **Multi-Phase & Complex Tasks**: All multi-phase and complex tasks must always be dispatched and executed using swarming specialist agents (`invoke_subagent`). Decompose complex workflows and audits into dedicated specialist roles (e.g. component specialists, research auditors, style/SEO specialists) to ensure deep, parallel execution and zero regressions.
+- **Always Work Swarming Agents**: ALL tasks (audits, research, implementation, testing, verification, and QA) must ALWAYS be conducted by swarming specialized subagents (`invoke_subagent`). Every task must be decomposed into dedicated specialist roles (e.g. UI/UX, Performance/A11y, Backend/Data, QA) operating in parallel to guarantee thorough analysis, zero blind spots, and zero regressions.
+
+## Planning & Approval Protocol
+- **Plan First**: For EVERY task, always create a proper, structured `implementation_plan.md` artifact FIRST.
+- **Explicit User Approval Required**: NEVER proceed with execution, file modifications, or code changes until the user has explicitly reviewed the implementation plan and commanded to proceed.

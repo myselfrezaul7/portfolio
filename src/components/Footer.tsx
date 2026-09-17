@@ -10,6 +10,8 @@ const socialLinks = [
     { icon: Mail, href: 'mailto:myselfrezaul@gmail.com', label: 'Email' },
 ];
 
+const CURRENT_YEAR = 2026;
+
 export default function Footer() {
     const scrollToTop = () => {
         if (typeof window !== 'undefined') {
@@ -22,14 +24,17 @@ export default function Footer() {
             <div className={styles.container}>
                 <div className={styles.content}>
                     {/* Logo */}
-                    <button
+                    <motion.button
+                        type="button"
                         onClick={scrollToTop}
                         className={styles.logo}
                         aria-label="Scroll to top"
+                        whileHover={{ y: -2 }}
+                        whileTap={{ scale: 0.95 }}
                     >
                         <span>M•K</span>
                         <ArrowUp size={14} className={styles.logoArrow} strokeWidth={2} />
-                    </button>
+                    </motion.button>
 
                     {/* Social Links */}
                     <div className={styles.socialLinks}>
@@ -57,7 +62,7 @@ export default function Footer() {
 
                     {/* Copyright */}
                     <p className={styles.copyright}>
-                        © {new Date().getFullYear()} Md Rezaul Karim
+                        © {CURRENT_YEAR} Md Rezaul Karim
                     </p>
                 </div>
             </div>

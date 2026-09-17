@@ -270,16 +270,27 @@ body {
   }
 }
 
-/* Theme Transitioning Fallback Rules */
+/* Scroll Margins for Anchor Navigation to prevent fixed navbar occlusion */
+section[id],
+div[id],
+article[id] {
+  scroll-margin-top: 100px;
+}
+
+/* Theme Transitioning Fallback Rules (scoped to avoid style thrashing) */
 html.theme-transitioning,
-html.theme-transitioning *,
-html.theme-transitioning *::before,
-html.theme-transitioning *::after {
+html.theme-transitioning body,
+html.theme-transitioning header,
+html.theme-transitioning main,
+html.theme-transitioning footer,
+html.theme-transitioning section,
+html.theme-transitioning nav,
+html.theme-transitioning article,
+html.theme-transitioning button,
+html.theme-transitioning a {
   transition: background-color 300ms ease,
               border-color 300ms ease,
               color 300ms ease,
-              fill 300ms ease,
-              stroke 300ms ease,
               box-shadow 300ms ease !important;
   transition-delay: 0s !important;
 }

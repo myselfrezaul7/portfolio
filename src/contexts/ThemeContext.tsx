@@ -44,6 +44,8 @@ function getServerSnapshot(): Theme {
     return 'dark';
 }
 
+let transitionTimer: ReturnType<typeof setTimeout> | null = null;
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
     const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
@@ -60,15 +62,20 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const toggleTheme = useCallback(() => {
         const nextTheme: Theme = theme === 'dark' ? 'light' : 'dark';
 
-        if (typeof document !== 'undefined' && 'startViewTransition' in document && typeof (document as unknown as { startViewTransition: unknown }).startViewTransition === 'function') {
-            (document as unknown as { startViewTransition: (cb: () => void) => void }).startViewTransition(() => {
+        const doc = typeof document !== 'undefined' ? (document as unknown as { startViewTransition?: (updateCallback: () => void) => void }) : null;
+        if (doc && typeof doc.startViewTransition === 'function') {
+            doc.startViewTransition(() => {
                 applyTheme(nextTheme);
             });
         } else if (typeof document !== 'undefined') {
             document.documentElement.classList.add('theme-transitioning');
             applyTheme(nextTheme);
-            window.setTimeout(() => {
+            if (transitionTimer) {
+                clearTimeout(transitionTimer);
+            }
+            transitionTimer = setTimeout(() => {
                 document.documentElement.classList.remove('theme-transitioning');
+                transitionTimer = null;
             }, 400);
         } else {
             applyTheme(nextTheme);

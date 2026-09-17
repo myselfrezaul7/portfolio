@@ -8,15 +8,16 @@ interface ErrorBoundaryProps {
 
 interface ErrorBoundaryState {
     hasError: boolean;
+    retryCount: number;
 }
 
 export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
     constructor(props: ErrorBoundaryProps) {
         super(props);
-        this.state = { hasError: false };
+        this.state = { hasError: false, retryCount: 0 };
     }
 
-    static getDerivedStateFromError(): ErrorBoundaryState {
+    static getDerivedStateFromError(): Partial<ErrorBoundaryState> {
         return { hasError: true };
     }
 
@@ -24,8 +25,22 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
         console.error('ErrorBoundary caught:', error, errorInfo);
     }
 
+    handleRetry = () => {
+        if (this.state.retryCount >= 2) {
+            if (typeof window !== 'undefined') {
+                window.location.reload();
+            }
+            return;
+        }
+        this.setState((prev) => ({
+            hasError: false,
+            retryCount: prev.retryCount + 1,
+        }));
+    };
+
     render() {
         if (this.state.hasError) {
+            const isPersistent = this.state.retryCount >= 2;
             return (
                 <div style={{
                     display: 'flex',
@@ -41,7 +56,8 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
                         Something went wrong loading this section.
                     </p>
                     <button
-                        onClick={() => this.setState({ hasError: false })}
+                        type="button"
+                        onClick={this.handleRetry}
                         style={{
                             padding: '10px 24px',
                             fontSize: '14px',
@@ -53,7 +69,7 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
                             cursor: 'pointer',
                         }}
                     >
-                        Try Again
+                        {isPersistent ? 'Refresh Page' : 'Try Again'}
                     </button>
                 </div>
             );

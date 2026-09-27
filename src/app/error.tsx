@@ -12,7 +12,9 @@ export default function Error({
     reset: () => void;
 }) {
     useEffect(() => {
-        console.error('Unhandled route error caught by error.tsx:', error);
+        if (process.env.NODE_ENV !== 'production') {
+            console.error('Unhandled route error caught by error.tsx:', error);
+        }
     }, [error]);
 
     return (

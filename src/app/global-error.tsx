@@ -10,7 +10,9 @@ export default function GlobalError({
     reset: () => void;
 }) {
     useEffect(() => {
-        console.error('Global root layout error:', error);
+        if (process.env.NODE_ENV !== 'production') {
+            console.error('Global root layout error:', error);
+        }
     }, [error]);
 
     return (

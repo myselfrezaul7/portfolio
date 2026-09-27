@@ -37,7 +37,9 @@ export default function Contact() {
                 document.body.removeChild(textarea);
                 setCopied(true);
             } catch (err) {
-                console.error('Failed to copy email:', err);
+                if (process.env.NODE_ENV !== 'production') {
+                    console.error('Failed to copy email:', err);
+                }
             }
         }
 

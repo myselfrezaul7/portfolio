@@ -12,6 +12,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://mdkarim.vercel.app'),
+  alternates: {
+    canonical: '/',
+  },
   title: {
     default: "Md Rezaul Karim - Bridging Business Operations & Technology",
     template: "%s | Md Rezaul Karim"

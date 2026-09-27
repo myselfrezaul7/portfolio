@@ -12,6 +12,15 @@
     transition: all var(--transition-fast);
 }
 
+@media (max-width: 767px) {
+    .toggle {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
 .toggle:hover {
     background: var(--bg-card-hover);
     border-color: var(--border-hover);
@@ -38,3 +47,8 @@
     color: #38bdf8;
     filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.65));
 }
+
+.placeholder {
+    cursor: default;
+    pointer-events: none;
+}

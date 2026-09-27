@@ -1,12 +1,33 @@
 'use client';
 
+import { useSyncExternalStore } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import styles from './ThemeToggle.module.css';
 
+const emptySubscribe = () => () => {};
+
 export default function ThemeToggle() {
+    const mounted = useSyncExternalStore(
+        emptySubscribe,
+        () => true,
+        () => false
+    );
     const { theme, toggleTheme } = useTheme();
+
+    if (!mounted) {
+        return (
+            <button
+                type="button"
+                className={`${styles.toggle} ${styles.placeholder}`}
+                aria-label="Toggle theme"
+                tabIndex={-1}
+                disabled
+                suppressHydrationWarning
+            />
+        );
+    }
 
     return (
         <motion.button
@@ -18,7 +39,6 @@ export default function ThemeToggle() {
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.92 }}
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            suppressHydrationWarning
         >
             <AnimatePresence mode="wait" initial={false}>
                 {theme === 'dark' ? (

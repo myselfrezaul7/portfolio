@@ -216,9 +216,9 @@ export default function Navbar() {
                                 layout
                                 onClick={scrollToTop}
                                 className={styles.scrolledLogo}
-                                initial={{ opacity: 0, width: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, width: 'auto', scale: 1 }}
-                                exit={{ opacity: 0, width: 0, scale: 0.8 }}
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
                                 transition={{ duration: 0.25 }}
                                 whileTap={{ scale: 0.95 }}
                                 aria-label="Scroll to top"

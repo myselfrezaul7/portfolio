@@ -8,7 +8,7 @@ import styles from './About.module.css';
 const languages = [
     { name: 'Bengali', level: 'Native', percentage: 100 },
     { name: 'English', level: 'IELTS 7.0', percentage: 90 },
-    { name: 'German', level: 'A1 (Learning A2)', percentage: 35 },
+    { name: 'German', level: 'A2', percentage: 50 },
 ];
 
 export default function About() {

@@ -1,13 +1,20 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import styles from './Hero.module.css';
 
+const SupplyChainCanvas = dynamic(
+    () => import('./canvas/SupplyChainCanvas'),
+    { ssr: false }
+);
+
 export default function Hero() {
     return (
         <section className={styles.hero} aria-label="Hero">
+            <SupplyChainCanvas />
             <div className={styles.container}>
                 <div className={styles.content}>
                     {/* Greeting */}
@@ -100,10 +107,11 @@ export default function Hero() {
                     <div className={styles.imageGlowBackdrop} aria-hidden="true" />
                     <div className={styles.imageContainer}>
                         <Image
-                            src="/images/profile.jpg"
+                            src="/images/profile.png"
                             alt="Md Rezaul Karim"
                             fill
                             priority
+                            quality={90}
                             sizes="(max-width: 768px) 200px, (max-width: 1024px) 300px, 340px"
                             style={{ objectFit: 'cover', objectPosition: 'center top' }}
                         />

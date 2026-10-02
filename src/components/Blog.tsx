@@ -26,6 +26,8 @@ function getCategoryClass(category: string) {
             return styles.categoryEntrepreneurship;
         case 'productivity':
             return styles.categoryProductivity;
+        case 'community operations':
+            return styles.categoryCommunity;
         default:
             return '';
     }
@@ -44,9 +46,9 @@ export default function Blog() {
                     </div>
                 </ScrollReveal>
 
-                <div className={styles.scrollStrip}>
+                <div className={styles.blogGrid}>
                     {blogPosts.map((post, index) => (
-                        <div key={post.id} className={styles.snapItem}>
+                        <div key={post.id} className={styles.gridItem}>
                             <Link href={`/blog#${post.slug}`} className={styles.cardLink}>
                                 <motion.div
                                     className={styles.card}
@@ -58,15 +60,9 @@ export default function Blog() {
                                     transition={{ duration: 0.4, delay: index * 0.1 }}
                                 >
                                     <div className={styles.cardTop}>
-                                        <div className={styles.badgeGroup}>
-                                            <span className={`${styles.category} ${getCategoryClass(post.category)}`}>
-                                                {post.category}
-                                            </span>
-                                            <span className={styles.readTimeBadge}>
-                                                <Clock size={12} />
-                                                {post.readTime}
-                                            </span>
-                                        </div>
+                                        <span className={`${styles.category} ${getCategoryClass(post.category)}`}>
+                                            {post.category}
+                                        </span>
                                         <ArrowUpRight size={18} className={styles.arrow} />
                                     </div>
 
@@ -75,8 +71,13 @@ export default function Blog() {
 
                                     <div className={styles.cardMeta}>
                                         <span className={styles.metaItem}>
-                                            <Calendar size={14} />
+                                            <Calendar size={13} />
                                             {formatDate(post.date)}
+                                        </span>
+                                        <span className={styles.metaDot} aria-hidden="true">•</span>
+                                        <span className={styles.metaItem}>
+                                            <Clock size={13} />
+                                            {post.readTime}
                                         </span>
                                     </div>
                                 </motion.div>

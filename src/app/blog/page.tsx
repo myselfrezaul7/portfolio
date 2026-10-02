@@ -24,6 +24,8 @@ function formatDate(dateStr: string) {
 
 function getCategoryClass(category: string) {
     switch (category.toLowerCase()) {
+        case 'community operations':
+            return styles.categoryCommunity;
         case 'operations':
             return styles.categoryOperations;
         case 'entrepreneurship':
@@ -187,7 +189,7 @@ export default function BlogPage() {
                         </motion.div>
 
                         {/* Interactive Table of Contents quick-jump bar */}
-                        <nav className={styles.tocNav} aria-label="Table of contents">
+                        <nav className={styles.mobileTocBar} aria-label="Table of contents">
                             <div className={styles.tocHeader}>
                                 <span className={styles.tocLabel}>Quick Jump</span>
                             </div>
@@ -219,84 +221,105 @@ export default function BlogPage() {
                             </div>
                         </nav>
 
-                        <div className={styles.postsList}>
-                            {blogPosts.map((post, index) => (
-                                <motion.article
-                                    key={post.id}
-                                    id={post.slug}
-                                    className={styles.postCard}
-                                    initial={{ opacity: 0, y: 30 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                                >
-                                    <div className={styles.postHeader}>
-                                        <div className={styles.headerBadges}>
-                                            <span className={`${styles.category} ${getCategoryClass(post.category)}`}>
-                                                {post.category}
-                                            </span>
-                                            <div className={styles.postMeta}>
-                                                <span className={styles.metaItem}>
-                                                    <Calendar size={14} />
-                                                    {formatDate(post.date)}
+                        <div className={styles.mainLayout}>
+                            <div className={styles.postsColumn}>
+                                {blogPosts.map((post, index) => (
+                                    <motion.article
+                                        key={post.id}
+                                        id={post.slug}
+                                        className={styles.postCard}
+                                        initial={{ opacity: 0, y: 30 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                                    >
+                                        <div className={styles.postHeader}>
+                                            <div className={styles.headerBadges}>
+                                                <span className={`${styles.category} ${getCategoryClass(post.category)}`}>
+                                                    {post.category}
                                                 </span>
-                                                <span className={styles.metaItem}>
-                                                    <Clock size={14} />
-                                                    {post.readTime}
-                                                </span>
+                                                <div className={styles.postMeta}>
+                                                    <span className={styles.metaItem}>
+                                                        <Calendar size={14} />
+                                                        {formatDate(post.date)}
+                                                    </span>
+                                                    <span className={styles.metaItem}>
+                                                        <Clock size={14} />
+                                                        {post.readTime}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            {/* Copy link to section button */}
+                                            <div className={styles.copyWrapper}>
+                                                <motion.button
+                                                    type="button"
+                                                    onClick={() => handleCopyLink(post.slug)}
+                                                    className={styles.copyButton}
+                                                    whileTap={{ scale: 0.94 }}
+                                                    aria-label={`Copy direct link to ${post.title}`}
+                                                    title="Copy direct link to section"
+                                                >
+                                                    {copiedSlug === post.slug ? (
+                                                        <Check size={14} className={styles.copiedIcon} />
+                                                    ) : (
+                                                        <Link2 size={14} />
+                                                    )}
+                                                    <span className={styles.copyButtonText}>
+                                                        {copiedSlug === post.slug ? 'Copied!' : 'Share link'}
+                                                    </span>
+                                                </motion.button>
                                             </div>
                                         </div>
 
-                                        {/* Copy link to section button */}
-                                        <div className={styles.copyWrapper}>
-                                            <motion.button
-                                                type="button"
-                                                onClick={() => handleCopyLink(post.slug)}
-                                                className={styles.copyButton}
-                                                whileTap={{ scale: 0.94 }}
-                                                aria-label={`Copy direct link to ${post.title}`}
-                                                title="Copy direct link to section"
-                                            >
-                                                {copiedSlug === post.slug ? (
-                                                    <Check size={14} className={styles.copiedIcon} />
-                                                ) : (
-                                                    <Link2 size={14} />
-                                                )}
-                                                <span className={styles.copyButtonText}>
-                                                    {copiedSlug === post.slug ? 'Copied' : 'Share link'}
-                                                </span>
-                                            </motion.button>
-                                            <AnimatePresence>
-                                                {copiedSlug === post.slug && (
-                                                    <motion.div
-                                                        className={styles.copiedToast}
-                                                        initial={{ opacity: 0, y: 6, scale: 0.9 }}
-                                                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                                                        exit={{ opacity: 0, y: -4, scale: 0.9 }}
-                                                        transition={{ duration: 0.2 }}
-                                                    >
-                                                        Copied!
-                                                    </motion.div>
-                                                )}
-                                            </AnimatePresence>
+                                        <h2 className={styles.postTitle}>{post.title}</h2>
+
+                                        <div className={styles.postContent}>
+                                            {post.content.split('\n\n').map((paragraph, pIndex) => {
+                                                if (paragraph.includes('Reorder Point = (Average Daily Usage')) {
+                                                    return (
+                                                        <div key={pIndex} className={styles.formulaWrapper}>
+                                                            <FormulaCallout />
+                                                        </div>
+                                                    );
+                                                }
+                                                return <p key={pIndex}>{paragraph}</p>;
+                                            })}
                                         </div>
-                                    </div>
-
-                                    <h2 className={styles.postTitle}>{post.title}</h2>
-
-                                    <div className={styles.postContent}>
-                                        {post.content.split('\n\n').map((paragraph, pIndex) => {
-                                            if (paragraph.includes('Reorder Point = (Average Daily Usage')) {
-                                                return (
-                                                    <div key={pIndex} className={styles.formulaWrapper}>
-                                                        <FormulaCallout />
+                                    </motion.article>
+                                ))}
+                            </div>
+                            <aside className={styles.sidebarColumn} aria-label="Article navigation">
+                                <div className={styles.stickySidebar}>
+                                    <h3 className={styles.sidebarHeading}>Articles in this series</h3>
+                                    <nav className={styles.sidebarNav}>
+                                        {blogPosts.map((post, idx) => {
+                                            const isActive = activeSlug === post.slug;
+                                            return (
+                                                <button
+                                                    key={post.slug}
+                                                    type="button"
+                                                    onClick={() => {
+                                                        const el = document.getElementById(post.slug);
+                                                        if (el) {
+                                                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                                            window.history.pushState(null, '', `#${post.slug}`);
+                                                            setActiveSlug(post.slug);
+                                                        }
+                                                    }}
+                                                    className={`${styles.sidebarItem} ${isActive ? styles.sidebarItemActive : ''}`}
+                                                    aria-current={isActive ? 'true' : undefined}
+                                                >
+                                                    <span className={styles.sidebarIndex}>0{idx + 1}</span>
+                                                    <div className={styles.sidebarMeta}>
+                                                        <span className={styles.sidebarTitle}>{post.title}</span>
+                                                        <span className={styles.sidebarReadTime}>{post.readTime}</span>
                                                     </div>
-                                                );
-                                            }
-                                            return <p key={pIndex}>{paragraph}</p>;
+                                                </button>
+                                            );
                                         })}
-                                    </div>
-                                </motion.article>
-                            ))}
+                                    </nav>
+                                </div>
+                            </aside>
                         </div>
                     </div>
                 </ErrorBoundary>

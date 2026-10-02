@@ -118,4 +118,26 @@ At the end of each sprint, I conduct a structured retrospective auditing estimat
         readTime: '1 min read',
         category: 'Productivity',
     },
+    {
+        id: 4,
+        slug: 'decentralized-community-operations',
+        title: 'Decentralized Operations at 450K Scale: Building Systems That Run Without Me',
+        excerpt: 'How we structured Standard Operating Procedures, role-based admin tiers, and automated intake workflows to keep an animal welfare community running smoothly from 7,000 km away.',
+        content: `Founding Dog Lovers of Bangladesh and Cat Lovers of Bangladesh started as a simple idea to connect local pet owners. What began as small online groups grew rapidly into a massive network of over 450,000 active community members across the country. We suddenly found ourselves managing a vital hub for animal welfare in a region where such resources were desperately needed.
+
+However, this exponential growth quickly introduced a severe initial bottleneck. We received dozens of daily rescue requests, reports of lost pets, and urgent emergency medical appeals. My personal inboxes were flooded 24 hours a day. I quickly realized that sheer enthusiasm without operational structure leads directly to burnout and dropped cases. Something had to change if we wanted to save lives sustainably.
+
+To solve this, I applied the People, Process, and Technology framework to our non-profit community operations. For the People aspect, I established a strict 3-tier governance model to distribute the workload. Tier 1 volunteers handled frontline comment and post moderation, filtering out spam. Tier 2 managers focused on case verification and conducted adoption background checks. Tier 3 coordinators directly managed emergency logistics and maintained relationships with our partner veterinary clinics.
+
+For the Process pillar, we moved away from ad hoc decision making by drafting comprehensive Standard Operating Procedures. We created standardized checklists to rigorously verify critical veterinary cases. This ensured we could eliminate fraudulent donation requests while protecting volunteer safety during field rescues. Clear rules meant everyone knew exactly what to do without waiting for my approval.
+
+On the Technology front, we completely replaced our chaotic direct message culture with structured digital intake forms. We integrated automated keyword notifications for emergency triage, utilizing automated systems to help categorize urgent appeals. This allowed critical cases to bypass the standard queue and alert Tier 3 coordinators instantly.
+
+The ultimate operational test arrived when I moved to Germany to pursue my Master's in IMIS at Fachhochschule Südwestfalen. I had to transition from day-to-day founder oversight to a completely decentralized governance model. Thanks to the robust systems we had built, the transition was a success. Our SOPs and empowered team leaders continue running the entire operation seamlessly across a six-hour time zone difference.
+
+The biggest lesson I learned from this journey is clear. True operational excellence is not about being indispensable every hour of the day. It is about designing transparent workflows that empower your teams to execute with absolute confidence in your absence.`,
+        date: '2026-04-18',
+        readTime: '6 min read',
+        category: 'Community Operations',
+    },
 ];

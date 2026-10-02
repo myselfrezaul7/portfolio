@@ -18,9 +18,9 @@
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 20px;
 }
 
 .backLink {
@@ -32,11 +32,15 @@
     color: var(--text-secondary);
     text-decoration: none;
     margin-bottom: 40px;
-    transition: color var(--transition-fast);
+    padding: 12px 16px;
+    margin-left: -16px;
+    border-radius: 8px;
+    transition: all var(--transition-fast);
 }
 
 .backLink:hover {
     color: var(--accent);
+    background: var(--bg-tertiary);
 }
 
 .header {
@@ -58,7 +62,7 @@
 }
 
 /* Table of Contents Quick Jump Bar */
-.tocNav {
+.mobileTocBar {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 16px;
@@ -142,6 +146,94 @@
     }
 }
 
+/* Layout */
+.mainLayout {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+@media (min-width: 1024px) {
+    .mainLayout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 300px;
+        gap: 48px;
+        align-items: start;
+    }
+
+    .mobileTocBar {
+        display: none;
+    }
+}
+
+.stickySidebar {
+    position: sticky;
+    top: 100px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.sidebarHeading {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.sidebarNav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebarItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    text-align: left;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.sidebarItem:hover {
+    background: var(--bg-tertiary);
+}
+
+.sidebarItemActive {
+    background: rgba(74, 155, 155, 0.1);
+    border-color: rgba(74, 155, 155, 0.2);
+}
+
+.sidebarIndex {
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.5;
+    margin-top: 2px;
+}
+
+.sidebarTitle {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.4;
+    margin-bottom: 4px;
+}
+
+.sidebarReadTime {
+    display: block;
+    font-size: 11px;
+    color: var(--text-tertiary);
+}
+
 /* Posts */
 .postsList {
     display: flex;
@@ -208,6 +300,12 @@
     color: #a855f7;
     background: rgba(168, 85, 247, 0.1);
     border-color: rgba(168, 85, 247, 0.25);
+}
+
+.categoryCommunity {
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.25);
 }
 
 .postMeta {
@@ -293,9 +391,14 @@
 
 .postContent p {
     font-size: 16px;
-    color: var(--text-secondary);
-    line-height: 1.8;
-    text-align: justify;
+    color: rgba(255, 255, 255, 0.92);
+    line-height: 1.75;
+    text-align: left;
+    max-width: 70ch;
+}
+
+:global([data-theme="light"]) .postContent p {
+    color: #1e293b;
 }
 
 /* Technical Formula Callout Card */
@@ -405,6 +508,41 @@
     line-height: 1.5;
 }
 
+:global([data-theme="light"]) .sidebarItemActive {
+    background: rgba(74, 155, 155, 0.15);
+    border-color: rgba(74, 155, 155, 0.3);
+}
+
+:global([data-theme="light"]) .category {
+    background: rgba(74, 155, 155, 0.15);
+    border-color: rgba(74, 155, 155, 0.3);
+    color: #2b7a7a;
+}
+
+:global([data-theme="light"]) .categoryOperations {
+    background: rgba(6, 182, 212, 0.15);
+    border-color: rgba(6, 182, 212, 0.3);
+    color: #0891b2;
+}
+
+:global([data-theme="light"]) .categoryEntrepreneurship {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.3);
+    color: #d97706;
+}
+
+:global([data-theme="light"]) .categoryProductivity {
+    background: rgba(168, 85, 247, 0.15);
+    border-color: rgba(168, 85, 247, 0.3);
+    color: #9333ea;
+}
+
+:global([data-theme="light"]) .categoryCommunity {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: #059669;
+}
+
 /* Mobile */
 @media (max-width: 640px) {
     .page {
@@ -412,8 +550,13 @@
         padding-bottom: 60px;
     }
 
+    .container {
+        padding: 0 16px;
+    }
+
     .postCard {
-        padding: 24px;
+        padding: 20px 16px;
+        border-radius: 16px;
     }
 
     .postHeader {

@@ -3,32 +3,46 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { ArrowUpRight, ExternalLink, GraduationCap, ShoppingBag, Heart, Dog, Cat, Database, CalendarCheck, Newspaper } from 'lucide-react';
+import { ArrowUpRight, ExternalLink, GraduationCap, ShoppingBag, Heart, Users, Database, Newspaper } from 'lucide-react';
 import ScrollReveal from './animations/ScrollReveal';
+import { useTilt } from '@/hooks/useTilt';
 import styles from './Projects.module.css';
+
+function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
+  const { ref, handleMove, handleLeave } = useTilt({ maxDeg: 6, scale: 1.02 });
+  return (
+    <div
+      ref={ref}
+      className={className}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+    >
+      {children}
+    </div>
+  );
+}
 
 const categoryList = [
     'All',
-    'Healthcare Operations',
-    'Education Consulting',
     'Digital Operations',
+    'Education Consulting',
     'Data Warehousing',
-    'Project Management',
+    'Healthcare Operations',
     'E-commerce Logistics',
-    'Non-Profit Operations',
+    'Community Operations',
 ] as const;
 
 const projects = [
     {
         id: 1,
-        category: 'Healthcare Operations',
-        title: 'Renaissance Diagnostic Care · Data & Operations Analytics',
-        description: 'Engineered ETL pipelines to clean demographic and clinical testing data across 500+ daily patient records. Built visual KPI dashboards in Power BI to monitor lab throughput, established safety stock reorder formulas, and reduced expired reagent waste by 18%.',
-        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-        icon: Heart,
-        link: null,
-        tags: ['Data Analytics', 'ETL & Power BI', 'Supply Chain Ops'],
-        image: '/images/projects/renaissance.jpg',
+        category: 'Digital Operations',
+        title: 'FH Südwestfalen · Web & Project Coordination',
+        description: 'Manage news, event communications, and alumni engagement for the IMIS portal at Fachhochschule Südwestfalen. Coordinate cross-functional event execution using Agile Scrum workflows and Jira Kanban boards, architect localized SEO strategies, and oversee digital publishing for major university milestones including the 2026 IMIS Smart Cricket Championship.',
+        gradient: 'linear-gradient(135deg, #2b5876 0%, #4e4376 100%)',
+        icon: Newspaper,
+        link: 'https://www.fh-swf.de/en/karriere/alumni/ehemalige/imis_alumni/index.php',
+        tags: ['Agile / Scrum', 'Content Strategy', 'Web Operations'],
+        image: '/images/projects/imis-content.jpg',
         blur: null,
     },
     {
@@ -45,18 +59,6 @@ const projects = [
     },
     {
         id: 3,
-        category: 'Digital Operations',
-        title: 'Digital Content Management & Web Coordination',
-        description: 'Manage news, event communications, and alumni engagement for the FH Südwestfalen IMIS portal. Architected localized SEO strategies and coordinate digital execution for major university milestones including the 2026 IMIS Smart Cricket Championship.',
-        gradient: 'linear-gradient(135deg, #2b5876 0%, #4e4376 100%)',
-        icon: Newspaper,
-        link: 'https://www.fh-swf.de/en/karriere/alumni/ehemalige/imis_alumni/index.php',
-        tags: ['Content Strategy', 'Local SEO', 'Web Operations'],
-        image: '/images/projects/imis-content.jpg',
-        blur: null,
-    },
-    {
-        id: 4,
         category: 'Data Warehousing',
         title: 'SAP BW/4HANA · Enterprise Data Warehousing',
         description: 'Designed a multi-tier Enterprise Data Warehouse (EDW) in SAP HANA Studio. Built DataSources, InfoObjects, and transformations to load transactional datasets into ADSOs, creating optimized CompositeProviders and BW Queries for executive supply chain reporting.',
@@ -68,19 +70,19 @@ const projects = [
         blur: null,
     },
     {
-        id: 5,
-        category: 'Project Management',
-        title: 'Agile Project Coordinator & Event Logistics',
-        description: 'Orchestrated cross-functional event execution using Agile Scrum workflows and Jira Kanban boards. Structured deliverable backlogs, coordinated sprint retrospectives, and managed digital publishing on the university IMIS portal.',
-        gradient: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
-        icon: CalendarCheck,
+        id: 4,
+        category: 'Healthcare Operations',
+        title: 'Renaissance Diagnostic Care · Data & Operations Analytics',
+        description: 'Engineered ETL pipelines to clean demographic and clinical testing data across 500+ daily patient records. Built visual KPI dashboards in Power BI to monitor lab throughput, established safety stock reorder formulas, and reduced expired reagent waste by 18%.',
+        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+        icon: Heart,
         link: null,
-        tags: ['Agile / Scrum', 'Jira & Kanban', 'Operations Coordination'],
-        image: '/images/projects/agile-event.jpg',
+        tags: ['Data Analytics', 'ETL & Power BI', 'Supply Chain Ops'],
+        image: '/images/projects/renaissance.jpg',
         blur: null,
     },
     {
-        id: 6,
+        id: 5,
         category: 'E-commerce Logistics',
         title: 'PetBhai · Pet Supplies E-commerce Platform',
         description: 'Engineered a full-stack e-commerce logistics platform prototype. Designed multi-tier SKU inventory state machines, mapped end-to-end order fulfillment and courier tracking workflows, and integrated real-time database triggers.',
@@ -92,26 +94,14 @@ const projects = [
         blur: 'data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAEx/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANi7FAH/2Q==',
     },
     {
-        id: 7,
-        category: 'Non-Profit Operations',
-        title: 'Dog Lovers of Bangladesh · Non-Profit Platform',
-        description: 'Founded animal welfare community infrastructure in Bangladesh. Designed digital intake workflows for rescue logistics, volunteer coordination matrices, and adoption tracking systems to scale community impact.',
+        id: 6,
+        category: 'Community Operations',
+        title: 'Community Operations Platform (450K+ Members)',
+        description: 'Founded and scaled two community infrastructure platforms to 450,000+ active members across Bangladesh. Designed standardized intake workflows for rescue logistics, built volunteer coordination matrices with role-based task assignment, and created adoption screening protocols with multi-stage verification.',
         gradient: 'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)',
-        icon: Dog,
-        link: 'https://kuttawaala.com',
-        tags: ['Community Operations', 'Workflow Design', 'Platform Lead'],
-        image: '/images/projects/kuttawaala.webp',
-        blur: 'data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAEx/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANi7FAH/2Q==',
-    },
-    {
-        id: 8,
-        category: 'Non-Profit Operations',
-        title: 'Cat Lovers of Bangladesh · Non-Profit Platform',
-        description: 'Founded animal welfare platform supporting an active community of 450K+ members. Designed standardized adoption screening workflows, volunteer management protocols, and digital outreach channels.',
-        gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-        icon: Cat,
+        icon: Users,
         link: 'https://catwaala.com',
-        tags: ['Community Operations', 'Process Modeling', 'Platform Lead'],
+        tags: ['Operations at Scale', 'Workflow Design', 'Community Management'],
         image: '/images/projects/catwaala.webp',
         blur: 'data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhAAAwEAAwAAAAAAAAAAAAAAAAEDAhEhQf/EABQBAQAAAAAAAAAAAAAAAAAAAAL/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEQMRAD8A06UeJPXqJK+uF0gA0n//2Q==',
     },
@@ -185,12 +175,13 @@ export default function Projects() {
                                 exit={{ opacity: 0, scale: 0.95 }}
                                 transition={{ duration: 0.35 }}
                             >
-                                <motion.article
-                                    className={styles.projectCard}
+                                <motion.div
                                     whileHover={{ y: -6 }}
                                     whileTap={{ scale: 0.97 }}
+                                    style={{ height: '100%' }}
                                 >
-                                    {/* Project Visual */}
+                                    <TiltCard className={`${styles.projectCard} ${styles.tiltCard}`}>
+                                        {/* Project Visual */}
                                     <div className={styles.imageWrapper}>
                                         {project.image ? (
                                             <>
@@ -262,7 +253,8 @@ export default function Projects() {
                                             ))}
                                         </div>
                                     </div>
-                                </motion.article>
+                                    </TiltCard>
+                                </motion.div>
                             </motion.div>
                         ))}
                     </AnimatePresence>

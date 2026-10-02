@@ -1,9 +1,9 @@
 import { ImageResponse } from 'next/og';
 
-export const size = { width: 32, height: 32 };
+export const size = { width: 180, height: 180 };
 export const contentType = 'image/png';
 
-export default function Icon() {
+export default function AppleIcon() {
     return new ImageResponse(
         (
             <div
@@ -17,29 +17,29 @@ export default function Icon() {
                     borderRadius: '22%',
                 }}
             >
-                <svg viewBox="0 0 100 100" width="24" height="24">
+                <svg viewBox="0 0 100 100" width="120" height="120">
                     <path
                         d="M 30 15 L 30 85"
                         stroke="#1a1a1a"
-                        strokeWidth="8"
+                        strokeWidth="6"
                         fill="none"
                         strokeLinecap="square"
                     />
                     <path
                         d="M 32 50 L 74 15"
                         stroke="#1a1a1a"
-                        strokeWidth="8"
+                        strokeWidth="6"
                         fill="none"
                         strokeLinecap="square"
                     />
                     <path
                         d="M 32 50 L 74 85"
                         stroke="#1a1a1a"
-                        strokeWidth="8"
+                        strokeWidth="6"
                         fill="none"
                         strokeLinecap="square"
                     />
-                    <circle cx="32" cy="50" r="6" fill="#4a9b9b" />
+                    <circle cx="32" cy="50" r="5" fill="#4a9b9b" />
                 </svg>
             </div>
         ),

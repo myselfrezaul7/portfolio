@@ -10,20 +10,11 @@ export const metadata: Metadata = {
         title: 'Insights & Writing | Md Rezaul Karim',
         description: 'Thoughts on operations, supply chain, technology, and building digital products.',
         url: '/blog',
-        images: [
-            {
-                url: '/images/profile.jpg',
-                width: 800,
-                height: 800,
-                alt: 'Md Rezaul Karim',
-            },
-        ],
     },
     twitter: {
-        card: 'summary',
+        card: 'summary_large_image',
         title: 'Insights & Writing | Md Rezaul Karim',
         description: 'Thoughts on operations, supply chain, technology, and building digital products.',
-        images: ['/images/profile.jpg'],
     },
 };
 

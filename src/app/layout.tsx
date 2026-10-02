@@ -40,27 +40,18 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Md Rezaul Karim", url: "https://linkedin.com/in/myselfkarim" }],
   creator: "Md Rezaul Karim",
-  openGraph: {
+    openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://mdkarim.vercel.app",
     siteName: "Md Rezaul Karim",
     title: "Md Rezaul Karim - Bridging Business Operations & Technology",
     description: "Master's student in IMIS | Supply Chain Optimizer | Founder. Bridging business operations and technology through process analytics and digital transformation.",
-    images: [
-      {
-        url: "/images/profile.jpg",
-        width: 800,
-        height: 800,
-        alt: "Md Rezaul Karim - Operations & Technology",
-      },
-    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Md Rezaul Karim - Bridging Business Operations & Technology",
     description: "Master's student in IMIS | Supply Chain Optimizer | Founder. Bridging operations and technology.",
-    images: ["/images/profile.jpg"],
   },
   robots: {
     index: true,
@@ -73,7 +64,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  // Icons are auto-detected from src/app/icon.jpg and apple-icon.jpg
+  // Icons are auto-detected from src/app/icon.tsx and apple-icon.jpg
   manifest: "/manifest.json",
 };
 
@@ -83,7 +74,7 @@ const jsonLd = {
   "@type": "Person",
   name: "Md Rezaul Karim",
   url: "https://mdkarim.vercel.app",
-  image: "https://mdkarim.vercel.app/images/profile.jpg",
+  image: "https://mdkarim.vercel.app/images/profile.png",
   sameAs: [
     "https://linkedin.com/in/myselfkarim",
     "https://github.com/myselfrezaul7",

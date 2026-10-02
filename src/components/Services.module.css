@@ -194,3 +194,33 @@
     border-color: rgba(30, 123, 120, 0.4);
     text-shadow: none;
 }
+.tiltCard {
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+}
+
+.tiltCard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at var(--glare-x, 50%) var(--glare-y, 50%),
+    rgba(255, 255, 255, 0.12) 0%,
+    transparent 60%
+  );
+  opacity: var(--glare-opacity, 0);
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@media (pointer: coarse) {
+  .tiltCard {
+    transform: none !important;
+  }
+  .tiltCard::after {
+    display: none;
+  }
+}

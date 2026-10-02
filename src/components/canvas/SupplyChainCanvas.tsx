@@ -39,6 +39,13 @@ interface PulseRingData {
     speed: number;
 }
 
+interface EchoData {
+    position: THREE.Vector3;
+    phase: number;
+    startTime: number;
+    active: boolean;
+}
+
 interface PaletteColors {
     nodeColor: THREE.Color;
     nodeCoreColor: THREE.Color;
@@ -250,6 +257,9 @@ export default function SupplyChainCanvas({ className }: SupplyChainCanvasProps)
     );
     const isReducedMotionRef = useRef(false);
     const renderStaticFrameRef = useRef<(() => void) | null>(null);
+    const mouseNDCRef = useRef({ x: 0, y: 0, active: false });
+    const scrollRatioRef = useRef(0);
+    const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     // Keep target palette synced when theme changes without resetting WebGL
     useEffect(() => {
@@ -537,6 +547,48 @@ export default function SupplyChainCanvas({ className }: SupplyChainCanvasProps)
         const haloMesh = new THREE.InstancedMesh(haloGeometry, haloMaterial, pulseCount);
         sceneGroup.add(haloMesh);
 
+        // 6. Echo Rings Pool
+        const echoPoolSize = 12;
+        const echoes: EchoData[] = Array.from({ length: echoPoolSize }, () => ({
+            position: new THREE.Vector3(),
+            phase: 0,
+            startTime: 0,
+            active: false
+        }));
+        const echoGeometry = new THREE.RingGeometry(0.04, 0.06, 24);
+        const echoAlphas = new Float32Array(echoPoolSize * 3);
+        echoGeometry.setAttribute('aAlpha', new THREE.InstancedBufferAttribute(echoAlphas, 1));
+        const echoMaterial = new THREE.ShaderMaterial({
+            uniforms: {
+                uColor: { value: currentPalette.haloColor.clone() },
+            },
+            vertexShader: `
+                attribute float aAlpha;
+                varying float vAlpha;
+                void main() {
+                    vAlpha = aAlpha;
+                    vec4 mvPosition = modelViewMatrix * instanceMatrix * vec4(position, 1.0);
+                    gl_Position = projectionMatrix * mvPosition;
+                }
+            `,
+            fragmentShader: `
+                uniform vec3 uColor;
+                varying float vAlpha;
+                void main() {
+                    gl_FragColor = vec4(uColor, vAlpha);
+                }
+            `,
+            transparent: true,
+            depthWrite: false,
+            side: THREE.DoubleSide,
+            blending: THREE.AdditiveBlending
+        });
+        const echoMesh = new THREE.InstancedMesh(echoGeometry, echoMaterial, echoPoolSize * 3);
+        sceneGroup.add(echoMesh);
+
+        // Track node base positions
+        const currentPositions = NODES.map(n => new THREE.Vector3(n.x, n.y, n.z));
+
         // Motion and mouse tracking
         let baseRotation = 0;
         let targetMouseX = 0;
@@ -547,8 +599,24 @@ export default function SupplyChainCanvas({ className }: SupplyChainCanvasProps)
         const handlePointerMove = (event: PointerEvent) => {
             targetMouseX = (event.clientX / window.innerWidth) * 2 - 1;
             targetMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+            mouseNDCRef.current.x = targetMouseX;
+            mouseNDCRef.current.y = targetMouseY;
+            mouseNDCRef.current.active = true;
+            
+            if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current);
+            idleTimeoutRef.current = setTimeout(() => {
+                mouseNDCRef.current.active = false;
+            }, 2000);
+        };
+        const handlePointerLeave = () => {
+            mouseNDCRef.current.active = false;
+        };
+        const handleScroll = () => {
+            scrollRatioRef.current = THREE.MathUtils.clamp(window.scrollY / window.innerHeight, 0, 1);
         };
         window.addEventListener('pointermove', handlePointerMove, { passive: true });
+        window.addEventListener('pointerout', handlePointerLeave, { passive: true });
+        window.addEventListener('scroll', handleScroll, { passive: true });
 
         // Reduced motion check
         const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -600,16 +668,61 @@ export default function SupplyChainCanvas({ className }: SupplyChainCanvasProps)
             currentPalette.globalRouteOpacity += (target.globalRouteOpacity - currentPalette.globalRouteOpacity) * lerpFactor;
             currentPalette.globalNodeOpacity += (target.globalNodeOpacity - currentPalette.globalNodeOpacity) * lerpFactor;
 
+            const globalAlpha = 1.0 - scrollRatioRef.current * 0.4;
+            
             routeMaterial.uniforms.uColor.value.copy(currentPalette.routeColor);
-            routeMaterial.uniforms.uOpacity.value = currentPalette.globalRouteOpacity;
+            routeMaterial.uniforms.uOpacity.value = currentPalette.globalRouteOpacity * globalAlpha;
             regularMaterial.uniforms.uColor.value.copy(currentPalette.nodeColor);
             regularMaterial.uniforms.uCoreColor.value.copy(currentPalette.nodeCoreColor);
-            regularMaterial.uniforms.uOpacity.value = currentPalette.globalNodeOpacity;
+            regularMaterial.uniforms.uOpacity.value = currentPalette.globalNodeOpacity * globalAlpha;
             hubMaterial.uniforms.uColor.value.copy(currentPalette.hubColor);
             hubMaterial.uniforms.uCoreColor.value.copy(currentPalette.nodeCoreColor);
-            hubMaterial.uniforms.uOpacity.value = currentPalette.globalNodeOpacity;
+            hubMaterial.uniforms.uOpacity.value = currentPalette.globalNodeOpacity * globalAlpha;
             packetMaterial.uniforms.uColor.value.copy(currentPalette.packetColor);
             haloMaterial.uniforms.uColor.value.copy(currentPalette.haloColor);
+            echoMaterial.uniforms.uColor.value.copy(currentPalette.haloColor);
+
+            // Update magnetic nodes
+            const mousePos = new THREE.Vector3(mouseNDCRef.current.x, mouseNDCRef.current.y, 0.5);
+            mousePos.unproject(camera);
+            const dir = mousePos.sub(camera.position).normalize();
+            const dist = -camera.position.z / dir.z;
+            const worldCursor = camera.position.clone().add(dir.multiplyScalar(dist));
+            sceneGroup.worldToLocal(worldCursor);
+
+            const isMouseActive = mouseNDCRef.current.active;
+            
+            for (let i = 0; i < NODES.length; i++) {
+                const baseNode = NODES[i];
+                const basePos = new THREE.Vector3(baseNode.x, baseNode.y, baseNode.z);
+                const currentPos = currentPositions[i];
+                
+                const targetPos = basePos.clone();
+                
+                if (isMouseActive) {
+                    const nodeToCursor = new THREE.Vector3().subVectors(worldCursor, basePos);
+                    const d = nodeToCursor.length();
+                    if (d < 0.4) {
+                        const displacementMag = -0.15 * (d - 0.4);
+                        const displacementVec = nodeToCursor.clone().normalize().multiplyScalar(displacementMag);
+                        targetPos.add(displacementVec);
+                    }
+                }
+                
+                currentPos.lerp(targetPos, 0.08);
+                
+                dummy.position.copy(currentPos);
+                dummy.scale.setScalar(baseNode.radius);
+                dummy.updateMatrix();
+                
+                if (i < hubCount) {
+                    hubMesh.setMatrixAt(i, dummy.matrix);
+                } else {
+                    regularMesh.setMatrixAt(i - hubCount, dummy.matrix);
+                }
+            }
+            hubMesh.instanceMatrix.needsUpdate = true;
+            regularMesh.instanceMatrix.needsUpdate = true;
 
             // Update packets
             const packetAttr = packetGeometry.getAttribute('aAlpha') as THREE.InstancedBufferAttribute;
@@ -618,6 +731,15 @@ export default function SupplyChainCanvas({ className }: SupplyChainCanvasProps)
                 p.progress += p.speed;
                 if (p.progress >= 1.0) {
                     p.progress = 0.0;
+                    
+                    // Trigger echo at destination
+                    const endNode = NODES[NETWORK_ROUTES[p.routeIndex].endIndex];
+                    const inactiveEcho = echoes.find(e => !e.active);
+                    if (inactiveEcho) {
+                        inactiveEcho.active = true;
+                        inactiveEcho.position.set(endNode.x, endNode.y, endNode.z);
+                        inactiveEcho.startTime = performance.now();
+                    }
                 }
                 const route = NETWORK_ROUTES[p.routeIndex];
                 const x = THREE.MathUtils.lerp(route.start.x, route.end.x, p.progress);
@@ -656,6 +778,55 @@ export default function SupplyChainCanvas({ className }: SupplyChainCanvasProps)
             haloMesh.instanceMatrix.needsUpdate = true;
             haloAttr.needsUpdate = true;
 
+            // Update echoes
+            const now = performance.now();
+            const echoAttr = echoGeometry.getAttribute('aAlpha') as THREE.InstancedBufferAttribute;
+            let echoInstanceIdx = 0;
+            
+            for (let i = 0; i < echoPoolSize; i++) {
+                const echo = echoes[i];
+                if (echo.active) {
+                    const elapsed = now - echo.startTime;
+                    let allDone = true;
+                    
+                    for (let phase = 0; phase < 3; phase++) {
+                        const phaseElapsed = elapsed - phase * 120;
+                        let alpha = 0;
+                        let scale = 0.0001;
+                        
+                        if (phaseElapsed > 0 && phaseElapsed < 600) {
+                            allDone = false;
+                            const progress = phaseElapsed / 600;
+                            scale = 1.0 + progress * 1.5;
+                            alpha = (1.0 - progress) * globalAlpha;
+                        } else if (phaseElapsed < 0) {
+                            allDone = false;
+                        }
+                        
+                        dummy.position.copy(echo.position);
+                        dummy.scale.setScalar(scale);
+                        dummy.updateMatrix();
+                        echoMesh.setMatrixAt(echoInstanceIdx, dummy.matrix);
+                        echoAttr.setX(echoInstanceIdx, alpha);
+                        echoInstanceIdx++;
+                    }
+                    
+                    if (allDone && elapsed > 1000) {
+                        echo.active = false;
+                    }
+                } else {
+                    for (let phase = 0; phase < 3; phase++) {
+                        dummy.scale.setScalar(0.0001);
+                        dummy.updateMatrix();
+                        echoMesh.setMatrixAt(echoInstanceIdx, dummy.matrix);
+                        echoAttr.setX(echoInstanceIdx, 0);
+                        echoInstanceIdx++;
+                    }
+                }
+            }
+            echoMesh.instanceMatrix.needsUpdate = true;
+            echoAttr.needsUpdate = true;
+
             // Subtle rotation and mouse parallax
             baseRotation += 0.0008;
             currentMouseX += (targetMouseX - currentMouseX) * 0.04;
@@ -663,6 +834,7 @@ export default function SupplyChainCanvas({ className }: SupplyChainCanvasProps)
 
             sceneGroup.rotation.y = baseRotation + currentMouseX * 0.12;
             sceneGroup.rotation.x = currentMouseY * 0.08;
+            sceneGroup.rotation.z = scrollRatioRef.current * 0.08;
         };
 
         const tick = () => {

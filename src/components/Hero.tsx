@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import styles from './Hero.module.css';
+import { getMailtoUrl } from '@/utils/obfuscate';
 
 const SupplyChainCanvas = dynamic(
     () => import('./canvas/SupplyChainCanvas'),
@@ -80,7 +81,7 @@ export default function Hero() {
                         transition={{ duration: 0.6, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
                     >
                         <motion.a 
-                            href="mailto:myselfrezaul@gmail.com" 
+                            href={getMailtoUrl()} 
                             className={styles.primaryBtn}
                             whileTap={{ scale: 0.96 }}
                         >

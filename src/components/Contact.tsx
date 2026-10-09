@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Calendar, Mail, Check, Copy } from 'lucide-react';
 import ScrollReveal from './animations/ScrollReveal';
 import styles from './Contact.module.css';
+import { getContactEmail, getMailtoUrl } from '@/utils/obfuscate';
 
 export default function Contact() {
     const [copied, setCopied] = useState(false);
@@ -17,7 +18,7 @@ export default function Contact() {
     }, []);
 
     const handleCopyEmail = async () => {
-        const email = 'myselfrezaul@gmail.com';
+        const email = getContactEmail();
         try {
             if (navigator?.clipboard?.writeText) {
                 await navigator.clipboard.writeText(email);
@@ -85,7 +86,7 @@ export default function Contact() {
 
                             {/* Secondary - Email */}
                             <motion.a
-                                href="mailto:myselfrezaul@gmail.com"
+                                href={getMailtoUrl()}
                                 className={styles.emailBtn}
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.95 }}

@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Download, ArrowUpRight } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import styles from './Navbar.module.css';
+import { getMailtoUrl } from '@/utils/obfuscate';
 
 const navLinks = [
     { name: 'Competencies', href: '#services' },
@@ -260,7 +261,7 @@ export default function Navbar() {
                             <Download size={14} />
                             Resume
                         </a>
-                        <a href="mailto:myselfrezaul@gmail.com" className={styles.ctaButton}>
+                        <a href={getMailtoUrl()} className={styles.ctaButton}>
                             Let&apos;s Talk
                             <ArrowUpRight size={14} />
                         </a>
@@ -344,7 +345,7 @@ export default function Navbar() {
                                     Download Resume
                                 </motion.a>
                                 <motion.a 
-                                    href="mailto:myselfrezaul@gmail.com" 
+                                    href={getMailtoUrl()} 
                                     className={styles.mobileCta} 
                                     onClick={() => setIsMobileMenuOpen(false)}
                                     whileTap={{ scale: 0.96 }}

@@ -3,11 +3,12 @@
 import { motion } from 'framer-motion';
 import { Linkedin, Github, Mail, ArrowUp } from 'lucide-react';
 import styles from './Footer.module.css';
+import { getMailtoUrl } from '@/utils/obfuscate';
 
 const socialLinks = [
     { icon: Linkedin, href: 'https://www.linkedin.com/in/myselfkarim', label: 'LinkedIn' },
     { icon: Github, href: 'https://github.com/myselfrezaul7', label: 'GitHub' },
-    { icon: Mail, href: 'mailto:myselfrezaul@gmail.com', label: 'Email' },
+    { icon: Mail, href: getMailtoUrl(), label: 'Email' },
 ];
 
 const CURRENT_YEAR = 2026;

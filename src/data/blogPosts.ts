@@ -9,135 +9,183 @@ export interface BlogPost {
     category: string;
 }
 
-export const blogPosts: BlogPost[] = [
+export function getReadTime(content: string): string {
+    const words = content.trim().split(/\s+/).length;
+    const minutes = Math.max(1, Math.ceil(words / 200));
+    return `${minutes} min read`;
+}
+
+const rawBlogPosts: Omit<BlogPost, 'readTime'>[] = [
     {
         id: 1,
-        slug: 'lab-supply-chain',
-        title: 'What Managing a Clinical Lab Supply Chain Actually Taught Me',
-        excerpt: 'Counting reagent bottles at 4°C, negotiating with distributors in Dhaka traffic, and learning why textbook formulas break down when patients are waiting outside.',
-        content: `Sitting in a quiet lecture hall here in Germany, watching the autumn rain outside, the silence sometimes catches me off guard. My head still instinctively listens for a different sound: the heavy, low rattle of a diesel backup generator kicking on when the power cuts out in Dhaka.
-
-For nearly two years as a Data and Operations Analyst at Renaissance Diagnostic Care, that mechanical thrum was the soundtrack to our afternoons. Whenever the lights flickered, our team had about three seconds of breath-holding before the generator took over to protect the analyzers and the cold room compressors.
-
-When I first took the job, I honestly thought my work would be clean and analytical. I had studied computing and business, and I imagined building neat dashboards, writing SQL queries, and tracking high-level metrics from an air-conditioned desk.
-
-Instead, the job hit me with the weight of raw physical reality.
-
-Renaissance was processing over 500 patient samples every single day. Blood, urine, biopsies, tissue cultures. In a diagnostic center, data doesn't start in a clean database. It starts with an 8-milliliter purple-top EDTA tube handed across a reception counter by someone who is worried about their health or their child's fever.
-
-To keep those analyzers running, you need reagents: diluents, lysing agents, enzymatic washes, and control sera. Most of them are biologically active chemicals that must stay strictly between 2°C and 8°C.
-
-I spent hours inside our cold room at 4°C, wearing an oversized jacket over my clothes, counting boxes by hand while my fingers went numb. If an analyzer ran out of CBC (Complete Blood Count) diluent in the middle of a shift, testing stopped immediately. If a batch of hormone assays spoiled because someone left a box on a receiving table during a shift handover, thousands of taka evaporated.
-
-Like many facilities in Dhaka, our supply chain ran on instinct, phone calls, and chaotic WhatsApp voice notes. Whenever a technician noticed a shelf looking thin, they would ping an informal group: "Distributor on Mirpur Road said lyse will arrive Thursday." But Thursday would come, Mirpur Road would turn into a parking lot, or the importer's shipment would stall at Chittagong port, and nobody had answers.
-
-Then August arrived, bringing the peak of the monsoon and Dhaka's Dengue season.
-
-Overnight, our test volume exploded. Patients flooded the clinic with crushing body aches and high fevers. Requests for CBCs to monitor dropping platelet counts and Dengue NS1 antigen tests jumped fivefold within forty-eight hours. We burned through three weeks of inventory in five days.
-
-One night around 2 AM, our night-shift hematology tech called me in a panic. We had four bottles of CBC lyse left, and thirty patients were waiting outside in the emergency triage area. I jumped on my motorbike, rode through flooded streets, and knocked on the back door of a friendly peer lab across town to borrow two boxes of reagent packs until our morning distributor could deliver.
-
-Handing those bottles over while anxious families paced the corridor cured me forever of viewing supply chain as mere paperwork. A stockout in a diagnostic center isn't a lost retail sale. It is a worried mother waiting in tears because a doctor cannot confirm whether her child needs an immediate platelet transfusion.
-
-After that Dengue surge, our team decided we were done operating on adrenaline. We needed a system that actually matched reality.
-
-My first instinct was to implement textbook FIFO: First-In, First-Out. Whatever inventory arrives first should be consumed first.
-
-It took us three weeks to realize FIFO was actively creating waste.
-
-Here was the catch: distributors in Dhaka don't always receive homogeneous inventory from overseas manufacturers. In June, a supplier might deliver reagents with an expiration date of December. But in July, their shipment from Europe or China might contain a batch produced earlier, with an expiration date of October.
-
-If we strictly followed FIFO, we pushed the July arrival behind the June arrival on our shelves. The result? Reagents with shorter shelf lives sat quietly at the back of our racks until they expired unused.
-
-We threw out the textbook rule and switched strictly to FEFO: First-Expired, First-Out.
-
-We didn't buy expensive software for this. We reorganized our cold room bins with clear color-coded physical tags based on expiry month: red for less than 60 days, yellow for 90 days, green for six months plus. Every technician who grabbed a bottle was trained to take from the front-left bin, regardless of when it had arrived at the loading dock.
-
-That single operational change, pairing physical bin discipline with FEFO tracking, cut our expired reagent waste by 18% over the next four months.
-
-The second challenge was figuring out when to reorder.
-
-When people talk about operations nowadays, the conversation instantly jumps to artificial intelligence and predictive algorithms. But in a city where delivery times can swing from four hours to four days depending on weather, traffic, or supplier shortages, fancy black-box models are useless.
-
-What worked was simple, disciplined arithmetic.
-
-We sat down and calculated our actual daily burn rate across high-volume test profiles, and more importantly, we mapped out our lead-time variance. Instead of assuming a supplier took 48 hours because they promised 48 hours, we tracked their actual delivery stamps over the previous six months. We factored in buffer margins for rainy days and customs delays.
-
-We established transparent Reorder Points (ROP) with explicit safety stock thresholds:
-
-Reorder Point = (Average Daily Usage × Average Lead Time) + Safety Stock
-
-Where our safety stock directly reflected the worst-case delivery delays we had logged during peak traffic and import bottlenecks.
-
-We also shut down the informal WhatsApp ordering. Requisitions went through a shared, standardized log that required batch numbers, current stock on hand, and supplier confirmation timestamps. When our shared Excel sheet started lagging and locking up under 40,000 test records, I built a lightweight Power BI dashboard connected directly to our test exports so floor supervisors could see stockout risks 72 hours in advance.
-
-The outcome wasn't glamorous, but it was real. We eliminated midnight emergency dashes to borrow supplies from other clinics, brought our stockout rate on essential test profiles to zero, and freed up our medical technologists to focus on sample quality rather than tracking down delivery vans.
-
-Now, as an IMIS Master's student in Germany, I spend my days studying enterprise architectures, information systems, and process modeling.
-
-In seminar discussions about digital transformation, it is easy for conversations to stay abstract. It's tempting to think that better data just means cleaner database schemas or sleeker user interfaces.
-
-Whenever I find myself drifting into pure theory, I think back to that 4°C cold room in Dhaka, shivering in my jacket, writing lot numbers on a clipboard.
-
-Real systems don't exist in a vacuum. They live in physical spaces where generators vibrate the floorboards, where distributors drop off mismatched batches, and where traffic jams make a mockery of clean timelines. Good data management isn't about building the most complex system possible; it is about building processes sturdy enough to hold up when the pressure spikes and people's health is on the line.
-
-Technology and data are only as good as the physical reality they support. And sometimes, the most useful thing an analyst can do is grab a colored sticker, do some honest math, and make sure the lab never runs out of lyse when the waiting room is full.`,
+        slug: 'lab-data',
+        title: 'From Data Entry to Charts: What a Diagnostic Lab Taught Me About Useful Data',
+        excerpt: 'Entering daily records for over 100 patient samples in Excel and Google Sheets, building PowerPoint charts for managers, and learning why clean data matters before any complex analysis.',
+        category: 'Data & Reporting',
         date: '2026-01-15',
-        readTime: '6 min read',
-        category: 'Operations',
+        content: `## The Daily Volume
+
+When people picture data analysis, they often imagine complex algorithms, real-time dashboards, and automated pipelines. My time at Renaissance Diagnostic Care taught me a very different reality. For over a year, I worked as a Data and Operations Analyst at our diagnostic center in Dhaka. Every single day, we handled over 100 patient samples: blood tests, urine screenings, tissue cultures, and urgent pathology orders.
+
+In a clinical diagnostic center, data does not begin in a tidy data warehouse. It starts at a reception desk with a handwritten doctor prescription, a patient registration slip, and a labelled purple-top collection tube. Each sample represents a patient waiting for an answer. Behind that sample is a chain of data points: patient demographics, test categories, reagent batch numbers, and stock deductions.
+
+## Getting the Data Right in Spreadsheets
+
+My primary responsibility was entering and maintaining this daily stream of records. We worked primarily in Excel and Google Sheets, logging test counts, sample types, patient records, and inventory movements.
+
+Early on, I realized how fragile spreadsheet data can be. In a fast-paced environment where samples arrive continuously, one miskeyed digit in a sample ID or an accidental paste into the wrong column can silently distort an entire weekly summary. If an entry error goes unnoticed, inventory logs show stock that does not exist, or test volume numbers misrepresent clinic throughput.
+
+To prevent errors, I developed strict entry routines. Every evening, I reconciled our spreadsheet row counts against the physical registration logs from the front desk. I set up data validation rules to block duplicate patient IDs and highlight missing test codes. I used conditional formatting to flag low reagent quantities and locked formula cells so accidental keystrokes could not corrupt monthly sums. These were not complex software engineering feats, but disciplined spreadsheet habits that kept our baseline numbers trustworthy.
+
+## Turning Rows into Management Charts
+
+Spreadsheets with thousands of rows are necessary for record-keeping, but they are nearly useless for quick decision making. Our clinic managers, chief medical officers, and administrative heads did not have the time to scroll through rows of test codes during morning meetings.
+
+To make the data actionable, I converted our daily logs into visual charts and weekly PowerPoint presentations. I built pivot tables to aggregate test categories, calculated week-over-week volume changes, and plotted trend lines showing which diagnostic panels were rising or falling.
+
+Presenting data visually changed the conversation in our operations meetings. Instead of guessing whether our laboratory analyzers were operating near capacity, the management team could see clear bar charts comparing morning versus afternoon sample arrivals. They could see how reagent consumption aligned with patient volume and identify which days of the week experienced the heaviest testing bottlenecks.
+
+## The Decision: Stepping Up Rural Marketing
+
+The most significant outcome of this reporting came from analyzing patient origins alongside test selections. While our urban center traffic remained steady, our charts showed that several advanced diagnostic panels were almost never requested by patients traveling from neighboring rural areas.
+
+When I presented these geographical breakdowns and test distributions in our PowerPoint deck, the clinic manager spotted an important gap. Patients in rural communities outside the main city were not avoiding these tests because they did not need them; they simply did not know that our facility offered them, or they found the booking process intimidating.
+
+Following that presentation, the manager decided to step up outreach and marketing efforts in those rural districts. The center published clear informational materials detailing our testing services, fee structures, and sample turnaround times. We simplified access so rural patients and their families could understand exactly how to reach the lab and avail the services with minimal friction. Seeing a managerial decision translate directly into better healthcare access for underserved communities confirmed for me the true value of accessible, well-presented data.
+
+## What Didn't Go to Plan
+
+Not every attempt at improvement went smoothly. During my third month, I tried to introduce an intricate multi-sheet workbook with nested lookup formulas to track stock reorders automatically. I felt proud of its complexity.
+
+A week later, our floor supervisor tried to update a supplier phone number, inadvertently deleted a reference column, and caused reference errors across three linked sheets. The night shift could not log their counts, and I had to spend hours restoring backups and apologizing for creating a bottleneck.
+
+The lesson was humbling and immediate: in operational settings, a simple system that everyone understands is far superior to a clever system that breaks under pressure. I redesigned the tracker with straightforward, transparent columns and clear documentation.
+
+## What I Would Do Differently Today
+
+Now, as a Master's student in International Management and Information Systems (IMIS) in Germany, I study formal business process modeling, enterprise data warehousing, and system architectures.
+
+Looking back at my time at Renaissance with what I know today, I would design our data intake differently. Instead of relying on manual spreadsheet entries, I would map our sample intake using standard BPMN 2.0 workflows to identify handoff friction between receptionists and lab technologists. I would implement structured data validation at the point of initial capture to remove repetitive double-entry work entirely.
+
+Yet the core principle remains unchanged. Whether you are building an enterprise data warehouse or typing entries into a Google Sheet, technology is only as valuable as the decisions it enables. The most rewarding part of working with data is not the complexity of your formulas, but whether your reports help responsible leaders make sound decisions that improve people's lives.`,
     },
     {
         id: 2,
         slug: 'building-petbhai',
-        title: 'Building PetBhai: Supply Chain Architecture Under Constraints',
-        excerpt: 'Architecting an e-commerce platform for an emerging market taught me that code is only as good as the underlying inventory state machines and fulfillment workflows.',
-        content: `In emerging e-commerce markets like Bangladesh, the pet supplies sector has historically depended on informal social media storefronts with zero visibility into inventory availability or order fulfillment. Building PetBhai as a full-stack platform prototype from Germany required solving complex logistics constraints before writing frontend code.
-
-The fundamental engineering challenge was inventory state management. In informal supply chains, multiple retail channels often pull from the same physical stock. I designed an atomic state machine in the database to manage product lifecycles across five distinct states: Available, Reserved (in active checkout), Dispatched, Delivered, and Returned. This prevented overselling during peak traffic while enabling real-time stock reconciliations.
-
-Fulfillment presented another challenge. Courier infrastructure outside major urban hubs often involves multi-hop handoffs and cash-on-delivery reconciliation. I mapped end-to-end logistics workflows, integrating automated webhook updates for shipment tracking and exception handling for partial deliveries.
-
-Building PetBhai demonstrated that technical platforms succeed or fail based on how accurately software architecture models real-world operational constraints.`,
+        title: 'PetBhai: Planning a Pet Shop That Funds Animal Rescue',
+        excerpt: 'Why our animal rescue work led to building an e-commerce prototype, how the revenue model supports voiceless animals, and what remains to be solved before launch.',
+        category: 'Social Venture',
         date: '2025-10-10',
-        readTime: '1 min read',
-        category: 'Entrepreneurship',
+        content: `## Why Rescue Needs a Sustainable Model
+
+Anyone who has participated in street animal welfare knows the emotional and financial strain it creates. Over the years of running animal welfare initiatives in Bangladesh, my friends and I routinely faced urgent emergencies: injured stray dogs hit by vehicles, malnourished litters of kittens abandoned in alleyways, and animals suffering from severe infections.
+
+Every single rescue requires immediate funds. Veterinary consultations, antibiotics, wound dressing, surgery, and daily feeding all require reliable money. For years, we funded these operations through personal pockets and emergency appeals within our community. But relying solely on spontaneous donations and personal savings is exhausting and precarious. Some months funds run dry right when an animal needs critical medical care.
+
+At the same time, thousands of conscientious pet owners across the country buy pet food, cat litter, grooming supplies, and accessories every month through retail shops. That contrast sparked the idea for PetBhai: what if we built a dedicated pet supplies business whose primary purpose is to channel its revenue directly into rescuing and rehabilitating stray and voiceless animals?
+
+## Designing the Prototype
+
+To test the feasibility of this social venture, I set out to build PetBhai as a working software prototype. The goal was to prove the operational logic, catalogue structure, and order fulfillment flows before investing financial capital into warehouse leases or physical stock.
+
+I structured the prototype with several core capabilities:
+First, a clean product catalogue organized by dietary needs, age stages, and pet types, avoiding the cluttered social media marketplace listings typical in the local market.
+Second, an inventory tracking model with explicit stock states: Available, In Basket, Confirmed, and Dispatched. This state flow ensures that products cannot be oversold during high-traffic campaigns.
+Third, a checkout and delivery routing workflow designed around the local courier ecosystem, mapping how orders move from fulfillment hubs to residential doorsteps.
+
+## What Didn't Go to Plan
+
+Building the software prototype was straightforward; modeling the physical logistics under local constraints proved much harder.
+
+During our initial delivery simulations, we encountered major challenges with product handling and courier reliability. In Dhaka, heavy items like twenty-kilogram bags of dog food or clay cat litter require careful handling. Standard courier services frequently damaged packaging in transit during rainy monsoon days, leading to rejected deliveries and lost revenue.
+
+Furthermore, cash on delivery remains the dominant payment method in the region. Modeling cash-on-delivery reconciliations in our order pipeline revealed that payments often take several days to clear back from courier partners to the business account. For a venture meant to provide immediate cash flow for urgent veterinary surgeries, delayed courier reconciliations would create serious cash crunches. These logistical roadblocks demonstrated that writing working web code is only ten percent of the challenge; physical fulfillment and cash cycles determine whether a social venture survives.
+
+## Keeping It a Prototype While Studying
+
+People often ask why PetBhai has not launched as an active commercial storefront yet. The answer comes down to operational honesty.
+
+Running a reliable e-commerce business requires full-time, hands-on attention on the ground. It demands managing vendor relationships, inspecting product storage quality, supervising packing teams, and handling customer support calls every morning. When I moved to Germany to pursue my Master's degree in International Management and Information Systems (IMIS) at Fachhochschule Südwestfalen, I had to be realistic about my capacity.
+
+Attempting to run a fragile, early-stage logistics business from seven thousand kilometers away while handling full-time graduate studies would have compromised both my education and the quality of the service. I chose to keep PetBhai as an architected prototype and research foundation. It serves as an active testing ground where I apply the principles of information systems, enterprise resource planning, and supply chain management that I study in Germany.
+
+## The Long-Term Vision
+
+PetBhai remains a central part of my long-term plans. The mission has not changed: establishing a self-sustaining social enterprise where pet owners can buy quality products knowing that every purchase helps rescue an injured animal or feed a hungry stray on the street.
+
+My time in the IMIS Master's program is giving me the tools to build this venture properly. When the time comes to launch PetBhai commercially, it will not be an impulsive experiment, but a well-structured operation designed to stand on its own feet and serve voiceless animals for years to come.`,
     },
     {
         id: 3,
-        slug: 'solo-sprints',
-        title: 'Solo Sprints: Agile Governance for Independent Builders',
-        excerpt: 'Applying 2-week timeboxed sprint ceremonies, Work-In-Progress limits, and retrospective logs to keep complex master research and product development on schedule.',
-        content: `Agile methodologies and Scrum ceremonies are traditionally designed for cross-functional engineering teams. However, applying sprint structures to independent software engineering and master thesis research has been one of the most effective productivity frameworks I have adopted.
-
-The primary pitfall of solo technical work is scope creep and premature optimization: spending weeks refining visual micro-details while core architectural milestones stall. To counter this, I structure my work into strict two-week timeboxed sprint cycles.
-
-Each sprint begins with a backlog grooming session where deliverables are decomposed into discrete, testable user stories with defined story points. I enforce a strict Work-In-Progress (WIP) limit: no more than two active tasks at any given time. A clear Definition of Done (DoD) ensures that features are only closed when automated tests pass, responsive mobile layouts are verified, and documentation is complete.
-
-At the end of each sprint, I conduct a structured retrospective auditing estimated vs actual velocity. This practice transforms vague ambitions into measurable execution, creating transparency and sustained momentum across complex technical projects.`,
-        date: '2025-05-05',
-        readTime: '1 min read',
-        category: 'Productivity',
-    },
-    {
-        id: 4,
-        slug: 'decentralized-community-operations',
-        title: 'Decentralized Operations at 450K Scale: Building Systems That Run Without Me',
-        excerpt: 'How we structured Standard Operating Procedures, role-based admin tiers, and automated intake workflows to keep an animal welfare community running smoothly from 7,000 km away.',
-        content: `Founding Dog Lovers of Bangladesh and Cat Lovers of Bangladesh started as a simple idea to connect local pet owners. What began as small online groups grew rapidly into a massive network of over 450,000 active community members across the country. We suddenly found ourselves managing a vital hub for animal welfare in a region where such resources were desperately needed.
-
-However, this exponential growth quickly introduced a severe initial bottleneck. We received dozens of daily rescue requests, reports of lost pets, and urgent emergency medical appeals. My personal inboxes were flooded 24 hours a day. I quickly realized that sheer enthusiasm without operational structure leads directly to burnout and dropped cases. Something had to change if we wanted to save lives sustainably.
-
-To solve this, I applied the People, Process, and Technology framework to our non-profit community operations. For the People aspect, I established a strict 3-tier governance model to distribute the workload. Tier 1 volunteers handled frontline comment and post moderation, filtering out spam. Tier 2 managers focused on case verification and conducted adoption background checks. Tier 3 coordinators directly managed emergency logistics and maintained relationships with our partner veterinary clinics.
-
-For the Process pillar, we moved away from ad hoc decision making by drafting comprehensive Standard Operating Procedures. We created standardized checklists to rigorously verify critical veterinary cases. This ensured we could eliminate fraudulent donation requests while protecting volunteer safety during field rescues. Clear rules meant everyone knew exactly what to do without waiting for my approval.
-
-On the Technology front, we completely replaced our chaotic direct message culture with structured digital intake forms. We integrated automated keyword notifications for emergency triage, utilizing automated systems to help categorize urgent appeals. This allowed critical cases to bypass the standard queue and alert Tier 3 coordinators instantly.
-
-The ultimate operational test arrived when I moved to Germany to pursue my Master's in IMIS at Fachhochschule Südwestfalen. I had to transition from day-to-day founder oversight to a completely decentralized governance model. Thanks to the robust systems we had built, the transition was a success. Our SOPs and empowered team leaders continue running the entire operation seamlessly across a six-hour time zone difference.
-
-The biggest lesson I learned from this journey is clear. True operational excellence is not about being indispensable every hour of the day. It is about designing transparent workflows that empower your teams to execute with absolute confidence in your absence.`,
-        date: '2026-04-18',
-        readTime: '6 min read',
+        slug: 'community-moderators',
+        title: 'Handing Over a 450,000-Member Community to Five Moderators',
+        excerpt: 'Founding two large animal welfare groups, handling the burnout of answering every message alone, and building clear rules and automated alerts that let a small team run the platform.',
         category: 'Community Operations',
+        date: '2026-04-18',
+        content: `## Founding the Communities
+
+Years ago, I founded Dog Lovers of Bangladesh and Cat Lovers of Bangladesh. At the time, there was no centralized online space where pet owners and animal rescuers in Bangladesh could connect, find reliable veterinary advice, or report lost pets.
+
+What began as modest discussion groups grew rapidly. Month after month, thousands of new members joined. Today, across both communities, over 450,000 members share advice, arrange adoptions, and report animals in distress. Seeing that community grow from zero was inspiring, but as the numbers climbed, the operational burden grew alongside them.
+
+## The Bottleneck and Personal Burnout
+
+In the early stages, I made the classic founder mistake of trying to handle everything myself. My notifications never stopped. At 7 AM, someone would message about a lost puppy in Dhanmondi. At noon, someone would report an injured cat in Chittagong. At midnight, someone would post an emotional appeal for urgent veterinary donations.
+
+I felt personally responsible for every animal mentioned in the groups. I spent hours answering direct messages, approving posts, and trying to connect rescuers with clinics.
+
+Inevitably, this approach collapsed into severe burnout. When you try to be the single point of contact for tens of thousands of people, you become the primary bottleneck. Urgent medical appeals sat in the approval queue while I was working or sleeping, while fraudulent fundraising posts occasionally slipped through because I was too tired to review documentation properly. It became painfully clear that passion without organization harms the very animals you want to protect.
+
+## Handing Over to Five Dedicated Moderators
+
+I realized the groups needed a real operational structure. I could not run them alone, nor did we need a massive, bloated bureaucracy. What we needed was a focused, trustworthy team.
+
+I selected about five active, reliable community members who had demonstrated good judgment, deep empathy for animals, and emotional calm during online conflicts. I invited them to step up as our core moderation team.
+
+Instead of dividing the team into complex corporate tiers, we kept the structure practical and direct. Each moderator took ownership of specific time windows during the day and specific focus areas. Some focused on reviewing daily submissions, others focused on adoption vetting, and others verified medical cases with clinics.
+
+## Standard Formats and Automated Keyword Alerts
+
+To make the moderators' work manageable, we created clear rules and standardized posting formats:
+
+First, we banned open, unverified fundraising requests. Anyone requesting financial help for an animal was required to provide a clear photograph, the name and location of the treating veterinary clinic, and an itemized prescription or doctor note. This single policy eliminated fraudulent claims and protected our members' trust.
+
+Second, we introduced strict post templates for adoption and lost-pet notices. Every post had to include the animal age, medical history, location, and clear contact numbers before approval.
+
+Third, we configured several automated keyword alerts inside our moderation tools. Keywords associated with life-threatening emergencies, such as poisonings, vehicular accidents, critical fractures, or urgent blood donor needs, immediately trigger high-priority alerts for our moderation team. When an alert fires, a moderator receives an immediate notification, reviews the post ahead of the general queue, and pins it to the top of the group so nearby rescuers can respond quickly.
+
+## Managing Across Time Zones
+
+The true test of this operational setup came when I moved to Germany to begin my Master's studies in International Management and Information Systems at Fachhochschule Südwestfalen.
+
+Germany is four to five hours behind Bangladesh, depending on daylight saving time. If our communities had still depended on my personal daily approvals, the groups would have stalled every morning. But because our five moderators had clear guidelines, established posting formats, and automated alerts, the groups continued operating smoothly without interruption.
+
+Our team communicates through a shared group chat where moderators discuss tricky cases, flag repeat offenders, and share updates on ongoing rescues. My role shifted from frontline moderator to community steward: I handle technical configuration, policy updates, and major escalations, while the five moderators manage day-to-day operations with confidence.
+
+## What True Operations Looks Like
+
+Founding a project is exciting, but building systems that function without your constant intervention is the real test of leadership.
+
+A community of 450,000 members does not stay orderly because one person works eighteen hours a day. It works because a small team of dedicated people has clear rules, practical tools, and the trust to make decisions independently. Knowing that injured animals are still being rescued and adopted every single day while I study in Germany is the most satisfying proof that good operations matter.`,
     },
 ];
+
+export const blogPosts: BlogPost[] = rawBlogPosts.map((post) => ({
+    ...post,
+    readTime: getReadTime(post.content),
+}));
+
+export function getPostBySlug(slug: string): BlogPost | undefined {
+    return blogPosts.find((post) => post.slug === slug);
+}
+
+export function getAdjacentPosts(slug: string): { prev: BlogPost | null; next: BlogPost | null } {
+    const index = blogPosts.findIndex((post) => post.slug === slug);
+    if (index === -1) {
+        return { prev: null, next: null };
+    }
+    return {
+        prev: index > 0 ? blogPosts[index - 1] : null,
+        next: index < blogPosts.length - 1 ? blogPosts[index + 1] : null,
+    };
+}

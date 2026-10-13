@@ -20,12 +20,10 @@ function formatDate(dateStr: string) {
 
 function getCategoryClass(category: string) {
     switch (category.toLowerCase()) {
-        case 'operations':
-            return styles.categoryOperations;
-        case 'entrepreneurship':
-            return styles.categoryEntrepreneurship;
-        case 'productivity':
-            return styles.categoryProductivity;
+        case 'data & reporting':
+            return styles.categoryData;
+        case 'social venture':
+            return styles.categoryVenture;
         case 'community operations':
             return styles.categoryCommunity;
         default:
@@ -46,30 +44,24 @@ export default function Blog() {
                     </div>
                 </ScrollReveal>
 
-                <div className={styles.blogGrid}>
+                <div className={styles.articleList}>
                     {blogPosts.map((post, index) => (
-                        <div key={post.id} className={styles.gridItem}>
-                            <Link href={`/blog#${post.slug}`} className={styles.cardLink}>
+                        <div key={post.id} className={styles.rowItem}>
+                            <Link href={`/blog/${post.slug}`} className={styles.rowLink}>
                                 <motion.div
-                                    className={styles.card}
-                                    initial={{ opacity: 0, y: 20 }}
+                                    className={styles.rowCard}
+                                    initial={{ opacity: 0, y: 15 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    whileHover={{ y: -6 }}
-                                    whileTap={{ scale: 0.97 }}
-                                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                                    whileHover={{ x: 4 }}
+                                    whileTap={{ scale: 0.99 }}
+                                    transition={{ duration: 0.3, delay: index * 0.08 }}
                                 >
-                                    <div className={styles.cardTop}>
+                                    <div className={styles.rowMeta}>
                                         <span className={`${styles.category} ${getCategoryClass(post.category)}`}>
                                             {post.category}
                                         </span>
-                                        <ArrowUpRight size={18} className={styles.arrow} />
-                                    </div>
-
-                                    <h3 className={styles.cardTitle}>{post.title}</h3>
-                                    <p className={styles.cardExcerpt}>{post.excerpt}</p>
-
-                                    <div className={styles.cardMeta}>
+                                        <span className={styles.metaDot} aria-hidden="true">•</span>
                                         <span className={styles.metaItem}>
                                             <Calendar size={13} />
                                             {formatDate(post.date)}
@@ -80,17 +72,25 @@ export default function Blog() {
                                             {post.readTime}
                                         </span>
                                     </div>
+
+                                    <div className={styles.rowContent}>
+                                        <div className={styles.rowHeader}>
+                                            <h3 className={styles.rowTitle}>{post.title}</h3>
+                                            <ArrowUpRight size={18} className={styles.arrow} />
+                                        </div>
+                                        <p className={styles.rowExcerpt}>{post.excerpt}</p>
+                                    </div>
                                 </motion.div>
                             </Link>
                         </div>
                     ))}
                 </div>
 
-                <ScrollReveal delay={0.3}>
+                <ScrollReveal delay={0.2}>
                     <div className={styles.viewAll}>
                         <motion.div whileTap={{ scale: 0.97 }} style={{ display: 'inline-block' }}>
                             <Link href="/blog" className={styles.viewAllLink}>
-                                Read All Posts
+                                All writing ({blogPosts.length})
                                 <ArrowRight size={16} />
                             </Link>
                         </motion.div>

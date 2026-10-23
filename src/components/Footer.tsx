@@ -11,7 +11,7 @@ const socialLinks = [
     { icon: Mail, href: getMailtoUrl(), label: 'Email' },
 ];
 
-const CURRENT_YEAR = 2026;
+const CURRENT_YEAR = 2025;
 
 export default function Footer() {
     const scrollToTop = () => {

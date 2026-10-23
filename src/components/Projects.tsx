@@ -5,22 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { ArrowUpRight, ExternalLink, GraduationCap, ShoppingBag, Heart, Users, Database, Newspaper } from 'lucide-react';
 import ScrollReveal from './animations/ScrollReveal';
-import { useTilt } from '@/hooks/useTilt';
 import styles from './Projects.module.css';
-
-function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
-  const { ref, handleMove, handleLeave } = useTilt({ maxDeg: 6, scale: 1.02 });
-  return (
-    <div
-      ref={ref}
-      className={className}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-    >
-      {children}
-    </div>
-  );
-}
 
 const categoryList = [
     'All',
@@ -48,12 +33,12 @@ const projects = [
     {
         id: 2,
         category: 'Education Consulting',
-        title: 'NexTep Edu · Technical Project Lead & Workflow Automation',
-        description: 'Led end-to-end digital infrastructure delivery for an education consulting firm. Modeled business workflows using BPMN 2.0, automated document verification pipelines, and created interactive client dashboards that accelerated student onboarding by 40%.',
+        title: 'NexTep Edu · Technical Project Lead & Web Build',
+        description: 'Technical Project Lead for a study abroad consultancy (May 2025 to March 2026). Mapped the student application procedure with BPMN 2.0, which the team now uses as its working playbook. Built and deployed the company website in Next.js with 17 destination guides in English and Bangla, plus a private Supabase-backed application tracker that students open through a unique code and email link.',
         gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         icon: GraduationCap,
         link: 'https://www.nextepedu.com',
-        tags: ['Technical Project Lead', 'BPMN 2.0', 'Process Automation'],
+        tags: ['BPMN 2.0', 'Next.js & Supabase', 'Technical Project Lead'],
         image: '/images/projects/nextepedu.png',
         blur: null,
     },
@@ -176,11 +161,11 @@ export default function Projects() {
                                 transition={{ duration: 0.35 }}
                             >
                                 <motion.div
-                                    whileHover={{ y: -6 }}
+                                    whileHover={{ y: -3 }}
                                     whileTap={{ scale: 0.97 }}
                                     style={{ height: '100%' }}
                                 >
-                                    <TiltCard className={`${styles.projectCard} ${styles.tiltCard}`}>
+                                    <div className={styles.projectCard}>
                                         {/* Project Visual */}
                                     <div className={styles.imageWrapper}>
                                         {project.image ? (
@@ -253,7 +238,7 @@ export default function Projects() {
                                             ))}
                                         </div>
                                     </div>
-                                    </TiltCard>
+                                    </div>
                                 </motion.div>
                             </motion.div>
                         ))}

@@ -31,6 +31,8 @@ function getCategoryClass(category: string) {
             return styles.categoryVenture;
         case 'community operations':
             return styles.categoryCommunity;
+        case 'web & process':
+            return styles.categoryWeb;
         default:
             return '';
     }
@@ -49,6 +51,7 @@ export default function BlogIndexPage() {
             'building-petbhai': '/blog/building-petbhai',
             'decentralized-community-operations': '/blog/community-moderators',
             'community-moderators': '/blog/community-moderators',
+            'building-nextep-edu': '/blog/building-nextep-edu',
         };
 
         if (redirects[hash]) {

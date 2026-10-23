@@ -88,10 +88,10 @@
     background: none;
     border: none;
     color: var(--text-secondary);
-    font-size: 13px;
+    font-size: 13.5px;
     font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    text-transform: none;
     padding: 8px 16px;
     cursor: pointer;
     text-decoration: none;
@@ -143,10 +143,10 @@
     align-items: center;
     gap: 6px;
     padding: 6px 12px;
-    font-size: 13px;
+    font-size: 13.5px;
     font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    text-transform: none;
     color: var(--text-secondary);
     transition: color var(--transition-fast);
     white-space: nowrap;

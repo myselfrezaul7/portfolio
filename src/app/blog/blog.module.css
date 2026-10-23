@@ -217,3 +217,14 @@
 .readMore:hover .arrowIcon {
     transform: translateX(4px);
 }
+.categoryWeb {
+    color: #8b5cf6;
+    background: rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.25);
+}
+
+:global([data-theme="light"]) .categoryWeb {
+    color: #6d28d9;
+    background: rgba(109, 40, 217, 0.08);
+    border-color: rgba(109, 40, 217, 0.2);
+}

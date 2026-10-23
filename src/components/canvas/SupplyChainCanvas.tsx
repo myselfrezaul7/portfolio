@@ -64,8 +64,8 @@ const getDarkPalette = (): PaletteColors => ({
     routeColor: new THREE.Color(0x4a9b9b),
     packetColor: new THREE.Color(0xffffff),
     haloColor: new THREE.Color(0x4a9b9b),
-    globalRouteOpacity: 0.55,
-    globalNodeOpacity: 0.90,
+    globalRouteOpacity: 0.25,
+    globalNodeOpacity: 0.55,
 });
 
 const getLightPalette = (): PaletteColors => ({
@@ -75,8 +75,8 @@ const getLightPalette = (): PaletteColors => ({
     routeColor: new THREE.Color(0x1e7b78),
     packetColor: new THREE.Color(0x0f4c4a),
     haloColor: new THREE.Color(0x1e7b78),
-    globalRouteOpacity: 0.40,
-    globalNodeOpacity: 0.85,
+    globalRouteOpacity: 0.20,
+    globalNodeOpacity: 0.50,
 });
 
 function calculateSpatialAlpha(x: number): number {

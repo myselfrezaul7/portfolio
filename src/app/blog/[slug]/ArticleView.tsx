@@ -36,6 +36,8 @@ function getCategoryClass(category: string) {
             return styles.categoryVenture;
         case 'community operations':
             return styles.categoryCommunity;
+        case 'web & process':
+            return styles.categoryWeb;
         default:
             return '';
     }

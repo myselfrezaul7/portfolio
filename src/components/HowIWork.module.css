@@ -49,15 +49,9 @@
         top: 56px;
         left: 12%;
         right: 12%;
-        height: 2px;
-        background: linear-gradient(
-            90deg,
-            rgba(74, 155, 155, 0.15) 0%,
-            var(--accent) 30%,
-            var(--accent) 70%,
-            rgba(74, 155, 155, 0.15) 100%
-        );
-        box-shadow: 0 0 10px rgba(74, 155, 155, 0.4);
+        background: var(--border);
+        height: 1px;
+        opacity: 0.7;
         z-index: 0;
         pointer-events: none;
     }
@@ -157,23 +151,25 @@
 
 .stepNumber {
     position: absolute;
-    top: 24px;
-    right: 24px;
-    font-size: 48px;
-    font-weight: 800;
-    font-variant-numeric: tabular-nums;
-    font-feature-settings: "tnum";
-    color: var(--bg-tertiary);
-    letter-spacing: -0.03em;
-    -webkit-text-stroke: 1px transparent;
+    top: 28px;
+    right: 28px;
+    font-size: 13px;
+    font-family: var(--font-mono, monospace);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    padding: 3px 8px;
+    border-radius: 6px;
     transition: all var(--transition-normal);
     user-select: none;
 }
 
 .stepCard:hover .stepNumber {
-    color: rgba(74, 155, 155, 0.15);
-    -webkit-text-stroke: 1.5px var(--accent);
-    text-shadow: 0 0 16px rgba(74, 155, 155, 0.25);
+    color: var(--accent);
+    border-color: rgba(74, 155, 155, 0.4);
+    background: rgba(74, 155, 155, 0.08);
 }
 
 .iconWrapper {

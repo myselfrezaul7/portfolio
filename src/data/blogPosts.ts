@@ -168,12 +168,63 @@ Founding a project is exciting, but building systems that function without your 
 
 A community of 450,000 members does not stay orderly because one person works eighteen hours a day. It works because a small team of dedicated people has clear rules, practical tools, and the trust to make decisions independently. Knowing that injured animals are still being rescued and adopted every single day while I study in Germany is the most satisfying proof that good operations matter.`,
     },
+    {
+        id: 4,
+        slug: 'building-nextep-edu',
+        title: 'From BPMN Diagrams to My First Live Website: Building NexTep Edu',
+        excerpt: 'Mapping a study abroad consultancy with BPMN 2.0, building my first production website, and adding a private application tracker backed by Supabase.',
+        category: 'Web & Process',
+        date: '2026-03-10',
+        content: `## Why I Said Yes
+
+From the very beginning of my studies, I have been drawn to the space where management meets technology. I like understanding how a business actually runs, and then finding the right tools to make that work easier. So when I joined NexTep Edu, a study abroad consultancy helping students from Bangladesh apply to universities in Germany and other countries, as Technical Project Lead in May 2025, I saw a chance to do exactly that.
+
+There was one catch. I had never built a full website before. NexTep Edu was my first real web project, and I learned most of what I know about web building along the way.
+
+## Mapping the Process Before Writing Any Code
+
+Before touching the website, I wanted to understand how the consultancy worked. A student's journey has many steps: the first inquiry, a consultation, university selection, preparing documents and a statement of purpose, the offer letter, proof of funds, and finally the visa. Each step involves different people and different documents, and it is easy for things to fall through the cracks.
+
+Around that time I was learning BPMN 2.0 in my IMIS classes. As soon as I had access to a modelling tool, I used it to draw out the consultancy's workflow: who does what, in which order, and where a file waits for the next action.
+
+I want to be honest about what this did and did not become. The BPMN models are not running inside any software. Nothing is automated by a process engine. What changed is that the team now has a clear visual map of the procedure, and they manage their daily work based on those diagrams and the plan we built from them. For a small team, that shared picture turned out to be more useful than any complicated system would have been.
+
+## Building the Website
+
+With the process clear, I moved on to the website itself. I built it by vibe coding: describing what I needed to AI coding assistants, reading and testing what came back, fixing what did not work, and repeating that loop until each part behaved the way I wanted.
+
+The site runs on Next.js with Tailwind CSS. It supports both English and Bangla, has a dark and light theme, and includes a guide page for each of the 17 destination countries the consultancy works with. I also added structured data so search engines understand that NexTep Edu is an educational organisation with a local office, along with a frequently asked questions section and a simple contact form.
+
+None of this was planned perfectly at the start. Every feature taught me something new about how pages are rendered, how routes work, and how small layout decisions affect the experience on a phone.
+
+## The Private Application Tracker
+
+The part I am proudest of is the application tracker.
+
+Students applying abroad are understandably anxious, and the most common message the team received was some version of "Is there any update on my file?" Answering those one by one took time away from the actual work.
+
+So I built a tracking page. When a student's application is set up, they receive an email with a unique tracking code and a private link. Using that link, they can check the current stage of their application at any time, without calling or messaging anyone. The data is stored in Supabase, and only staff members with admin access can update a student's progress. Students only ever see their own application, which was important to me because these files contain personal information.
+
+It is not a complicated system, but it solves a real problem, and it connects directly back to the BPMN map: each stage a student sees on the tracker matches a step in the process we drew at the beginning.
+
+## What I Would Do Differently
+
+Because this was my first project, I made plenty of decisions that I would approach differently today. I would plan the content structure for both languages before building pages, test how the site looks to search engines earlier instead of only checking it in my own browser, and document the admin workflow for the team from day one rather than explaining it as questions came up.
+
+## What It Gave Me
+
+My time as Technical Project Lead at NexTep Edu ended in March 2026. Looking back, the biggest thing I took from it was not a specific framework or tool. It was confidence. I went in having never shipped a website, and I came out knowing I could take a business process, map it properly, and turn it into something people actually use.
+
+That confidence is the reason this portfolio exists, and it is the same mindset I bring to my work now: understand the people and the process first, then choose the technology that supports them.`,
+    },
 ];
 
-export const blogPosts: BlogPost[] = rawBlogPosts.map((post) => ({
-    ...post,
-    readTime: getReadTime(post.content),
-}));
+export const blogPosts: BlogPost[] = rawBlogPosts
+    .map((post) => ({
+        ...post,
+        readTime: getReadTime(post.content),
+    }))
+    .sort((a, b) => b.date.localeCompare(a.date));
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
     return blogPosts.find((post) => post.slug === slug);

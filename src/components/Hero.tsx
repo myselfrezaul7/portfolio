@@ -25,7 +25,7 @@ export default function Hero() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        <span className={styles.emoji}>👋</span>
+                        <span className={styles.eyebrowLine} aria-hidden="true" />
                         <span className={styles.greetingText}>Hello, I am</span>
                     </motion.div>
 

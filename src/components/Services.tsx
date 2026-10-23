@@ -3,22 +3,7 @@
 import { motion } from 'framer-motion';
 import { Settings, BarChart3, Code2 } from 'lucide-react';
 import ScrollReveal from './animations/ScrollReveal';
-import { useTilt } from '@/hooks/useTilt';
 import styles from './Services.module.css';
-
-function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
-  const { ref, handleMove, handleLeave } = useTilt({ maxDeg: 6, scale: 1.02 });
-  return (
-    <div
-      ref={ref}
-      className={className}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-    >
-      {children}
-    </div>
-  );
-}
 
 const services = [
     {
@@ -63,12 +48,12 @@ export default function Services() {
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                whileHover={{ y: -8 }}
+                                whileHover={{ y: -3 }}
                                 whileTap={{ scale: 0.97 }}
                                 transition={{ duration: 0.4, delay: index * 0.15 }}
                                 style={{ height: '100%' }}
                             >
-                                <TiltCard className={`${styles.card} ${styles.tiltCard}`}>
+                                <div className={styles.card}>
                                     <div className={styles.iconWrapper}>
                                     <service.icon size={28} strokeWidth={1.5} />
                                 </div>
@@ -84,7 +69,7 @@ export default function Services() {
                                         </span>
                                     ))}
                                     </div>
-                                </TiltCard>
+                                </div>
                             </motion.div>
                         </div>
                     ))}

@@ -1,7 +1,7 @@
 .marqueeContainer {
     width: 100%;
     overflow: hidden;
-    padding: 24px 0;
+    padding: 14px 0;
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     background: var(--bg-secondary);
@@ -41,15 +41,15 @@
 .marqueeItem {
     display: inline-flex;
     align-items: center;
-    font-size: clamp(16px, 3vw, 24px);
+    font-size: 13px;
     font-weight: 500;
-    color: var(--text-secondary);
+    color: var(--text-tertiary);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
 }
 
 .separator {
-    margin: 0 32px;
+    margin: 0 24px;
     color: var(--text-tertiary);
     font-size: 12px;
 }

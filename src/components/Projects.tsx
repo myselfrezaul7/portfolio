@@ -95,6 +95,11 @@ const projects = [
 export default function Projects() {
     const [activeCategory, setActiveCategory] = useState<string>('All');
     const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
+    const [expandedIds, setExpandedIds] = useState<Record<number, boolean>>({});
+
+    const toggleExpand = (id: number) => {
+        setExpandedIds((prev) => ({ ...prev, [id]: !prev[id] }));
+    };
 
     const handleImageLoad = (id: number) => {
         setLoadedImages((prev) => ({ ...prev, [id]: true }));
@@ -179,7 +184,7 @@ export default function Projects() {
                                                     fill
                                                     className={`${styles.projectImage} ${loadedImages[project.id] ? styles.imageLoaded : styles.imageLoading}`}
                                                     style={{ objectFit: 'cover', objectPosition: 'top' }}
-                                                    sizes="(max-width: 767px) 85vw, (max-width: 1199px) 50vw, 33vw"
+                                                    sizes="(max-width: 767px) 80vw, (max-width: 1199px) 50vw, 33vw"
                                                     placeholder={project.blur ? 'blur' : 'empty'}
                                                     blurDataURL={project.blur || undefined}
                                                     onLoad={() => handleImageLoad(project.id)}
@@ -228,9 +233,19 @@ export default function Projects() {
                                             )}
                                         </h3>
 
-                                        <p className={styles.projectDescription}>
+                                        <div className={styles.descriptionWrapper}>
+                                            <p className={`${styles.projectDescription} ${expandedIds[project.id] ? styles.descriptionExpanded : ''}`}>
                                             {project.description}
-                                        </p>
+                                            </p>
+                                            <button
+                                                type="button"
+                                                className={styles.readMoreBtn}
+                                                onClick={() => toggleExpand(project.id)}
+                                                aria-expanded={!!expandedIds[project.id]}
+                                            >
+                                                {expandedIds[project.id] ? 'Show less' : 'Read more'}
+                                            </button>
+                                        </div>
 
                                         <div className={styles.tags}>
                                             {project.tags.map((tag) => (

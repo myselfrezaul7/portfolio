@@ -28,11 +28,16 @@ export default function Navbar() {
     useEffect(() => {
         let ticking = false;
         let rafId: number | null = null;
+        let lastScrolled: boolean | null = null;
 
         const handleScroll = () => {
             if (!ticking) {
                 rafId = window.requestAnimationFrame(() => {
-                    setIsScrolled(window.scrollY > 100);
+                    const nextScrolled = window.scrollY > 100;
+                    if (nextScrolled !== lastScrolled) {
+                        lastScrolled = nextScrolled;
+                        setIsScrolled(nextScrolled);
+                    }
                     ticking = false;
                 });
                 ticking = true;
@@ -245,7 +250,7 @@ export default function Navbar() {
                                         <motion.span
                                             layoutId="activeNavIndicator"
                                             className={styles.activePill}
-                                            transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                                            transition={{ type: 'spring', stiffness: 500, damping: 35, mass: 0.8 }}
                                         />
                                     )}
                                     <span className={styles.navLinkText}>{link.name}</span>

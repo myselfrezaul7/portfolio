@@ -9,18 +9,24 @@ export default function ScrollToTop() {
     const [isVisible, setIsVisible] = useState(false);
     const { scrollYProgress } = useScroll();
     const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 400,
-        damping: 30,
+        stiffness: 500,
+        damping: 35,
+        restDelta: 0.0005,
     });
 
     useEffect(() => {
         let ticking = false;
         let rafId: number | null = null;
+        let lastVisible: boolean | null = null;
 
         const toggleVisibility = () => {
             if (!ticking) {
                 rafId = window.requestAnimationFrame(() => {
-                    setIsVisible(window.scrollY > 300);
+                    const nextVisible = window.scrollY > 300;
+                    if (nextVisible !== lastVisible) {
+                        lastVisible = nextVisible;
+                        setIsVisible(nextVisible);
+                    }
                     ticking = false;
                 });
                 ticking = true;

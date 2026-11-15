@@ -31,20 +31,37 @@
     font-size: clamp(32px, 5vw, 48px);
     font-weight: 700;
     letter-spacing: -0.02em;
-    margin-bottom: 48px;
+    margin-bottom: 40px;
     max-width: 700px;
 }
 
 .content {
-    max-width: 800px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 36px;
+}
+
+@media (min-width: 1024px) {
+    .content {
+        grid-template-columns: 1.35fr 0.85fr;
+        gap: 48px;
+        align-items: start;
+        max-width: none;
+    }
+}
+
+.bioColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .bioSection {
-    margin-bottom: 48px;
+    width: 100%;
 }
 
 .bio {
-    font-size: 18px;
+    font-size: 16.5px;
     color: var(--text-secondary);
     line-height: 1.8;
     margin-bottom: 20px;
@@ -60,186 +77,24 @@
     font-weight: 600;
 }
 
-.infoCards {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    gap: 16px;
-    padding-bottom: 20px;
-    margin: 0 -24px 48px;
-    padding-left: 24px;
-    padding-right: 24px;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-.infoCards::-webkit-scrollbar {
-    display: none;
-}
-
-@media (min-width: 768px) {
-    .infoCards {
-        gap: 24px;
-        margin: 0 0 48px;
-        padding-left: 0;
-        padding-right: 0;
-        overflow-x: visible;
-        padding-bottom: 0;
-    }
-}
-
-.infoCard {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 20px 24px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    transition: all var(--transition-normal);
-    scroll-snap-align: start;
-    flex: 0 0 75vw;
-    max-width: 280px;
-}
-
-@media (min-width: 768px) {
-    .infoCard {
-        flex: 1;
-        max-width: none;
-    }
-}
-
-.infoCard:hover {
-    border-color: rgba(74, 155, 155, 0.4);
-    background: var(--bg-card-hover);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 0 16px rgba(74, 155, 155, 0.15);
-}
-
-:global([data-theme="light"]) .infoCard:hover {
-    border-color: rgba(30, 123, 120, 0.4);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 0 16px rgba(30, 123, 120, 0.15);
-}
-
-.infoCard svg {
-    color: var(--accent);
-    flex-shrink: 0;
-    margin-top: 2px;
-    transition: transform var(--transition-normal), color var(--transition-normal);
-}
-
-.infoCard:hover svg {
-    transform: scale(1.18);
-    color: var(--accent-hover);
-}
-
-.infoLabel {
-    display: block;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-tertiary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 4px;
-}
-
-.infoValue {
-    display: block;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-primary);
-}
-
-.languagesSection {
-    margin-bottom: 48px;
-}
-
-.languagesTitle {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-tertiary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 16px;
-}
-
-.languagesGrid {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.languageCard {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 20px;
-    transition: all var(--transition-normal);
-}
-
-.languageCard:hover {
-    border-color: rgba(74, 155, 155, 0.35);
-    background: var(--bg-card-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-
-.languageHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.languageName {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.languageLevel {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--accent);
-    background: rgba(74, 155, 155, 0.1);
-    padding: 3px 10px;
-    border-radius: 6px;
-    border: 1px solid rgba(74, 155, 155, 0.2);
-}
-
-.progressTrack {
-    width: 100%;
-    height: 6px;
-    background: var(--bg-tertiary);
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.progressFill {
-    height: 100%;
-    background: var(--gradient-accent);
-    border-radius: 4px;
-    box-shadow: 0 0 10px rgba(74, 155, 155, 0.4);
-}
-
 .resumeButton {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    padding: 16px 28px;
-    font-size: 15px;
+    margin-top: 28px;
+    padding: 15px 28px;
+    font-size: 14px;
     font-weight: 600;
-    color: white;
-    background: var(--gradient-primary);
-    border-radius: 10px;
-    transition: all var(--transition-normal);
-    box-shadow: var(--shadow-glow);
+    color: var(--bg-primary);
+    background: var(--text-primary);
+    border-radius: 50px;
+    transition: transform var(--transition-normal), opacity var(--transition-normal), box-shadow var(--transition-normal);
 }
 
 .resumeButton:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 0 40px rgba(74, 155, 155, 0.4);
+    transform: translateY(-2px);
+    opacity: 0.9;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 .downloadIcon {
@@ -247,5 +102,151 @@
 }
 
 .resumeButton:hover .downloadIcon {
-    transform: translateY(3px);
+    transform: translateY(2px);
+}
+
+/* Right Sidebar Bento Card */
+.sidebarCard {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+@media (max-width: 767px) {
+    .sidebarCard {
+        padding: 22px 18px;
+        border-radius: 16px;
+    }
+}
+
+.sidebarHeading {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+}
+
+.factsList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.factRow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: border-color var(--transition-fast);
+}
+
+.factRow:hover {
+    border-color: var(--border-hover);
+}
+
+.factIcon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(74, 155, 155, 0.1);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.factText {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.infoLabel {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.infoValue {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.sidebarDivider {
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0;
+}
+
+.languagesList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.languageRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.languageMeta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.languageName {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.languageLevel {
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--accent);
+    background: rgba(74, 155, 155, 0.08);
+    padding: 3px 9px;
+    border-radius: 6px;
+    border: 1px solid rgba(74, 155, 155, 0.18);
+}
+
+.langDots {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.langDot {
+    width: 10px;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--border-hover);
+}
+
+.langDotFilled {
+    background: var(--accent);
 }

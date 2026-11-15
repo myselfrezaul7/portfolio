@@ -46,7 +46,7 @@ export default function Footer() {
                                 target={social.href.startsWith('mailto') ? undefined : '_blank'}
                                 rel={social.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
                                 className={styles.socialLink}
-                                whileHover={{ y: -4, scale: 1.08 }}
+                                whileHover={{ y: -2, scale: 1.03 }}
                                 whileTap={{ scale: 0.92 }}
                                 transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                                 aria-label={social.label}

@@ -588,6 +588,12 @@ export default function SupplyChainCanvas({ className }: SupplyChainCanvasProps)
 
         // Track node base positions
         const currentPositions = NODES.map(n => new THREE.Vector3(n.x, n.y, n.z));
+        const basePositions = NODES.map(n => new THREE.Vector3(n.x, n.y, n.z));
+        const scratchMouse = new THREE.Vector3();
+        const scratchDir = new THREE.Vector3();
+        const scratchWorldCursor = new THREE.Vector3();
+        const scratchTargetPos = new THREE.Vector3();
+        const scratchNodeToCursor = new THREE.Vector3();
 
         // Motion and mouse tracking
         let baseRotation = 0;
@@ -651,12 +657,16 @@ export default function SupplyChainCanvas({ className }: SupplyChainCanvasProps)
 
         // Render loop control
         let animationFrameId: number | null = null;
+        let lastFrameTime = 0;
         let isIntersecting = false;
         let isTabVisible = !document.hidden;
 
-        const updateScene = () => {
+        const updateScene = (dt: number) => {
             const target = targetPaletteRef.current;
-            const lerpFactor = 0.05;
+            const frameScale = dt * 60;
+            const lerpFactor = 1 - Math.exp(-3.0 * dt);
+            const nodeLerpFactor = 1 - Math.exp(-5.0 * dt);
+            const mouseLerpFactor = 1 - Math.exp(-2.5 * dt);
 
             // Interpolate theme colors smoothly frame by frame
             currentPalette.nodeColor.lerp(target.nodeColor, lerpFactor);
@@ -682,34 +692,32 @@ export default function SupplyChainCanvas({ className }: SupplyChainCanvasProps)
             haloMaterial.uniforms.uColor.value.copy(currentPalette.haloColor);
             echoMaterial.uniforms.uColor.value.copy(currentPalette.haloColor);
 
-            // Update magnetic nodes
-            const mousePos = new THREE.Vector3(mouseNDCRef.current.x, mouseNDCRef.current.y, 0.5);
-            mousePos.unproject(camera);
-            const dir = mousePos.sub(camera.position).normalize();
-            const dist = -camera.position.z / dir.z;
-            const worldCursor = camera.position.clone().add(dir.multiplyScalar(dist));
-            sceneGroup.worldToLocal(worldCursor);
+            // Update magnetic nodes (zero per-frame heap allocations)
+            scratchMouse.set(mouseNDCRef.current.x, mouseNDCRef.current.y, 0.5).unproject(camera);
+            scratchDir.copy(scratchMouse).sub(camera.position).normalize();
+            const dist = -camera.position.z / scratchDir.z;
+            scratchWorldCursor.copy(camera.position).addScaledVector(scratchDir, dist);
+            sceneGroup.worldToLocal(scratchWorldCursor);
 
             const isMouseActive = mouseNDCRef.current.active;
             
             for (let i = 0; i < NODES.length; i++) {
                 const baseNode = NODES[i];
-                const basePos = new THREE.Vector3(baseNode.x, baseNode.y, baseNode.z);
+                const basePos = basePositions[i];
                 const currentPos = currentPositions[i];
                 
-                const targetPos = basePos.clone();
+                scratchTargetPos.copy(basePos);
                 
                 if (isMouseActive) {
-                    const nodeToCursor = new THREE.Vector3().subVectors(worldCursor, basePos);
-                    const d = nodeToCursor.length();
-                    if (d < 0.4) {
+                    scratchNodeToCursor.subVectors(scratchWorldCursor, basePos);
+                    const d = scratchNodeToCursor.length();
+                    if (d < 0.4 && d > 0.0001) {
                         const displacementMag = -0.15 * (d - 0.4);
-                        const displacementVec = nodeToCursor.clone().normalize().multiplyScalar(displacementMag);
-                        targetPos.add(displacementVec);
+                        scratchTargetPos.addScaledVector(scratchNodeToCursor, displacementMag / d);
                     }
                 }
                 
-                currentPos.lerp(targetPos, 0.08);
+                currentPos.lerp(scratchTargetPos, nodeLerpFactor);
                 
                 dummy.position.copy(currentPos);
                 dummy.scale.setScalar(baseNode.radius);
@@ -728,7 +736,7 @@ export default function SupplyChainCanvas({ className }: SupplyChainCanvasProps)
             const packetAttr = packetGeometry.getAttribute('aAlpha') as THREE.InstancedBufferAttribute;
             for (let i = 0; i < packets.length; i++) {
                 const p = packets[i];
-                p.progress += p.speed;
+                p.progress += p.speed * frameScale;
                 if (p.progress >= 1.0) {
                     p.progress = 0.0;
                     
@@ -761,7 +769,7 @@ export default function SupplyChainCanvas({ className }: SupplyChainCanvasProps)
             const haloAttr = haloGeometry.getAttribute('aAlpha') as THREE.InstancedBufferAttribute;
             for (let i = 0; i < pulses.length; i++) {
                 const pulse = pulses[i];
-                pulse.progress += pulse.speed;
+                pulse.progress += pulse.speed * frameScale;
                 if (pulse.progress >= 1.0) {
                     pulse.progress = 0.0;
                 }
@@ -828,17 +836,20 @@ export default function SupplyChainCanvas({ className }: SupplyChainCanvasProps)
             echoAttr.needsUpdate = true;
 
             // Subtle rotation and mouse parallax
-            baseRotation += 0.0008;
-            currentMouseX += (targetMouseX - currentMouseX) * 0.04;
-            currentMouseY += (targetMouseY - currentMouseY) * 0.04;
+            baseRotation += 0.0008 * frameScale;
+            currentMouseX += (targetMouseX - currentMouseX) * mouseLerpFactor;
+            currentMouseY += (targetMouseY - currentMouseY) * mouseLerpFactor;
 
             sceneGroup.rotation.y = baseRotation + currentMouseX * 0.12;
             sceneGroup.rotation.x = currentMouseY * 0.08;
             sceneGroup.rotation.z = scrollRatioRef.current * 0.08;
         };
 
-        const tick = () => {
-            updateScene();
+        const tick = (now: number) => {
+            const rawDt = lastFrameTime > 0 ? (now - lastFrameTime) / 1000 : 1 / 60;
+            lastFrameTime = now;
+            const dt = Math.min(Math.max(rawDt, 0.001), 0.1);
+            updateScene(dt);
             renderer.render(scene, camera);
             animationFrameId = requestAnimationFrame(tick);
         };
@@ -849,6 +860,7 @@ export default function SupplyChainCanvas({ className }: SupplyChainCanvasProps)
                 renderStaticFrame();
                 return;
             }
+            lastFrameTime = 0;
             animationFrameId = requestAnimationFrame(tick);
         };
 
@@ -925,6 +937,8 @@ export default function SupplyChainCanvas({ className }: SupplyChainCanvasProps)
             intersectionObserver.disconnect();
             document.removeEventListener('visibilitychange', handleVisibilityChange);
             window.removeEventListener('pointermove', handlePointerMove);
+            window.removeEventListener('pointerout', handlePointerLeave);
+            window.removeEventListener('scroll', handleScroll);
             motionQuery.removeEventListener('change', handleMotionPreferenceChange);
 
             scene.traverse((object) => {

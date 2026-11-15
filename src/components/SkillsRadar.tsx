@@ -113,15 +113,16 @@ export default function SkillsRadar() {
                     </div>
                 </ScrollReveal>
 
-                <ScrollReveal delay={0.1}>
-                    <div className={styles.radarWrapper}>
+                <div className={styles.bentoGrid}>
+                    <ScrollReveal delay={0.1}>
                         <motion.div
-                            className={styles.radarCard}
-                            initial={{ opacity: 0, scale: 0.9 }}
+                            className={styles.radarBentoCard}
+                            initial={{ opacity: 0, scale: 0.96 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
+                            transition={{ duration: 0.5 }}
                         >
+                            <span className={styles.bentoEyebrow}>Competency Balance</span>
                             <svg
                                 viewBox="-40 -20 380 340"
                                 className={styles.radarSvg}
@@ -283,43 +284,51 @@ export default function SkillsRadar() {
                                     );
                                 })}
                             </svg>
+                            <div className={styles.radarReadout} aria-live="polite">
+                                {hoveredIndex !== null ? (
+                                    <>
+                                        <span className={styles.readoutName}>{skills[hoveredIndex].name}</span>
+                                        <span className={styles.readoutValue}>{skills[hoveredIndex].value}%</span>
+                                    </>
+                                ) : (
+                                    <span className={styles.readoutHint}>6 Core Domains · Hover or tap vertices to inspect</span>
+                                )}
+                            </div>
                         </motion.div>
-                    </div>
-                </ScrollReveal>
+                    </ScrollReveal>
 
-                <div className={styles.scrollStrip}>
-                    {skillCategories.map((category, catIdx) => (
-                        <div key={category.title} className={styles.snapItem}>
-                            <div className={styles.categoryGroup}>
-                                <h3 className={styles.categoryTitle}>{category.title}</h3>
-                                <div className={styles.chipsContainer}>
-                                    {category.skills.map((skill, index) => (
-                                        <motion.div
-                                            key={skill.name}
-                                            className={styles.skillChip}
-                                            aria-label={`${skill.name}: Level ${skill.level} of 5`}
-                                            whileHover={{ y: -2 }}
-                                            whileTap={{ scale: 0.98 }}
-                                            initial={{ opacity: 0, y: 10 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            viewport={{ once: true }}
-                                            transition={{ duration: 0.3, delay: (catIdx * 0.1) + (index * 0.05) }}
-                                        >
-                                            <span className={styles.skillName}>{skill.name}</span>
-                                            <div className={styles.dotMeter} aria-hidden="true">
-                                                {[1, 2, 3, 4, 5].map((dot) => (
-                                                    <span 
-                                                        key={dot} 
-                                                        className={`${styles.dot} ${dot <= skill.level ? styles.dotFilled : ''}`}
-                                                    />
-                                                ))}
-                                            </div>
-                                        </motion.div>
-                                    ))}
+                    <div className={styles.scrollStrip}>
+                        {skillCategories.map((category, catIdx) => (
+                            <div key={category.title} className={styles.snapItem}>
+                                <div className={styles.categoryGroup}>
+                                    <h3 className={styles.categoryTitle}>{category.title}</h3>
+                                    <div className={styles.chipsContainer}>
+                                        {category.skills.map((skill, index) => (
+                                            <motion.div
+                                                key={skill.name}
+                                                className={styles.skillChip}
+                                                aria-label={`${skill.name}: Level ${skill.level} of 5`}
+                                                initial={{ opacity: 0, y: 8 }}
+                                                whileInView={{ opacity: 1, y: 0 }}
+                                                viewport={{ once: true }}
+                                                transition={{ duration: 0.28, delay: (catIdx * 0.08) + (index * 0.04) }}
+                                            >
+                                                <span className={styles.skillName}>{skill.name}</span>
+                                                <div className={styles.dotMeter} aria-hidden="true">
+                                                    {[1, 2, 3, 4, 5].map((dot) => (
+                                                        <span
+                                                            key={dot}
+                                                            className={`${styles.dot} ${dot <= skill.level ? styles.dotFilled : ''}`}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            </motion.div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>

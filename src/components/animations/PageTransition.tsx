@@ -1,31 +1,26 @@
 'use client';
 
-import { motion, AnimatePresence, Transition, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ReactNode } from 'react';
 
 interface PageTransitionProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 
-const transition: Transition = {
-    duration: 0.6,
-    ease: [0.25, 0.4, 0.25, 1] as [number, number, number, number],
-};
-
 export default function PageTransition({ children }: PageTransitionProps) {
-    const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useReducedMotion();
 
-    return (
-        <AnimatePresence mode="wait">
-            <motion.div
-                key="page"
-                initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={shouldReduceMotion ? undefined : { opacity: 0, y: -20 }}
-                transition={shouldReduceMotion ? { duration: 0 } : transition}
-            >
-                {children}
-            </motion.div>
-        </AnimatePresence>
-    );
+  if (shouldReduceMotion) {
+    return <>{children}</>;
+  }
+
+  return (
+    <motion.div
+      initial={false}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
 }

@@ -78,6 +78,27 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        // Scoped override so same-origin <iframe src="/resume.pdf"> renders inside CvPreviewModal
+        // while all other routes keep X-Frame-Options: DENY and frame-ancestors 'none'.
+        source: '/resume.pdf',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              "object-src 'self'",
+              "frame-ancestors 'self'",
+              "base-uri 'self'",
+              "upgrade-insecure-requests",
+            ].join('; '),
+          },
+        ],
+      },
     ];
   },
 

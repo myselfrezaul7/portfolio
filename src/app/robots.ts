@@ -1,5 +1,7 @@
 import type { MetadataRoute } from 'next';
 
+const SITE_URL = 'https://mdkarim.vercel.app';
+
 export default function robots(): MetadataRoute.Robots {
     return {
         rules: {
@@ -7,6 +9,7 @@ export default function robots(): MetadataRoute.Robots {
             allow: '/',
             disallow: ['/api/'],
         },
-        sitemap: 'https://mdkarim.vercel.app/sitemap.xml',
+        sitemap: `${SITE_URL}/sitemap.xml`,
+        host: SITE_URL,
     };
 }

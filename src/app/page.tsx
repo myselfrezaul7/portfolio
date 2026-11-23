@@ -1,5 +1,3 @@
-'use client';
-
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Marquee from '@/components/Marquee';
@@ -12,7 +10,6 @@ import Blog from '@/components/Blog';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
-import PageTransition from '@/components/animations/PageTransition';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 const marqueeItems = [
@@ -38,19 +35,17 @@ export default function Home() {
     <>
       <a href="#main-content" className="skip-nav">Skip to main content</a>
       <Navbar />
-      <PageTransition>
-        <main id="main-content">
-          <ErrorBoundary><Hero /></ErrorBoundary>
-          <ErrorBoundary><Marquee items={marqueeItems} speed={25} /></ErrorBoundary>
-          <ErrorBoundary><Services /></ErrorBoundary>
-          <ErrorBoundary><Projects /></ErrorBoundary>
-          <ErrorBoundary><HowIWork /></ErrorBoundary>
-          <ErrorBoundary><SkillsRadar /></ErrorBoundary>
-          <ErrorBoundary><About /></ErrorBoundary>
-          <ErrorBoundary><Blog /></ErrorBoundary>
-          <ErrorBoundary><Contact /></ErrorBoundary>
-        </main>
-      </PageTransition>
+      <main id="main-content">
+        <ErrorBoundary><Hero id="hero" /></ErrorBoundary>
+        <ErrorBoundary><Marquee items={marqueeItems} speed={30} /></ErrorBoundary>
+        <ErrorBoundary><Services /></ErrorBoundary>
+        <ErrorBoundary><Projects /></ErrorBoundary>
+        <ErrorBoundary><HowIWork /></ErrorBoundary>
+        <ErrorBoundary><SkillsRadar /></ErrorBoundary>
+        <ErrorBoundary><About /></ErrorBoundary>
+        <ErrorBoundary><Blog /></ErrorBoundary>
+        <ErrorBoundary><Contact /></ErrorBoundary>
+      </main>
       <Footer />
       <ScrollToTop />
     </>

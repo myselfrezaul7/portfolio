@@ -1,265 +1,334 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { ArrowUpRight, ExternalLink, GraduationCap, ShoppingBag, Heart, Users, Database, Newspaper } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowRight, BookOpen, ExternalLink, Images } from 'lucide-react';
+import {
+  PROJECTS,
+  PROJECT_DOMAIN_LENSES,
+  type ProjectCaseStudy,
+  type ProjectDomainLens,
+  getProjectBySlug,
+} from '@/data/projects';
+import { useTilt } from '@/hooks/useTilt';
 import ScrollReveal from './animations/ScrollReveal';
+import ProjectArchitectureVisual from './ProjectArchitectureVisual';
+import ProjectCaseStudyDrawer from './ProjectCaseStudyDrawer';
 import styles from './Projects.module.css';
 
-const categoryList = [
-    'All',
-    'Digital Operations',
-    'Education Consulting',
-    'Data Warehousing',
-    'Healthcare Operations',
-    'E-commerce Logistics',
-    'Community Operations',
-] as const;
+interface ProjectCardProps {
+  project: ProjectCaseStudy;
+  isLoaded: boolean;
+  onImageLoad: (id: number) => void;
+  onOpen: (slug: string) => void;
+}
 
-const projects = [
-    {
-        id: 1,
-        category: 'Digital Operations',
-        title: 'FH Südwestfalen · Web & Project Coordination',
-        description: 'Manage news, event communications, and alumni engagement for the IMIS portal at Fachhochschule Südwestfalen. Coordinate cross-functional event execution using Agile Scrum workflows and Jira Kanban boards, architect localized SEO strategies, and oversee digital publishing for major university milestones including the 2026 IMIS Smart Cricket Championship.',
-        gradient: 'linear-gradient(135deg, #2b5876 0%, #4e4376 100%)',
-        icon: Newspaper,
-        link: 'https://www.fh-swf.de/en/karriere/alumni/ehemalige/imis_alumni/index.php',
-        tags: ['Agile / Scrum', 'Content Strategy', 'Web Operations'],
-        image: '/images/projects/imis-content.jpg',
-        blur: null,
-    },
-    {
-        id: 2,
-        category: 'Education Consulting',
-        title: 'NexTep Edu · Technical Project Lead & Web Build',
-        description: 'Technical Project Lead for a study abroad consultancy (May 2025 to March 2026). Mapped the student application procedure with BPMN 2.0, which the team now uses as its working playbook. Built and deployed the company website in Next.js with 17 destination guides in English and Bangla, plus a private Supabase-backed application tracker that students open through a unique code and email link.',
-        gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        icon: GraduationCap,
-        link: 'https://www.nextepedu.com',
-        tags: ['BPMN 2.0', 'Next.js & Supabase', 'Technical Project Lead'],
-        image: '/images/projects/nextepedu.png',
-        blur: null,
-    },
-    {
-        id: 3,
-        category: 'Data Warehousing',
-        title: 'SAP BW/4HANA · Enterprise Data Warehousing',
-        description: 'Designed a multi-tier Enterprise Data Warehouse (EDW) in SAP HANA Studio. Built DataSources, InfoObjects, and transformations to load transactional datasets into ADSOs, creating optimized CompositeProviders and BW Queries for executive supply chain reporting.',
-        gradient: 'linear-gradient(135deg, #0061ff 0%, #60efff 100%)',
-        icon: Database,
-        link: null,
-        tags: ['SAP BW/4HANA', 'EDW Architecture', 'Business Intelligence'],
-        image: '/images/projects/sap-bw.jpg',
-        blur: null,
-    },
-    {
-        id: 4,
-        category: 'Healthcare Operations',
-        title: 'Renaissance Diagnostic Care · Data & Reporting',
-        description: "Entered and maintained daily data for over 100 patient samples, covering test counts, test types, patient records and stock levels, in Excel and Google Sheets. Turned it into charts and PowerPoint reports for management. One report led the manager to step up rural marketing so more people knew about the lab's services and how to access them.",
-        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-        icon: Heart,
-        link: null,
-        tags: ['Data Entry & Quality', 'Excel & Google Sheets', 'Management Reporting'],
-        image: '/images/projects/renaissance.jpg',
-        blur: null,
-    },
-    {
-        id: 5,
-        category: 'E-commerce Logistics',
-        title: 'PetBhai · Pet Supplies E-commerce Platform',
-        description: 'Engineered a full-stack e-commerce logistics platform prototype. Designed multi-tier SKU inventory state machines, mapped end-to-end order fulfillment and courier tracking workflows, and integrated real-time database triggers.',
-        gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-        icon: ShoppingBag,
-        link: 'https://www.petbhai.com',
-        tags: ['Product Architecture', 'Supply Chain Logic', 'Full-Stack'],
-        image: '/images/projects/petbhai.webp',
-        blur: 'data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAEx/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANi7FAH/2Q==',
-    },
-    {
-        id: 6,
-        category: 'Community Operations',
-        title: 'Community Operations Platform (450K+ Members)',
-        description: 'Founded and scaled two community infrastructure platforms to 450,000+ active members across Bangladesh. Designed standardized intake workflows for rescue logistics, built volunteer coordination matrices with role-based task assignment, and created adoption screening protocols with multi-stage verification.',
-        gradient: 'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)',
-        icon: Users,
-        link: 'https://catwaala.com',
-        tags: ['Operations at Scale', 'Workflow Design', 'Community Management'],
-        image: '/images/projects/catwaala.webp',
-        blur: 'data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhAAAwEAAwAAAAAAAAAAAAAAAAEDAhEhQf/EABQBAQAAAAAAAAAAAAAAAAAAAAL/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEQMRAD8A06UeJPXqJK+uF0gA0n//2Q==',
-    },
-];
+function ProjectCard({ project, isLoaded, onImageLoad, onOpen }: ProjectCardProps) {
+  const { ref, style, handlers } = useTilt<HTMLDivElement>({
+    maxDeg: 3,
+    perspective: 1000,
+    scale: 1.01,
+    speed: 380,
+  });
+
+  const handleCardKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onOpen(project.slug);
+    }
+  };
+
+  return (
+    <div
+      ref={ref}
+      style={style}
+      role="button"
+      tabIndex={0}
+      aria-label={`Explore case study: ${project.title}`}
+      className={styles.projectCard}
+      {...handlers}
+      onClick={() => onOpen(project.slug)}
+      onKeyDown={handleCardKeyDown}
+    >
+      {/* Card Visual Frame */}
+      <div className={styles.imageWrapper}>
+        {project.diagramType ? (
+          <ProjectArchitectureVisual type={project.diagramType} variant="card" />
+        ) : (
+          <>
+            {!isLoaded && <div className={styles.imageSkeleton} aria-hidden="true" />}
+            <Image
+              src={project.image}
+              alt={`${project.title} preview`}
+              fill
+              className={`${styles.projectImage} ${
+                isLoaded ? styles.imageLoaded : styles.imageLoading
+              }`}
+              style={{ objectFit: 'cover', objectPosition: 'top center' }}
+              sizes="(max-width: 767px) 95vw, (max-width: 1119px) 48vw, 33vw"
+              placeholder={project.blurDataURL ? 'blur' : 'empty'}
+              blurDataURL={project.blurDataURL}
+              onLoad={() => onImageLoad(project.id)}
+            />
+          </>
+        )}
+
+        <div className={styles.visualBadgesTop}>
+          <span className={styles.category}>{project.category}</span>
+          <span className={styles.metricBadge}>{project.headlineMetric}</span>
+        </div>
+
+        {!project.diagramType && project.gallery.length > 1 && (
+          <span className={styles.galleryCountPill}>
+            <Images size={11} />
+            {project.gallery.length} Visuals
+          </span>
+        )}
+      </div>
+
+      {/* Card Body */}
+      <div className={styles.content}>
+        <div className={styles.cardMetaRow}>
+          <span className={styles.cardRole}>{project.role}</span>
+          <span className={styles.cardPeriod}>{project.period}</span>
+        </div>
+
+        <h3 className={styles.projectTitle}>{project.title}</h3>
+        <p className={styles.projectDescription}>{project.shortDescription}</p>
+
+        <div className={styles.platformRow}>
+          {(project.platformBadges ?? project.tags.slice(0, 3)).map((badge) => (
+            <span key={badge} className={styles.tag}>
+              {badge}
+            </span>
+          ))}
+        </div>
+
+        <div className={styles.cardFooter}>
+          <span className={styles.exploreBtn}>
+            Explore Case Study
+            <ArrowRight size={15} aria-hidden="true" />
+          </span>
+
+          <div className={styles.quickActions}>
+            {project.relatedBlogSlug && (
+              <Link
+                href={`/blog/${project.relatedBlogSlug}`}
+                className={styles.quickActionLink}
+                aria-label={`Read essay for ${project.title}`}
+                title="Read deep-dive essay"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <BookOpen size={14} />
+              </Link>
+            )}
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.quickActionLink}
+                aria-label={`Launch ${project.title} live platform`}
+                title="Launch live platform"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <ExternalLink size={14} />
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Projects() {
-    const [activeCategory, setActiveCategory] = useState<string>('All');
-    const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
-    const [expandedIds, setExpandedIds] = useState<Record<number, boolean>>({});
+  const [activeLens, setActiveLens] = useState<ProjectDomainLens>('All');
+  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
 
-    const toggleExpand = (id: number) => {
-        setExpandedIds((prev) => ({ ...prev, [id]: !prev[id] }));
+  const syncQueryParam = useCallback((slug: string | null) => {
+    if (typeof window === 'undefined') return;
+    const url = new URL(window.location.href);
+    if (slug) {
+      url.searchParams.set('project', slug);
+    } else {
+      url.searchParams.delete('project');
+    }
+    const nextUrl = `${url.pathname}${url.search}${url.hash}`;
+    window.history.replaceState(null, '', nextUrl);
+  }, []);
+
+  const openProject = useCallback(
+    (slug: string) => {
+      if (!getProjectBySlug(slug)) return;
+      setSelectedSlug(slug);
+      syncQueryParam(slug);
+    },
+    [syncQueryParam]
+  );
+
+  const closeProject = useCallback(() => {
+    setSelectedSlug(null);
+    syncQueryParam(null);
+  }, [syncQueryParam]);
+
+  // Read `?project=<slug>` on mount & subscribe to cross-component custom events
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const rafId = window.requestAnimationFrame(() => {
+      const initialSlug = new URLSearchParams(window.location.search).get('project');
+      if (initialSlug && getProjectBySlug(initialSlug)) {
+        setSelectedSlug(initialSlug);
+      }
+    });
+
+    const handleOpenEvent = (event: Event) => {
+      const detail = (event as CustomEvent<{ slug?: string }>).detail;
+      if (detail?.slug && getProjectBySlug(detail.slug)) {
+        openProject(detail.slug);
+      }
     };
 
-    const handleImageLoad = (id: number) => {
-        setLoadedImages((prev) => ({ ...prev, [id]: true }));
+    const handleFilterEvent = (event: Event) => {
+      const detail = (event as CustomEvent<{ lens?: string }>).detail;
+      if (
+        detail?.lens &&
+        (PROJECT_DOMAIN_LENSES as readonly string[]).includes(detail.lens)
+      ) {
+        setActiveLens(detail.lens as ProjectDomainLens);
+      }
     };
 
-    const filteredProjects = activeCategory === 'All'
-        ? projects
-        : projects.filter((project) => project.category === activeCategory);
+    window.addEventListener('portfolio:open-project', handleOpenEvent);
+    window.addEventListener('portfolio:filter-projects', handleFilterEvent);
 
-    return (
-        <section id="work" className={styles.projects} aria-label="Recent projects">
-            <div className={styles.container}>
-                {/* Section Header */}
-                <ScrollReveal>
-                    <div className={styles.header}>
-                        <h2 className={styles.sectionTitle}>Recent Projects</h2>
-                    </div>
-                </ScrollReveal>
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      window.removeEventListener('portfolio:open-project', handleOpenEvent);
+      window.removeEventListener('portfolio:filter-projects', handleFilterEvent);
+    };
+  }, [openProject]);
 
-                {/* Category Filter Chip Bar */}
-                <div className={styles.filterBar} role="group" aria-label="Filter projects by category">
-                    {categoryList.map((category) => {
-                        const count = category === 'All'
-                            ? projects.length
-                            : projects.filter((p) => p.category === category).length;
-                        const isActive = activeCategory === category;
+  const handleImageLoad = useCallback((id: number) => {
+    setLoadedImages((prev) => ({ ...prev, [id]: true }));
+  }, []);
 
-                        return (
-                            <motion.button
-                                key={category}
-                                type="button"
-                                aria-pressed={isActive}
-                                onClick={() => setActiveCategory(category)}
-                                className={`${styles.filterChip} ${isActive ? styles.filterChipActive : ''}`}
-                                whileTap={{ scale: 0.96 }}
-                            >
-                                {isActive && (
-                                    <motion.span
-                                        layoutId="activeCategoryPill"
-                                        className={styles.activePill}
-                                        transition={{ type: 'spring', stiffness: 450, damping: 35 }}
-                                    />
-                                )}
-                                <span className={styles.chipText}>
-                                    {category}
-                                    <span className={styles.chipCount}>{count}</span>
-                                </span>
-                            </motion.button>
-                        );
-                    })}
-                </div>
+  const filteredProjects = useMemo(() => {
+    if (activeLens === 'All') return PROJECTS;
+    return PROJECTS.filter((project) => project.domainLenses.includes(activeLens));
+  }, [activeLens]);
 
-                {/* Projects Carousel / Grid */}
-                <div className={styles.projectsList}>
-                    <AnimatePresence mode="popLayout">
-                        {filteredProjects.map((project) => (
-                            <motion.div
-                                layout
-                                key={project.id}
-                                className={styles.snapItem}
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.95 }}
-                                transition={{ duration: 0.35 }}
-                            >
-                                <motion.div
-                                    whileHover={{ y: -3 }}
-                                    whileTap={{ scale: 0.97 }}
-                                    style={{ height: '100%' }}
-                                >
-                                    <div className={styles.projectCard}>
-                                        {/* Project Visual */}
-                                    <div className={styles.imageWrapper}>
-                                        {project.image ? (
-                                            <>
-                                                {!loadedImages[project.id] && (
-                                                    <div className={styles.imageSkeleton} aria-hidden="true" />
-                                                )}
-                                                <Image
-                                                    src={project.image}
-                                                    alt={`${project.title} screenshot`}
-                                                    fill
-                                                    className={`${styles.projectImage} ${loadedImages[project.id] ? styles.imageLoaded : styles.imageLoading}`}
-                                                    style={{ objectFit: 'cover', objectPosition: 'top' }}
-                                                    sizes="(max-width: 767px) 80vw, (max-width: 1199px) 50vw, 33vw"
-                                                    placeholder={project.blur ? 'blur' : 'empty'}
-                                                    blurDataURL={project.blur || undefined}
-                                                    onLoad={() => handleImageLoad(project.id)}
-                                                />
-                                            </>
-                                        ) : (
-                                            <div
-                                                className={styles.gradientBg}
-                                                style={{ background: project.gradient }}
-                                            >
-                                                <project.icon size={64} strokeWidth={1} className={styles.projectIcon} />
-                                            </div>
-                                        )}
-                                        <span className={styles.category}>{project.category}</span>
-                                        {project.link && (
-                                            <div className={styles.imageOverlay}>
-                                                <a
-                                                    href={project.link}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    tabIndex={-1}
-                                                    aria-hidden="true"
-                                                    className={styles.viewButton}
-                                                >
-                                                    <ExternalLink size={20} />
-                                                    View Live
-                                                </a>
-                                            </div>
-                                        )}
-                                    </div>
+  const selectedProject = useMemo(
+    () => (selectedSlug ? getProjectBySlug(selectedSlug) ?? null : null),
+    [selectedSlug]
+  );
 
-                                    {/* Project Content */}
-                                    <div className={styles.content}>
-                                        <h3 className={styles.projectTitle}>
-                                            {project.title}
-                                            {project.link && (
-                                                <a
-                                                    href={project.link}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className={styles.titleLink}
-                                                    aria-label={`Visit ${project.title}`}
-                                                >
-                                                    <ArrowUpRight size={24} />
-                                                </a>
-                                            )}
-                                        </h3>
+  const { prevSlug, nextSlug } = useMemo(() => {
+    if (!selectedSlug) return { prevSlug: null, nextSlug: null };
+    const list = filteredProjects.some((p) => p.slug === selectedSlug)
+      ? filteredProjects
+      : PROJECTS;
+    const idx = list.findIndex((p) => p.slug === selectedSlug);
+    if (idx === -1) return { prevSlug: null, nextSlug: null };
+    return {
+      prevSlug: idx > 0 ? list[idx - 1].slug : null,
+      nextSlug: idx < list.length - 1 ? list[idx + 1].slug : null,
+    };
+  }, [filteredProjects, selectedSlug]);
 
-                                        <div className={styles.descriptionWrapper}>
-                                            <p className={`${styles.projectDescription} ${expandedIds[project.id] ? styles.descriptionExpanded : ''}`}>
-                                            {project.description}
-                                            </p>
-                                            <button
-                                                type="button"
-                                                className={styles.readMoreBtn}
-                                                onClick={() => toggleExpand(project.id)}
-                                                aria-expanded={!!expandedIds[project.id]}
-                                            >
-                                                {expandedIds[project.id] ? 'Show less' : 'Read more'}
-                                            </button>
-                                        </div>
+  return (
+    <section id="work" className={styles.projects} aria-label="Selected projects and case studies">
+      <div className={styles.container}>
+        <ScrollReveal>
+          <div className={styles.header}>
+            <span className={styles.eyebrow}>Case Studies &amp; Architecture</span>
+            <h2 className={styles.sectionTitle}>Selected Work</h2>
+            <p className={styles.sectionSubtitle}>
+              From SAP BW/4HANA data warehousing and clinical process redesign to bilingual web &amp; Android ecosystems. Select any card to inspect the challenge, architecture, and measured outcomes.
+            </p>
+          </div>
+        </ScrollReveal>
 
-                                        <div className={styles.tags}>
-                                            {project.tags.map((tag) => (
-                                                <span key={tag} className={styles.tag}>{tag}</span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    </div>
-                                </motion.div>
-                            </motion.div>
-                        ))}
-                    </AnimatePresence>
-                </div>
-            </div>
-        </section>
-    );
+        {/* 4 Multi-Hit Domain Lenses */}
+        <div
+          className={styles.filterBar}
+          role="group"
+          aria-label="Filter projects by domain lens"
+        >
+          {PROJECT_DOMAIN_LENSES.map((lens) => {
+            const count =
+              lens === 'All'
+                ? PROJECTS.length
+                : PROJECTS.filter((p) => p.domainLenses.includes(lens)).length;
+            const isActive = activeLens === lens;
+
+            return (
+              <motion.button
+                key={lens}
+                type="button"
+                aria-pressed={isActive}
+                onClick={() => setActiveLens(lens)}
+                className={`${styles.filterChip} ${
+                  isActive ? styles.filterChipActive : ''
+                }`}
+                whileTap={{ scale: 0.96 }}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="activeProjectLensPill"
+                    className={styles.activePill}
+                    transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+                  />
+                )}
+                <span className={styles.chipText}>
+                  {lens}
+                  <span className={styles.chipCount}>{count}</span>
+                </span>
+              </motion.button>
+            );
+          })}
+        </div>
+
+        {/* Projects Grid */}
+        <div
+          className={styles.projectsGrid}
+          data-count={filteredProjects.length}
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project) => (
+              <motion.div
+                layout
+                key={project.slug}
+                className={styles.gridItem}
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ProjectCard
+                  project={project}
+                  isLoaded={!!loadedImages[project.id]}
+                  onImageLoad={handleImageLoad}
+                  onOpen={openProject}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* Interactive Case Study Deep-Dive Drawer */}
+      <ProjectCaseStudyDrawer
+        project={selectedProject}
+        onClose={closeProject}
+        onSelectProject={openProject}
+        prevSlug={prevSlug}
+        nextSlug={nextSlug}
+      />
+    </section>
+  );
 }

@@ -1,0 +1,339 @@
+.page {
+    position: relative;
+    min-height: calc(100vh - 140px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 132px 24px 88px;
+    background: var(--bg-primary);
+    overflow: hidden;
+}
+
+.backdropGrid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 75% 65% at 50% 42%, black 20%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 42%, black 20%, transparent 100%);
+    pointer-events: none;
+}
+
+:global([data-theme="light"]) .backdropGrid {
+    background-image:
+        linear-gradient(to right, rgba(0, 0, 0, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.045) 1px, transparent 1px);
+}
+
+.ambientGlow {
+    position: absolute;
+    top: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(680px, 92vw);
+    height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74, 155, 155, 0.14) 0%, rgba(74, 155, 155, 0) 70%);
+    pointer-events: none;
+}
+
+:global([data-theme="light"]) .ambientGlow {
+    background: radial-gradient(circle, rgba(30, 123, 120, 0.12) 0%, rgba(30, 123, 120, 0) 70%);
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 740px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.statusBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(74, 155, 155, 0.12);
+    border: 1px solid rgba(74, 155, 155, 0.3);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+:global([data-theme="light"]) .statusBadge {
+    background: rgba(30, 123, 120, 0.1);
+    border-color: rgba(30, 123, 120, 0.28);
+}
+
+.statusDot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+}
+
+.statusCode {
+    display: block;
+    font-size: clamp(80px, 15vw, 144px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+    color: var(--accent);
+    margin-bottom: 16px;
+    user-select: none;
+}
+
+.title {
+    font-size: clamp(26px, 4.5vw, 38px);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+}
+
+.description {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin-bottom: 32px;
+}
+
+.primaryActions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 44px;
+}
+
+.primaryButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 26px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    background: var(--accent);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+    transition:
+        background-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.primaryButton:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(74, 155, 155, 0.28);
+}
+
+.primaryButton:active {
+    transform: translateY(0);
+}
+
+.primaryButton:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.secondaryButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-decoration: none;
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.secondaryButton:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.secondaryButton:active {
+    transform: translateY(0);
+}
+
+.secondaryButton:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.quickLinksSection {
+    width: 100%;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+}
+
+.quickLinksHeading {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 18px;
+}
+
+.quickLinksGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    text-align: left;
+}
+
+.quickCard {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    text-decoration: none;
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-normal);
+}
+
+.quickCard:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(74, 155, 155, 0.55);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md), var(--shadow-glow);
+}
+
+.quickCard:active {
+    transform: translateY(0);
+}
+
+.quickCard:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.quickCardIcon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(74, 155, 155, 0.12);
+    border: 1px solid rgba(74, 155, 155, 0.22);
+    color: var(--accent);
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast);
+}
+
+.quickCard:hover .quickCardIcon {
+    background: rgba(74, 155, 155, 0.2);
+    border-color: rgba(74, 155, 155, 0.45);
+}
+
+.quickCardBody {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.quickCardTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: color var(--transition-fast);
+}
+
+.quickCard:hover .quickCardTitle {
+    color: var(--accent);
+}
+
+.quickCardSubtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.quickCardArrow {
+    flex-shrink: 0;
+    color: var(--text-tertiary);
+    transition:
+        transform var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.quickCard:hover .quickCardArrow {
+    color: var(--accent);
+    transform: translateX(3px);
+}
+
+@media (max-width: 640px) {
+    .page {
+        padding: 112px 16px 64px;
+    }
+
+    .quickLinksGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .primaryActions {
+        width: 100%;
+    }
+
+    .primaryButton,
+    .secondaryButton {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .primaryButton,
+    .secondaryButton,
+    .quickCard,
+    .quickCardArrow {
+        transition: none;
+    }
+
+    .primaryButton:hover,
+    .secondaryButton:hover,
+    .quickCard:hover,
+    .quickCard:hover .quickCardArrow {
+        transform: none;
+    }
+}

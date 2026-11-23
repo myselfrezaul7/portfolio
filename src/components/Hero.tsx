@@ -1,128 +1,170 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Calendar, FileText, GraduationCap, Cpu } from 'lucide-react';
+import { useTilt } from '@/hooks/useTilt';
 import styles from './Hero.module.css';
-import { getMailtoUrl } from '@/utils/obfuscate';
 
-const SupplyChainCanvas = dynamic(
-    () => import('./canvas/SupplyChainCanvas'),
-    { ssr: false }
-);
+const SupplyChainCanvas = dynamic(() => import('./canvas/SupplyChainCanvas'), {
+  ssr: false,
+});
 
-export default function Hero() {
-    return (
-        <section className={styles.hero} aria-label="Hero">
-            <SupplyChainCanvas />
-            <div className={styles.container}>
-                <div className={styles.content}>
-                    {/* Greeting */}
-                    <motion.div
-                        className={styles.greeting}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        <span className={styles.eyebrowLine} aria-hidden="true" />
-                        <span className={styles.greetingText}>Hello, I am</span>
-                    </motion.div>
+const PROFILE_BLUR_DATA_URL =
+  'data:image/webp;base64,UklGRroAAABXRUJQVlA4IK4AAAAwBQCdASoUABsAPt1iq08opSQiKAqpEBuJYwDNwA/HHPuxvcUe4ZkVymlLYfqRH848gAD+cbDylKh6E6frigGgShN5MSC2GhLr9kAgCpb9B3s3naDbqzTxTyhLYymSX+Rc7wF/RGcfcEi6HEvc+d8c8mM8yk2ebb9uy4Gw4jxzUVlhidxXjzjGjHCx3ozTtQpzj1PO31NPEUNc9VDH0qM2LkghP5WB2IYyLX/pAAA=';
 
-                    {/* Name */}
-                    <motion.h1
-                        className={styles.name}
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        Md Rezaul Karim
-                    </motion.h1>
+interface HeroProps {
+  id?: string;
+}
 
-                    {/* Title */}
-                    <motion.h2
-                        className={styles.title}
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        Data Analytics · Supply Chain Operations · IT Project Management
-                    </motion.h2>
+export default function Hero({ id = 'hero' }: HeroProps) {
+  const { ref: portraitTiltRef, style: tiltStyle, handlers: tiltHandlers } = useTilt<HTMLDivElement>({
+    maxDeg: 7,
+    perspective: 1000,
+    scale: 1.02,
+    speed: 450,
+  });
 
-                    {/* Description */}
-                    <motion.p
-                        className={styles.description}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        Master&apos;s student in International Management & Information Systems (IMIS) in Germany. I bridge business operations and technology, transforming complex workflows into automated, data-driven systems using SAP, Power BI, and modern digital tools.
-                    </motion.p>
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    const target = document.querySelector(targetId);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+      if (typeof window !== 'undefined') {
+        window.history.pushState(null, '', targetId);
+      }
+    }
+  };
 
-                    {/* Availability Badge */}
-                    <motion.div
-                        className={styles.availabilityBadge}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        <span className={styles.statusDotWrapper}>
-                            <span className={styles.statusDotRipple} />
-                            <span className={styles.statusDot} />
-                        </span>
-                        <span className={styles.statusText}>Available for Internship, Working Student & Master Thesis Roles</span>
-                    </motion.div>
+  const handleOpenCv = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('portfolio:open-cv'));
+    }
+  };
 
-                    {/* CTA Buttons */}
-                    <motion.div
-                        className={styles.actions}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        <motion.a 
-                            href={getMailtoUrl()} 
-                            className={styles.primaryBtn}
-                            whileTap={{ scale: 0.96 }}
-                        >
-                            <span>Get in Touch</span>
-                            <ArrowRight size={16} className={styles.btnIcon} strokeWidth={2} />
-                        </motion.a>
-                        <motion.a 
-                            href="#work" 
-                            className={styles.secondaryBtn}
-                            whileTap={{ scale: 0.96 }}
-                        >
-                            View My Work
-                        </motion.a>
-                    </motion.div>
-                </div>
+  const handleOpenBooking = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('portfolio:open-booking'));
+    }
+  };
 
-                {/* Profile Image */}
-                <motion.div
-                    className={styles.imageWrapper}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                >
-                    <div className={styles.imageGlowBackdrop} aria-hidden="true" />
-                    <div className={styles.imageContainer}>
-                        <Image
-                            src="/images/profile.png"
-                            alt="Md Rezaul Karim"
-                            fill
-                            priority
-                            quality={90}
-                            sizes="(max-width: 768px) 200px, (max-width: 1024px) 300px, 340px"
-                            style={{ objectFit: 'cover', objectPosition: 'center top' }}
-                        />
-                        <div className={styles.imageGlow} />
-                    </div>
-                </motion.div>
+  return (
+    <section id={id} className={styles.hero} aria-label="Introduction">
+      <SupplyChainCanvas />
+
+      <div className={styles.container}>
+        <div className={styles.content}>
+          {/* Eyebrow Greeting */}
+          <div className={styles.greeting}>
+            <span className={styles.eyebrowLine} aria-hidden="true" />
+            <span className={styles.greetingText}>Hello, I am</span>
+          </div>
+
+          {/* Instant-LCP Headline */}
+          <h1 className={styles.name}>Md Rezaul Karim</h1>
+
+          {/* Role Positioning */}
+          <h2 className={styles.title}>
+            Data Analytics · Supply Chain Operations · IT Project Management
+          </h2>
+
+          {/* Left-Aligned Executive Summary */}
+          <p className={styles.description}>
+            Master&apos;s student in International Management &amp; Information Systems (IMIS) in Germany. I bridge business operations and technology, transforming complex workflows into automated, data-driven systems using SAP, Power BI, and modern digital tools.
+          </p>
+
+          {/* Availability Badge */}
+          <a
+            href="#contact"
+            onClick={(e) => handleSmoothScroll(e, '#contact')}
+            className={styles.availabilityBadge}
+          >
+            <span className={styles.statusDotWrapper} aria-hidden="true">
+              <span className={styles.statusDotRipple} />
+              <span className={styles.statusDot} />
+            </span>
+            <span className={styles.statusText}>
+              Open to Working Student, Internship &amp; Master Thesis Roles · Selective Consulting
+            </span>
+          </a>
+
+          {/* Clean Action Bar (Zero SSR mailto:) */}
+          <div className={styles.actions}>
+            <motion.a
+              href="#contact"
+              onClick={(e) => handleSmoothScroll(e, '#contact')}
+              className={styles.primaryBtn}
+              whileTap={{ scale: 0.97 }}
+            >
+              <span>Get in Touch</span>
+              <ArrowRight size={16} className={styles.btnIcon} strokeWidth={2} />
+            </motion.a>
+
+            <motion.button
+              type="button"
+              onClick={handleOpenBooking}
+              className={styles.secondaryBtn}
+              whileTap={{ scale: 0.97 }}
+            >
+              <Calendar size={15} strokeWidth={1.8} />
+              <span>Book Call</span>
+            </motion.button>
+
+            <motion.button
+              type="button"
+              onClick={handleOpenCv}
+              className={styles.ghostBtn}
+              whileTap={{ scale: 0.97 }}
+            >
+              <FileText size={15} strokeWidth={1.8} />
+              <span>Preview CV</span>
+            </motion.button>
+          </div>
+        </div>
+
+        {/* Instant-LCP Portrait Stage with 120Hz Specular Tilt & Floating Credential Chips */}
+        <div className={styles.imageWrapper}>
+          <div className={styles.imageGlowBackdrop} aria-hidden="true" />
+
+          <div
+            ref={portraitTiltRef}
+            style={tiltStyle}
+            {...tiltHandlers}
+            className={styles.portraitStage}
+          >
+            <div className={styles.imageContainer}>
+              <Image
+                src="/images/profile.webp"
+                alt="Md Rezaul Karim — Data Analytics, Supply Chain & IT Project Management"
+                fill
+                priority
+                quality={88}
+                placeholder="blur"
+                blurDataURL={PROFILE_BLUR_DATA_URL}
+                sizes="(max-width: 768px) 220px, (max-width: 1024px) 300px, 340px"
+                style={{ objectFit: 'cover', objectPosition: 'center top' }}
+              />
+              <div className={styles.specularSheen} aria-hidden="true" />
+              <div className={styles.imageGlow} aria-hidden="true" />
             </div>
 
-            {/* Background Elements */}
-            <div className={styles.bgGradient} />
-        </section>
-    );
+            {/* Floating Glass Credential Chips */}
+            <div className={`${styles.credentialChip} ${styles.chipTop}`}>
+              <GraduationCap size={13} className={styles.chipIcon} aria-hidden="true" />
+              <span>M.A. IMIS · FH Südwestfalen</span>
+            </div>
+
+            <div className={`${styles.credentialChip} ${styles.chipBottom}`}>
+              <Cpu size={13} className={styles.chipIcon} aria-hidden="true" />
+              <span className="font-mono">SAP · BPMN 2.0 · BI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Subtle Ambient Background Gradient */}
+      <div className={styles.bgGradient} aria-hidden="true" />
+    </section>
+  );
 }

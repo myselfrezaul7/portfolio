@@ -2,14 +2,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     background: var(--bg-tertiary);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 999px;
     color: var(--text-secondary);
     cursor: pointer;
-    transition: all var(--transition-fast);
+    flex-shrink: 0;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
 }
 
 @media (max-width: 767px) {
@@ -37,18 +38,18 @@
     align-items: center;
     justify-content: center;
     color: #f59e0b;
-    filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.65));
+    filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.55));
 }
 
 .moonIcon {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #38bdf8;
-    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.65));
+    color: #0284c7;
+    filter: drop-shadow(0 0 5px rgba(2, 132, 199, 0.45));
 }
 
 .placeholder {
     cursor: default;
     pointer-events: none;
-}
+}

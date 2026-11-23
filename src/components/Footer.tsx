@@ -1,72 +1,146 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin, Github, Mail, ArrowUp } from 'lucide-react';
+import { Linkedin, Github, Mail, ArrowUp, Command, MapPin } from 'lucide-react';
+import { openMailClient } from '@/utils/obfuscate';
 import styles from './Footer.module.css';
-import { getMailtoUrl } from '@/utils/obfuscate';
 
-const socialLinks = [
-    { icon: Linkedin, href: 'https://www.linkedin.com/in/myselfkarim', label: 'LinkedIn' },
-    { icon: Github, href: 'https://github.com/myselfrezaul7', label: 'GitHub' },
-    { icon: Mail, href: getMailtoUrl(), label: 'Email' },
-];
+const FALLBACK_YEAR = 2026;
 
-const CURRENT_YEAR = 2025;
+function formatBerlinTime(date: Date): string {
+  try {
+    return new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/Berlin',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+      timeZoneName: 'short',
+    }).format(date);
+  } catch {
+    return 'CET';
+  }
+}
 
 export default function Footer() {
-    const scrollToTop = () => {
-        if (typeof window !== 'undefined') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+  const [currentYear, setCurrentYear] = useState<number>(FALLBACK_YEAR);
+  const [berlinClock, setBerlinClock] = useState<string>('');
+
+  useEffect(() => {
+    const syncClock = () => {
+      const now = new Date();
+      setCurrentYear(now.getFullYear());
+      setBerlinClock(formatBerlinTime(now));
     };
 
-    return (
-        <footer className={styles.footer} role="contentinfo">
-            <div className={styles.container}>
-                <div className={styles.content}>
-                    {/* Logo */}
-                    <motion.button
-                        type="button"
-                        onClick={scrollToTop}
-                        className={styles.logo}
-                        aria-label="Scroll to top"
-                        whileHover={{ y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        <span>M•K</span>
-                        <ArrowUp size={14} className={styles.logoArrow} strokeWidth={2} />
-                    </motion.button>
+    syncClock();
+    const intervalId = setInterval(syncClock, 30_000);
+    return () => clearInterval(intervalId);
+  }, []);
 
-                    {/* Social Links */}
-                    <div className={styles.socialLinks}>
-                        {socialLinks.map((social) => (
-                            <motion.a
-                                key={social.label}
-                                href={social.href}
-                                target={social.href.startsWith('mailto') ? undefined : '_blank'}
-                                rel={social.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-                                className={styles.socialLink}
-                                whileHover={{ y: -2, scale: 1.03 }}
-                                whileTap={{ scale: 0.92 }}
-                                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                                aria-label={social.label}
-                            >
-                                <social.icon size={20} />
-                            </motion.a>
-                        ))}
-                    </div>
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-                    {/* Tagline */}
-                    <p className={styles.tagline}>
-                        Based in Soest, Germany · Open to Opportunities
-                    </p>
+  const openCommandPalette = () => {
+    window.dispatchEvent(new CustomEvent('portfolio:open-command-palette'));
+  };
 
-                    {/* Copyright */}
-                    <p className={styles.copyright}>
-                        © {CURRENT_YEAR} Md Rezaul Karim
-                    </p>
-                </div>
-            </div>
-        </footer>
-    );
+  const handleEmailClick = () => {
+    openMailClient('Portfolio Inquiry — Md Rezaul Karim');
+  };
+
+  return (
+    <footer className={styles.footer} role="contentinfo">
+      <div className={styles.container}>
+        <div className={styles.topRow}>
+          {/* Brand Return-to-Top */}
+          <motion.button
+            type="button"
+            onClick={scrollToTop}
+            className={styles.logo}
+            aria-label="Scroll to top"
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <span>M•K</span>
+            <ArrowUp size={14} className={styles.logoArrow} strokeWidth={2} aria-hidden="true" />
+          </motion.button>
+
+          {/* Live Germany Clock & Availability Pill */}
+          <div className={styles.liveLocationPill}>
+            <span className={styles.statusDot} aria-hidden="true" />
+            <MapPin size={13} className={styles.pinIcon} aria-hidden="true" />
+            <span className={styles.locationText}>Soest, Germany</span>
+            <span className={styles.divider} aria-hidden="true">·</span>
+            <span className={`${styles.clockText} font-mono`} suppressHydrationWarning>
+              {berlinClock || 'CET/CEST'}
+            </span>
+          </div>
+
+          {/* Actions: Command Palette + Socials (Zero SSR mailto:) */}
+          <div className={styles.socialLinks}>
+            <button
+              type="button"
+              onClick={openCommandPalette}
+              className={`${styles.cmdButton} font-mono`}
+              aria-label="Open command palette"
+              title="Open Command Palette (⌘K)"
+            >
+              <Command size={13} aria-hidden="true" />
+              <span>K</span>
+            </button>
+
+            <motion.a
+              href="https://www.linkedin.com/in/myselfkarim"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.socialLink}
+              whileHover={{ y: -2, scale: 1.03 }}
+              whileTap={{ scale: 0.94 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 18 }}
+              aria-label="LinkedIn"
+            >
+              <Linkedin size={18} />
+            </motion.a>
+
+            <motion.a
+              href="https://github.com/myselfrezaul7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.socialLink}
+              whileHover={{ y: -2, scale: 1.03 }}
+              whileTap={{ scale: 0.94 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 18 }}
+              aria-label="GitHub"
+            >
+              <Github size={18} />
+            </motion.a>
+
+            <motion.button
+              type="button"
+              onClick={handleEmailClick}
+              className={styles.socialLink}
+              whileHover={{ y: -2, scale: 1.03 }}
+              whileTap={{ scale: 0.94 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 18 }}
+              aria-label="Open email client"
+              title="Send Email"
+            >
+              <Mail size={18} />
+            </motion.button>
+          </div>
+        </div>
+
+        <div className={styles.bottomRow}>
+          <p className={styles.tagline}>
+            Open to Working Student, Internship &amp; Master Thesis Roles · Selective Consulting
+          </p>
+          <p className={styles.copyright}>
+            © {currentYear} Md Rezaul Karim
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
 }

@@ -1,3 +1,5 @@
+import { getReadMinutes } from '@/utils/blogUtils';
+
 export interface BlogPost {
     id: number;
     slug: string;
@@ -7,12 +9,17 @@ export interface BlogPost {
     date: string;
     readTime: string;
     category: string;
+    tldr?: string[];
+    relatedProjectSlug?: string;
+    relatedProjectTitle?: string;
+    relatedProjectUrl?: string;
+    relatedProjectMetric?: string;
+    tags?: string[];
+    updatedAt?: string;
 }
 
 export function getReadTime(content: string): string {
-    const words = content.trim().split(/\s+/).length;
-    const minutes = Math.max(1, Math.ceil(words / 200));
-    return `${minutes} min read`;
+    return `${getReadMinutes(content)} min read`;
 }
 
 const rawBlogPosts: Omit<BlogPost, 'readTime'>[] = [
@@ -23,6 +30,15 @@ const rawBlogPosts: Omit<BlogPost, 'readTime'>[] = [
         excerpt: 'Entering daily records for over 100 patient samples in Excel and Google Sheets, building PowerPoint charts for managers, and learning why clean data matters before any complex analysis.',
         category: 'Data & Reporting',
         date: '2026-01-15',
+        relatedProjectSlug: 'renaissance-diagnostic',
+        relatedProjectTitle: 'Renaissance Diagnostic Care · Clinical Data & Ops',
+        relatedProjectMetric: '-25% Wait Time · 100+ Daily Samples',
+        tags: ['Data Quality', 'Excel & Sheets', 'Management Reporting', 'Healthcare Ops', 'BPMN 2.0'],
+        tldr: [
+            'Clean capture discipline—nightly physical-log reconciliation, validation rules, and locked formulas—beats brittle complexity on high-volume clinical floors.',
+            'Converting raw rows into weekly visual briefings exposed an underserved rural diagnostic gap and directly triggered a regional outreach campaign.',
+            'Operational tools must match the team using them: simple, transparent columns survive shift handoffs far better than deeply nested multi-sheet workbooks.',
+        ],
         content: `## The Daily Volume
 
 When people picture data analysis, they often imagine complex algorithms, real-time dashboards, and automated pipelines. My time at Renaissance Diagnostic Care taught me a very different reality. For over a year, I worked as a Data and Operations Analyst at our diagnostic center in Dhaka. Every single day, we handled over 100 patient samples: blood tests, urine screenings, tissue cultures, and urgent pathology orders.
@@ -35,7 +51,16 @@ My primary responsibility was entering and maintaining this daily stream of reco
 
 Early on, I realized how fragile spreadsheet data can be. In a fast-paced environment where samples arrive continuously, one miskeyed digit in a sample ID or an accidental paste into the wrong column can silently distort an entire weekly summary. If an entry error goes unnoticed, inventory logs show stock that does not exist, or test volume numbers misrepresent clinic throughput.
 
-To prevent errors, I developed strict entry routines. Every evening, I reconciled our spreadsheet row counts against the physical registration logs from the front desk. I set up data validation rules to block duplicate patient IDs and highlight missing test codes. I used conditional formatting to flag low reagent quantities and locked formula cells so accidental keystrokes could not corrupt monthly sums. These were not complex software engineering feats, but disciplined spreadsheet habits that kept our baseline numbers trustworthy.
+### Four Guardrails That Protected Baseline Accuracy
+
+To prevent silent errors without slowing down the front desk, I built four disciplined routines directly into our workbooks:
+
+- **End-of-day physical reconciliation**: Every evening, I matched spreadsheet row counts against the physical registration slips from reception before closing the daily log.
+- **Input validation gates**: Data validation rules blocked duplicate patient IDs and highlighted missing test codes the moment an entry was typed.
+- **Reagent threshold alerts**: Conditional formatting flagged low reagent batches early so procurement never scrambled mid-week.
+- **Protected calculation layers**: Locking summary formula cells ensured accidental keystrokes during busy shifts could never corrupt monthly totals.
+
+These were not complex software engineering feats, but disciplined spreadsheet habits that kept our baseline numbers trustworthy.
 
 ## Turning Rows into Management Charts
 
@@ -59,24 +84,39 @@ Not every attempt at improvement went smoothly. During my third month, I tried t
 
 A week later, our floor supervisor tried to update a supplier phone number, inadvertently deleted a reference column, and caused reference errors across three linked sheets. The night shift could not log their counts, and I had to spend hours restoring backups and apologizing for creating a bottleneck.
 
-The lesson was humbling and immediate: in operational settings, a simple system that everyone understands is far superior to a clever system that breaks under pressure. I redesigned the tracker with straightforward, transparent columns and clear documentation.
+> In operational settings, a simple system that everyone understands is far superior to a clever system that breaks under pressure.
+
+The lesson was humbling and immediate. I redesigned the tracker with straightforward, transparent columns and clear documentation so any shift supervisor could maintain it safely.
 
 ## What I Would Do Differently Today
 
 Now, as a Master's student in International Management and Information Systems (IMIS) in Germany, I study formal business process modeling, enterprise data warehousing, and system architectures.
 
-Looking back at my time at Renaissance with what I know today, I would design our data intake differently. Instead of relying on manual spreadsheet entries, I would map our sample intake using standard BPMN 2.0 workflows to identify handoff friction between receptionists and lab technologists. I would implement structured data validation at the point of initial capture to remove repetitive double-entry work entirely.
+Looking back at my time at Renaissance with what I know today, I would design our data intake differently. Instead of relying on manual spreadsheet entries, I would map our sample intake using standard **BPMN 2.0** workflows to identify handoff friction between receptionists and lab technologists. I would implement structured data validation at the point of initial capture to remove repetitive double-entry work entirely.
 
 Yet the core principle remains unchanged. Whether you are building an enterprise data warehouse or typing entries into a Google Sheet, technology is only as valuable as the decisions it enables. The most rewarding part of working with data is not the complexity of your formulas, but whether your reports help responsible leaders make sound decisions that improve people's lives.`,
     },
     {
         id: 2,
         slug: 'building-petbhai',
-        title: 'PetBhai: Planning a Pet Shop That Funds Animal Rescue',
-        excerpt: 'Why our animal rescue work led to building an e-commerce prototype, how the revenue model supports voiceless animals, and what remains to be solved before launch.',
+        title: 'PetBhai: From Rescue-Funded Prototype to Live Bilingual Pet Care Ecosystem',
+        excerpt: 'Why our animal rescue work inspired a self-sustaining pet commerce architecture, the logistics lessons learned in Dhaka, and how PetBhai evolved in 2026 into a live bilingual Web PWA and Native Android platform.',
         category: 'Social Venture',
         date: '2025-10-10',
-        content: `## Why Rescue Needs a Sustainable Model
+        updatedAt: '2026-04-20',
+        relatedProjectSlug: 'petbhai-ecosystem',
+        relatedProjectTitle: 'PetBhai · Bilingual Web PWA & Native Android Ecosystem',
+        relatedProjectUrl: 'https://www.petbhai.com',
+        relatedProjectMetric: 'Web PWA + Native Android · EN/BN',
+        tags: ['Social Venture', 'Supply Chain Logic', 'Web PWA', 'Android App', 'SKU State Machine'],
+        tldr: [
+            'Spontaneous rescue donations run dry during medical emergencies; PetBhai channels recurring pet-care demand into sustainable funding for street animal welfare.',
+            'Designing explicit SKU inventory state machines (Available -> In Basket -> Confirmed -> Dispatched) and mapping cash-on-delivery reconciliation cycles solved real operational bottlenecks before scaling.',
+            'Updated in 2026: PetBhai transitioned from an architected prototype to a live bilingual (EN/BN) platform at petbhai.com spanning a Web PWA and Native Android app with commerce, adoption, community Q&A, and vet booking.',
+        ],
+        content: `> **2026 Platform Update:** Originally written while PetBhai was an architected prototype, the platform is now live at [petbhai.com](https://www.petbhai.com) as a bilingual (English & Bangla) **Web PWA and Native Android ecosystem** bringing together rescue-funded commerce, community Q&A, adoption listings, and veterinary clinic booking.
+
+## Why Rescue Needs a Sustainable Model
 
 Anyone who has participated in street animal welfare knows the emotional and financial strain it creates. Over the years of running animal welfare initiatives in Bangladesh, my friends and I routinely faced urgent emergencies: injured stray dogs hit by vehicles, malnourished litters of kittens abandoned in alleyways, and animals suffering from severe infections.
 
@@ -84,36 +124,48 @@ Every single rescue requires immediate funds. Veterinary consultations, antibiot
 
 At the same time, thousands of conscientious pet owners across the country buy pet food, cat litter, grooming supplies, and accessories every month through retail shops. That contrast sparked the idea for PetBhai: what if we built a dedicated pet supplies business whose primary purpose is to channel its revenue directly into rescuing and rehabilitating stray and voiceless animals?
 
-## Designing the Prototype
+## Designing the Core Architecture
 
-To test the feasibility of this social venture, I set out to build PetBhai as a working software prototype. The goal was to prove the operational logic, catalogue structure, and order fulfillment flows before investing financial capital into warehouse leases or physical stock.
+To test the feasibility of this social venture, I set out to build PetBhai first as a rigorously modeled software system. The goal was to prove the operational logic, catalogue structure, and order fulfillment flows before committing capital to warehouse leases or physical stock.
 
-I structured the prototype with several core capabilities:
-First, a clean product catalogue organized by dietary needs, age stages, and pet types, avoiding the cluttered social media marketplace listings typical in the local market.
-Second, an inventory tracking model with explicit stock states: Available, In Basket, Confirmed, and Dispatched. This state flow ensures that products cannot be oversold during high-traffic campaigns.
-Third, a checkout and delivery routing workflow designed around the local courier ecosystem, mapping how orders move from fulfillment hubs to residential doorsteps.
+I structured the platform around three core architectural capabilities:
+
+- **Structured dietary & life-stage catalogue**: Products organized cleanly by dietary needs, age stages, and pet types—replacing the cluttered social media marketplace listings typical in the local market.
+- **Deterministic SKU inventory state machine**: Explicit stock states (**Available**, **In Basket**, **Confirmed**, and **Dispatched**) that prevent overselling during high-traffic rescue campaigns and keep warehouse counts synchronized.
+- **Local courier routing workflow**: A checkout and fulfillment pipeline modeled directly around regional courier handoffs, tracking every parcel from fulfillment hubs to residential doorsteps.
 
 ## What Didn't Go to Plan
 
-Building the software prototype was straightforward; modeling the physical logistics under local constraints proved much harder.
+Building the software layer was straightforward; modeling physical logistics under local constraints proved much harder.
 
 During our initial delivery simulations, we encountered major challenges with product handling and courier reliability. In Dhaka, heavy items like twenty-kilogram bags of dog food or clay cat litter require careful handling. Standard courier services frequently damaged packaging in transit during rainy monsoon days, leading to rejected deliveries and lost revenue.
 
-Furthermore, cash on delivery remains the dominant payment method in the region. Modeling cash-on-delivery reconciliations in our order pipeline revealed that payments often take several days to clear back from courier partners to the business account. For a venture meant to provide immediate cash flow for urgent veterinary surgeries, delayed courier reconciliations would create serious cash crunches. These logistical roadblocks demonstrated that writing working web code is only ten percent of the challenge; physical fulfillment and cash cycles determine whether a social venture survives.
+Furthermore, cash on delivery remains the dominant payment method in the region. Modeling cash-on-delivery reconciliations in our order pipeline revealed that payments often take several days to clear back from courier partners to the business account. For a venture meant to provide immediate cash flow for urgent veterinary surgeries, delayed courier reconciliations would create serious cash crunches.
 
-## Keeping It a Prototype While Studying
+> Writing working web code is only ten percent of the challenge; physical fulfillment and cash-conversion cycles determine whether a social venture survives.
 
-People often ask why PetBhai has not launched as an active commercial storefront yet. The answer comes down to operational honesty.
+## Staying Disciplined Through Graduate Studies
 
-Running a reliable e-commerce business requires full-time, hands-on attention on the ground. It demands managing vendor relationships, inspecting product storage quality, supervising packing teams, and handling customer support calls every morning. When I moved to Germany to pursue my Master's degree in International Management and Information Systems (IMIS) at Fachhochschule Südwestfalen, I had to be realistic about my capacity.
+When I moved to Germany to pursue my Master's degree in International Management and Information Systems (IMIS) at Fachhochschule Südwestfalen, I deliberately refused to rush into reckless commercial inventory commitments from seven thousand kilometers away.
 
-Attempting to run a fragile, early-stage logistics business from seven thousand kilometers away while handling full-time graduate studies would have compromised both my education and the quality of the service. I chose to keep PetBhai as an architected prototype and research foundation. It serves as an active testing ground where I apply the principles of information systems, enterprise resource planning, and supply chain management that I study in Germany.
+Running a physical fulfillment operation blindly across time zones would have compromised both my graduate studies and customer trust. Instead, I treated PetBhai as a living systems laboratory—applying enterprise information systems, structured database modeling, and supply chain discipline from my IMIS coursework to harden the platform piece by piece.
+
+## 2026 Live-Platform Milestone: Web PWA & Native Android Ecosystem
+
+That disciplined architecture paid off. In 2026, PetBhai graduated from a conceptual blueprint into a live bilingual (English and Bangla) digital ecosystem at [petbhai.com](https://www.petbhai.com), shipped across both a **Progressive Web App (PWA)** and a **Native Android application**.
+
+### What Runs Live in the Ecosystem Today
+
+1. **Multi-tier e-commerce & inventory engine**: Full bilingual storefront backed by deterministic SKU state tracking, clear pricing, and structured order lifecycle management.
+2. **Adoption & veterinary clinic booking workflows**: Dedicated discovery pathways connecting pet parents with verified veterinary clinics and responsible local adoptions.
+3. **Community Q&A & pet-care editorial hub**: A moderated knowledge space where real pet owners exchange practical guidance and veterinary-reviewed articles in both English and Bangla.
+4. **Offline-resilient mobile experience**: Service-worker caching for editorial guides combined with network-first live data synchronization so users on variable mobile networks get fast, reliable access.
 
 ## The Long-Term Vision
 
-PetBhai remains a central part of my long-term plans. The mission has not changed: establishing a self-sustaining social enterprise where pet owners can buy quality products knowing that every purchase helps rescue an injured animal or feed a hungry stray on the street.
+The mission has never changed: establishing a self-sustaining social enterprise where pet owners can rely on a trustworthy platform knowing every milestone strengthens rescue and welfare capacity for voiceless street animals.
 
-My time in the IMIS Master's program is giving me the tools to build this venture properly. When the time comes to launch PetBhai commercially, it will not be an impulsive experiment, but a well-structured operation designed to stand on its own feet and serve voiceless animals for years to come.`,
+Building PetBhai alongside my IMIS studies proved how powerfully process modeling, disciplined architecture, and empathy reinforce each other—turning a grassroots animal welfare need into a resilient, production-grade digital ecosystem.`,
     },
     {
         id: 3,
@@ -122,6 +174,16 @@ My time in the IMIS Master's program is giving me the tools to build this ventur
         excerpt: 'Founding two large animal welfare groups, handling the burnout of answering every message alone, and building clear rules and automated alerts that let a small team run the platform.',
         category: 'Community Operations',
         date: '2026-04-18',
+        relatedProjectSlug: 'community-operations',
+        relatedProjectTitle: 'Animal Welfare Community Operations (450K+ Members)',
+        relatedProjectUrl: 'https://catwaala.com',
+        relatedProjectMetric: '450K+ Members · 5 Moderators · Cross-Timezone',
+        tags: ['Operations at Scale', 'Moderation Playbooks', 'Automated Triage', 'Leadership', 'Animal Welfare'],
+        tldr: [
+            'Founder-as-bottleneck fails catastrophically at scale: solo moderation delayed life-critical rescue posts and let unverified fundraising slip through.',
+            'Three lightweight operational controls—mandatory clinic proof, standardized intake templates, and emergency keyword alerts—allowed five trusted moderators to run 450,000+ members reliably.',
+            'Relocating to Germany (+4–5h timezone delta) stress-tested the handover: clear governance enabled uninterrupted daily rescues without founder intervention.',
+        ],
         content: `## Founding the Communities
 
 Years ago, I founded Dog Lovers of Bangladesh and Cat Lovers of Bangladesh. At the time, there was no centralized online space where pet owners and animal rescuers in Bangladesh could connect, find reliable veterinary advice, or report lost pets.
@@ -140,31 +202,29 @@ Inevitably, this approach collapsed into severe burnout. When you try to be the 
 
 I realized the groups needed a real operational structure. I could not run them alone, nor did we need a massive, bloated bureaucracy. What we needed was a focused, trustworthy team.
 
-I selected about five active, reliable community members who had demonstrated good judgment, deep empathy for animals, and emotional calm during online conflicts. I invited them to step up as our core moderation team.
+I selected five active, reliable community members who had demonstrated good judgment, deep empathy for animals, and emotional calm during online conflicts. I invited them to step up as our core moderation team.
 
-Instead of dividing the team into complex corporate tiers, we kept the structure practical and direct. Each moderator took ownership of specific time windows during the day and specific focus areas. Some focused on reviewing daily submissions, others focused on adoption vetting, and others verified medical cases with clinics.
+Instead of dividing the team into complex corporate tiers, we kept the structure practical and direct. Each moderator took ownership of specific time windows during the day and specific focus areas: reviewing daily submissions, vetting adoption listings, and verifying critical medical cases directly with clinics.
 
 ## Standard Formats and Automated Keyword Alerts
 
-To make the moderators' work manageable, we created clear rules and standardized posting formats:
+To make the moderators' work sustainable without burning them out too, we codified three explicit operational rules and automated triage safeguards:
 
-First, we banned open, unverified fundraising requests. Anyone requesting financial help for an animal was required to provide a clear photograph, the name and location of the treating veterinary clinic, and an itemized prescription or doctor note. This single policy eliminated fraudulent claims and protected our members' trust.
-
-Second, we introduced strict post templates for adoption and lost-pet notices. Every post had to include the animal age, medical history, location, and clear contact numbers before approval.
-
-Third, we configured several automated keyword alerts inside our moderation tools. Keywords associated with life-threatening emergencies, such as poisonings, vehicular accidents, critical fractures, or urgent blood donor needs, immediately trigger high-priority alerts for our moderation team. When an alert fires, a moderator receives an immediate notification, reviews the post ahead of the general queue, and pins it to the top of the group so nearby rescuers can respond quickly.
+1. **Mandatory clinical verification for fundraising**: We banned open, unverified donation appeals. Anyone requesting financial help for an animal must provide a clear photograph, the name and location of the treating veterinary clinic, and an itemized prescription or doctor note—eliminating fraudulent claims and protecting member trust.
+2. **Structured adoption and lost-pet templates**: Every listing must include the animal's age, medical history, exact neighborhood location, and verified contact numbers prior to approval, cutting dozens of back-and-forth comment threads per post.
+3. **Automated emergency keyword alerts**: High-priority moderation triggers watch for life-threatening terms—poisonings, vehicular accidents, critical fractures, and urgent blood donor calls. Whenever a trigger fires, a moderator receives an instant alert, reviews the post ahead of the general queue, and pins it so nearby rescuers mobilize immediately.
 
 ## Managing Across Time Zones
 
 The true test of this operational setup came when I moved to Germany to begin my Master's studies in International Management and Information Systems at Fachhochschule Südwestfalen.
 
-Germany is four to five hours behind Bangladesh, depending on daylight saving time. If our communities had still depended on my personal daily approvals, the groups would have stalled every morning. But because our five moderators had clear guidelines, established posting formats, and automated alerts, the groups continued operating smoothly without interruption.
+Germany is four to five hours behind Bangladesh, depending on daylight saving time. If our communities had still depended on my personal daily approvals, the groups would have stalled every morning. Because our five moderators operated with clear guidelines, established posting formats, and automated alerts, the groups continued running smoothly without interruption.
 
-Our team communicates through a shared group chat where moderators discuss tricky cases, flag repeat offenders, and share updates on ongoing rescues. My role shifted from frontline moderator to community steward: I handle technical configuration, policy updates, and major escalations, while the five moderators manage day-to-day operations with confidence.
+Our team communicates through a shared coordination chat where moderators discuss edge cases, flag repeat offenders, and coordinate complex rescues. My role shifted from frontline moderator to community steward: I handle technical configuration, policy evolution, and rare escalations while the five moderators lead day-to-day operations with full autonomy.
 
 ## What True Operations Looks Like
 
-Founding a project is exciting, but building systems that function without your constant intervention is the real test of leadership.
+> Founding a project is exciting, but building systems that function reliably without your constant intervention is the real test of leadership.
 
 A community of 450,000 members does not stay orderly because one person works eighteen hours a day. It works because a small team of dedicated people has clear rules, practical tools, and the trust to make decisions independently. Knowing that injured animals are still being rescued and adopted every single day while I study in Germany is the most satisfying proof that good operations matter.`,
     },
@@ -175,9 +235,19 @@ A community of 450,000 members does not stay orderly because one person works ei
         excerpt: 'Mapping a study abroad consultancy with BPMN 2.0, building my first production website, and adding a private application tracker backed by Supabase.',
         category: 'Web & Process',
         date: '2026-03-10',
+        relatedProjectSlug: 'nextep-edu',
+        relatedProjectTitle: 'NexTep Edu · BPMN 2.0 Playbook & Bilingual Web Platform',
+        relatedProjectUrl: 'https://www.nextepedu.com',
+        relatedProjectMetric: '17 Country Guides · Supabase Tracker',
+        tags: ['BPMN 2.0', 'Next.js', 'Supabase', 'Technical Project Lead', 'Bilingual Web'],
+        tldr: [
+            'Drawing the end-to-end student admissions workflow in BPMN 2.0 before writing code exposed handoff gaps and gave the consultancy its daily operational playbook.',
+            'Built and shipped a bilingual (English & Bangla) Next.js production site featuring 17 country study guides, structured Organization schema, and dark/light themes.',
+            'A lightweight Supabase-backed private application tracker linked directly to the BPMN stages eliminated repetitive status-check messages for staff.',
+        ],
         content: `## Why I Said Yes
 
-From the very beginning of my studies, I have been drawn to the space where management meets technology. I like understanding how a business actually runs, and then finding the right tools to make that work easier. So when I joined NexTep Edu, a study abroad consultancy helping students from Bangladesh apply to universities in Germany and other countries, as Technical Project Lead in May 2025, I saw a chance to do exactly that.
+From the very beginning of my studies, I have been drawn to the space where management meets technology. I like understanding how a business actually runs, and then finding the right tools to make that work easier. So when I joined [NexTep Edu](https://www.nextepedu.com), a study abroad consultancy helping students from Bangladesh apply to universities in Germany and other countries, as Technical Project Lead in May 2025, I saw a chance to do exactly that.
 
 There was one catch. I had never built a full website before. NexTep Edu was my first real web project, and I learned most of what I know about web building along the way.
 
@@ -185,35 +255,47 @@ There was one catch. I had never built a full website before. NexTep Edu was my 
 
 Before touching the website, I wanted to understand how the consultancy worked. A student's journey has many steps: the first inquiry, a consultation, university selection, preparing documents and a statement of purpose, the offer letter, proof of funds, and finally the visa. Each step involves different people and different documents, and it is easy for things to fall through the cracks.
 
-Around that time I was learning BPMN 2.0 in my IMIS classes. As soon as I had access to a modelling tool, I used it to draw out the consultancy's workflow: who does what, in which order, and where a file waits for the next action.
+Around that time I was learning **BPMN 2.0** in my IMIS classes. As soon as I had access to a modelling tool, I used it to draw out the consultancy's workflow: who does what, in which order, and where a file waits for the next action.
 
 I want to be honest about what this did and did not become. The BPMN models are not running inside any software. Nothing is automated by a process engine. What changed is that the team now has a clear visual map of the procedure, and they manage their daily work based on those diagrams and the plan we built from them. For a small team, that shared picture turned out to be more useful than any complicated system would have been.
 
 ## Building the Website
 
-With the process clear, I moved on to the website itself. I built it by vibe coding: describing what I needed to AI coding assistants, reading and testing what came back, fixing what did not work, and repeating that loop until each part behaved the way I wanted.
+With the process clear, I moved on to the website itself. I built it by pairing process clarity with AI-assisted iteration: describing what each component needed to accomplish, reading and testing every output carefully, fixing edge cases, and repeating that loop until every interaction behaved reliably.
 
-The site runs on Next.js with Tailwind CSS. It supports both English and Bangla, has a dark and light theme, and includes a guide page for each of the 17 destination countries the consultancy works with. I also added structured data so search engines understand that NexTep Edu is an educational organisation with a local office, along with a frequently asked questions section and a simple contact form.
+### Production Architecture Delivered
 
-None of this was planned perfectly at the start. Every feature taught me something new about how pages are rendered, how routes work, and how small layout decisions affect the experience on a phone.
+- **Bilingual experience (English & Bangla)** with persistent dark and light themes tailored for both students and parents.
+- **17 destination country guides** structuring tuition, intake timelines, and visa prerequisites into clear reference pages.
+- **Search-ready semantic foundation** combining Organization structured data, concise FAQs, and a streamlined inquiry flow.
+
+None of this was planned perfectly at the start. Every feature taught me something concrete about server/client rendering, routing hygiene, and how small layout decisions shape mobile usability.
 
 ## The Private Application Tracker
 
 The part I am proudest of is the application tracker.
 
-Students applying abroad are understandably anxious, and the most common message the team received was some version of "Is there any update on my file?" Answering those one by one took time away from the actual work.
+Students applying abroad are understandably anxious, and the most common message the team received was some version of *"Is there any update on my file?"* Answering those one by one pulled counselors away from actual application reviews.
 
-So I built a tracking page. When a student's application is set up, they receive an email with a unique tracking code and a private link. Using that link, they can check the current stage of their application at any time, without calling or messaging anyone. The data is stored in Supabase, and only staff members with admin access can update a student's progress. Students only ever see their own application, which was important to me because these files contain personal information.
+So I built a dedicated tracking portal backed by **Supabase**:
 
-It is not a complicated system, but it solves a real problem, and it connects directly back to the BPMN map: each stage a student sees on the tracker matches a step in the process we drew at the beginning.
+1. When a student's file opens, they receive an email containing a unique tracking code and private link.
+2. Opening that link reveals their live application stage at any hour—without calling or messaging staff.
+3. Only authenticated staff admins can update progress states, while row-level isolation guarantees each student sees strictly their own personal record.
+
+> Every stage a student sees on the tracker maps one-to-one with a milestone in the BPMN diagram we drew before writing a single line of code.
 
 ## What I Would Do Differently
 
-Because this was my first project, I made plenty of decisions that I would approach differently today. I would plan the content structure for both languages before building pages, test how the site looks to search engines earlier instead of only checking it in my own browser, and document the admin workflow for the team from day one rather than explaining it as questions came up.
+Because this was my first production web build, there are clear architectural improvements I would make from day one on future projects:
+
+- **Plan bilingual content schemas upfront** before building individual destination pages so translations stay structurally aligned.
+- **Audit SEO and crawler rendering early** rather than checking visual layouts exclusively in my local browser.
+- **Document the staff admin handbook on day one** instead of explaining edge cases ad hoc as questions arose.
 
 ## What It Gave Me
 
-My time as Technical Project Lead at NexTep Edu ended in March 2026. Looking back, the biggest thing I took from it was not a specific framework or tool. It was confidence. I went in having never shipped a website, and I came out knowing I could take a business process, map it properly, and turn it into something people actually use.
+My time as Technical Project Lead at NexTep Edu concluded in March 2026. Looking back, the biggest thing I took from it was not a specific framework or library—it was operational confidence. I went in having never shipped a website, and I came out knowing I could take a real business process, map it rigorously, and ship a live system people depend on every day.
 
 That confidence is the reason this portfolio exists, and it is the same mindset I bring to my work now: understand the people and the process first, then choose the technology that supports them.`,
     },

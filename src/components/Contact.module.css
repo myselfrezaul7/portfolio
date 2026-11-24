@@ -5,7 +5,7 @@
 
 @media (max-width: 767px) {
     .contact {
-        padding: 60px 0;
+        padding: 48px 0;
     }
 }
 
@@ -13,6 +13,12 @@
     max-width: var(--container-max);
     margin: 0 auto;
     padding: 0 24px;
+}
+
+@media (max-width: 767px) {
+    .container {
+        padding: 0 16px;
+    }
 }
 
 @media (min-width: 768px) {
@@ -35,6 +41,13 @@
     padding: 36px 28px;
     overflow: hidden;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), var(--shadow-md);
+}
+
+@media (max-width: 767px) {
+    .hubCard {
+        padding: 24px 18px;
+        border-radius: 22px;
+    }
 }
 
 @media (min-width: 768px) {
@@ -71,6 +84,14 @@
     border-bottom: 1px solid var(--border);
 }
 
+@media (max-width: 640px) {
+    .availabilityHeader {
+        padding-bottom: 20px;
+        margin-bottom: 22px;
+        gap: 10px;
+    }
+}
+
 @media (min-width: 960px) {
     .availabilityHeader {
         flex-direction: row;
@@ -92,6 +113,25 @@
     font-weight: 600;
     color: var(--text-primary);
     width: fit-content;
+}
+
+@media (max-width: 640px) {
+    .liveStatusPill {
+        border-radius: 14px;
+        width: 100%;
+        padding: 10px 14px;
+        gap: 6px 8px;
+        font-size: 12px;
+    }
+
+    .slaDivider {
+        display: none;
+    }
+
+    .replySla {
+        flex-basis: 100%;
+        padding-left: 16px;
+    }
 }
 
 .pillPulseDot {
@@ -154,24 +194,31 @@
     border-radius: 999px;
 }
 
-/* Two-Column Grid */
+@media (max-width: 640px) {
+    .rolePill {
+        font-size: 10.5px;
+        padding: 4px 9px;
+    }
+}
+
+/* Balanced Two-Column Grid */
 .hubGrid {
     position: relative;
     z-index: 1;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 32px;
-    align-items: start;
+    gap: 28px;
+    align-items: center;
 }
 
 @media (min-width: 960px) {
     .hubGrid {
-        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-        gap: 40px;
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+        gap: 44px;
     }
 }
 
-/* Left Column: Concierge Actions */
+/* Left Column: Narrative & Primary Actions */
 .conciergeCol {
     display: flex;
     flex-direction: column;
@@ -190,7 +237,7 @@
 }
 
 .title {
-    font-size: clamp(32px, 5vw, 48px);
+    font-size: clamp(28px, 6.5vw, 46px);
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1.1;
@@ -200,22 +247,37 @@
 }
 
 .description {
-    font-size: 15.5px;
+    font-size: 15px;
     color: var(--text-secondary);
     line-height: 1.7;
-    margin-bottom: 26px;
-    text-align: left;
-    text-wrap: pretty;
+    margin-bottom: 24px;
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+}
+
+@media (min-width: 768px) {
+    .description {
+        font-size: 15.5px;
+    }
+}
+
+.primaryActions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
 }
 
 .bookCallBtn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    width: 100%;
-    padding: 15px 24px;
-    font-size: 15px;
+    gap: 9px;
+    min-height: 48px;
+    padding: 13px 22px;
+    font-size: 14.5px;
     font-weight: 700;
     letter-spacing: -0.01em;
     color: var(--bg-primary);
@@ -223,43 +285,97 @@
     border: 1px solid transparent;
     border-radius: 14px;
     cursor: pointer;
-    margin-bottom: 20px;
     transition: opacity var(--transition-fast), box-shadow var(--transition-normal);
 }
 
-.bookCallBtn:hover {
-    opacity: 0.92;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
-}
-
-.bookCallBadge {
-    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
-    font-size: 10.5px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 3px 8px;
-    border-radius: 999px;
-    background: rgba(74, 155, 155, 0.25);
-    color: var(--bg-primary);
-}
-
-.directChannelBox {
-    width: 100%;
-    padding: 16px;
+.sendEmailBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 13px 20px;
+    font-size: 14.5px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
     background: var(--bg-secondary);
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: border-color var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-normal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .bookCallBtn:hover {
+        opacity: 0.92;
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+    }
+
+    .sendEmailBtn:hover {
+        border-color: rgba(74, 155, 155, 0.5);
+        color: var(--accent);
+        background: var(--bg-card-hover);
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.16);
+    }
+}
+
+@media (max-width: 640px) {
+    .primaryActions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .bookCallBtn,
+    .sendEmailBtn {
+        width: 100%;
+    }
+}
+
+.bookingNote {
+    margin-top: 14px;
+    font-size: 12.5px;
+    color: var(--text-tertiary);
+    text-align: left;
+}
+
+.bookingNote a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    padding: 4px 0;
+}
+
+.bookingNote a:hover {
+    text-decoration: underline;
+}
+
+/* Right Column: Elevated Direct Channels Surface Card */
+.directChannelBox {
+    width: 100%;
+    padding: 20px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
+}
+
+@media (max-width: 767px) {
+    .directChannelBox {
+        padding: 14px;
+        border-radius: 16px;
+        gap: 14px;
+    }
 }
 
 .emailStrip {
     display: flex;
     flex-direction: column;
-    gap: 3px;
-    padding-bottom: 12px;
+    gap: 8px;
+    padding-bottom: 14px;
     border-bottom: 1px solid var(--border);
 }
 
@@ -272,21 +388,73 @@
     color: var(--text-tertiary);
 }
 
+.emailRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
 .emailValue {
     font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
-    font-size: 13.5px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--text-primary);
-    word-break: break-all;
+    overflow-wrap: anywhere;
+    min-width: 0;
+}
+
+.copyInlineBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 36px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: border-color var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.copyInlineBtnDone {
+    border-color: rgba(34, 197, 94, 0.45);
+    color: #22c55e;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .copyInlineBtn:hover {
+        border-color: rgba(74, 155, 155, 0.5);
+        color: var(--accent);
+        background: var(--bg-card-hover);
+    }
+
+    .copyInlineBtnDone:hover {
+        border-color: rgba(34, 197, 94, 0.55);
+        color: #22c55e;
+    }
+}
+
+@media (max-width: 640px) {
+    .copyInlineBtn {
+        min-height: 40px;
+        padding: 8px 13px;
+    }
 }
 
 .quickActionsGrid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 9px;
+    gap: 10px;
 }
 
-@media (max-width: 440px) {
+@media (max-width: 339px) {
     .quickActionsGrid {
         grid-template-columns: 1fr;
     }
@@ -297,23 +465,26 @@
     align-items: center;
     justify-content: center;
     gap: 7px;
+    min-height: 44px;
     padding: 10px 12px;
     font-size: 13px;
     font-weight: 600;
     color: var(--text-primary);
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 12px;
     text-decoration: none;
     cursor: pointer;
     transition: border-color var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);
 }
 
-.quickActionBtn:hover {
-    border-color: rgba(74, 155, 155, 0.45);
-    color: var(--accent);
-    background: var(--bg-card-hover);
-    transform: translateY(-1px);
+@media (hover: hover) and (pointer: fine) {
+    .quickActionBtn:hover {
+        border-color: rgba(74, 155, 155, 0.45);
+        color: var(--accent);
+        background: var(--bg-card-hover);
+        transform: translateY(-1px);
+    }
 }
 
 .externalMini {
@@ -324,268 +495,12 @@
     color: #22c55e;
 }
 
-.bookingNote {
-    margin-top: 16px;
+.cvRequestNote {
     font-size: 12.5px;
-    color: var(--text-tertiary);
-    text-align: left;
-}
-
-.bookingNote a {
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.bookingNote a:hover {
-    text-decoration: underline;
-}
-
-/* Right Column: Role-Guided Quick-Connect Composer */
-.composerCol {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 22px;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    text-align: left;
-}
-
-@media (max-width: 640px) {
-    .composerCol {
-        padding: 18px 16px;
-        border-radius: 16px;
-    }
-}
-
-.composerHeader {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.composerTitleRow {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.composerIcon {
-    color: var(--accent);
-}
-
-.composerTitle {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin: 0;
-}
-
-.composerHint {
-    font-size: 13px;
-    color: var(--text-tertiary);
-    text-align: left;
-    text-wrap: pretty;
-}
-
-/* Intent Selector Pills */
-.intentPills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-}
-
-.intentPill {
-    position: relative;
-    padding: 7px 12px;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    background: var(--bg-card);
-    color: var(--text-secondary);
-    font-size: 12.5px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: color var(--transition-fast), border-color var(--transition-fast);
-}
-
-.intentPill:hover {
-    color: var(--text-primary);
-    border-color: var(--border-hover);
-}
-
-.intentPillActive {
-    color: #ffffff;
-    border-color: transparent;
-}
-
-.intentPillActive:hover {
-    color: #ffffff;
-}
-
-.intentPillBg {
-    position: absolute;
-    inset: -1px;
-    border-radius: 999px;
-    background: var(--accent);
-    z-index: 0;
-}
-
-.intentPillText {
-    position: relative;
-    z-index: 1;
-}
-
-/* Compact Inputs */
-.inputGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.field {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.fieldLabel {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-secondary);
-}
-
-.optionalTag {
-    font-weight: 400;
-    color: var(--text-tertiary);
-}
-
-.textInput,
-.textArea {
-    width: 100%;
-    padding: 10px 13px;
-    font-size: 13.5px;
-    font-family: inherit;
-    color: var(--text-primary);
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    transition: border-color var(--transition-fast), background-color var(--transition-fast);
-}
-
-.textArea {
-    resize: vertical;
-    min-height: 62px;
     line-height: 1.5;
-}
-
-.textInput::placeholder,
-.textArea::placeholder {
     color: var(--text-tertiary);
-}
-
-.textInput:focus,
-.textArea:focus {
-    border-color: var(--accent);
-    background: var(--bg-primary);
-}
-
-/* Live Draft Preview Box */
-.previewBox {
-    padding: 14px 16px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.previewSubject {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    font-size: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
-}
-
-.previewMetaKey {
-    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
-    font-weight: 700;
-    color: var(--accent);
-}
-
-.previewMetaVal {
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.previewBody {
-    font-size: 12.5px;
-    line-height: 1.6;
-    color: var(--text-secondary);
-    white-space: pre-line;
     text-align: left;
-    text-wrap: pretty;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
     margin: 0;
-}
-
-/* Composer Dispatch Buttons */
-.composerActions {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-}
-
-@media (min-width: 540px) {
-    .composerActions {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-.copyBundleBtn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px 16px;
-    font-size: 13.5px;
-    font-weight: 600;
-    color: var(--text-primary);
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 11px;
-    cursor: pointer;
-    transition: border-color var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);
-}
-
-.copyBundleBtn:hover {
-    border-color: rgba(74, 155, 155, 0.45);
-    color: var(--accent);
-    background: var(--bg-card-hover);
-    transform: translateY(-1px);
-}
-
-.openMailBtn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px 16px;
-    font-size: 13.5px;
-    font-weight: 600;
-    color: #ffffff;
-    background: var(--accent);
-    border: 1px solid transparent;
-    border-radius: 11px;
-    cursor: pointer;
-    transition: background-color var(--transition-fast), transform var(--transition-fast);
-}
-
-.openMailBtn:hover {
-    background: var(--accent-hover);
-    transform: translateY(-1px);
 }

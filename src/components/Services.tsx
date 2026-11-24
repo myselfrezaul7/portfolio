@@ -1,10 +1,11 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { Settings, BarChart3, Code2, CheckCircle2, ArrowRight, type LucideIcon } from 'lucide-react';
 import type { ProjectDomainLens } from '@/data/projects';
 import { useTilt } from '@/hooks/useTilt';
+import { useMobileCarousel } from '@/hooks/useMobileCarousel';
 import ScrollReveal from './animations/ScrollReveal';
+import MobileCarouselControls from './ui/MobileCarouselControls';
 import styles from './Services.module.css';
 
 interface ServicePillar {
@@ -51,7 +52,7 @@ const services: ServicePillar[] = [
     icon: Code2,
     title: 'Digital Platforms & Systems Delivery',
     description:
-      'Bridge business requirements and shipped software—coordinating CMS governance, bilingual web PWAs, Android apps, and self-service Supabase portals.',
+      'Bridge business requirements and shipped software, coordinating CMS governance, bilingual web PWAs, Android apps, and self-service Supabase portals.',
     deliverables: [
       'Bilingual Web PWA & native Android ecosystems',
       'Private Supabase self-service tracking portals',
@@ -64,11 +65,9 @@ const services: ServicePillar[] = [
 
 function ServiceCard({
   service,
-  index,
   onFilterWork,
 }: {
   service: ServicePillar;
-  index: number;
   onFilterWork: (lens: Exclude<ProjectDomainLens, 'All'>) => void;
 }) {
   const { ref, style, handlers } = useTilt<HTMLDivElement>({
@@ -81,13 +80,7 @@ function ServiceCard({
   const Icon = service.icon;
 
   return (
-    <motion.div
-      className={styles.cardSlot}
-      initial={{ opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.42, delay: index * 0.1 }}
-    >
+    <div className={styles.cardSlot}>
       <div ref={ref} style={style} className={styles.card} {...handlers}>
         <div className={styles.cardInner}>
           <div className={styles.topRow}>
@@ -132,11 +125,20 @@ function ServiceCard({
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 export default function Services() {
+  const {
+    trackRef,
+    activeIndex,
+    canScrollPrev,
+    canScrollNext,
+    scrollToIndex,
+    step,
+  } = useMobileCarousel({ itemCount: services.length });
+
   const handleFilterWork = (lens: Exclude<ProjectDomainLens, 'All'>) => {
     window.dispatchEvent(
       new CustomEvent('portfolio:filter-projects', { detail: { lens } })
@@ -153,21 +155,32 @@ export default function Services() {
             <span className={styles.eyebrow}>Outcome-Driven Capabilities</span>
             <h2 className={styles.sectionTitle}>Core Competencies</h2>
             <p className={styles.sectionDescription}>
-              I operate at the intersection of business processes, SAP &amp; BI analytics, and digital product execution—turning ambiguous bottlenecks into measurable systems.
+              I operate at the intersection of business processes, SAP &amp; BI analytics, and digital product execution, turning ambiguous bottlenecks into measurable systems.
             </p>
           </div>
         </ScrollReveal>
 
-        <div className={styles.grid}>
-          {services.map((service, index) => (
-            <ServiceCard
-              key={service.title}
-              service={service}
-              index={index}
-              onFilterWork={handleFilterWork}
-            />
-          ))}
-        </div>
+        <ScrollReveal delay={0.06}>
+          <div ref={trackRef} className={styles.grid}>
+            {services.map((service) => (
+              <ServiceCard
+                key={service.title}
+                service={service}
+                onFilterWork={handleFilterWork}
+              />
+            ))}
+          </div>
+
+          <MobileCarouselControls
+            count={services.length}
+            activeIndex={activeIndex}
+            canScrollPrev={canScrollPrev}
+            canScrollNext={canScrollNext}
+            onSelect={scrollToIndex}
+            onStep={step}
+            label="competency"
+          />
+        </ScrollReveal>
       </div>
     </section>
   );

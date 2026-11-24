@@ -1,18 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Download,
-  Eye,
   MapPin,
   GraduationCap,
   Briefcase,
+  ArrowRight,
   ArrowUpRight,
   Compass,
+  FileText,
 } from 'lucide-react';
 import ScrollReveal from './animations/ScrollReveal';
-import CvPreviewModal from './CvPreviewModal';
 import styles from './About.module.css';
 
 const impactTiles = [
@@ -51,7 +50,7 @@ interface TimelineEntry {
 const timelineEntries: TimelineEntry[] = [
   {
     id: 'fh-swf-coord',
-    period: '03/2026 – Present',
+    period: '03/2026 - Present',
     role: 'Web & Project Coordinator',
     org: 'Fachhochschule Südwestfalen',
     type: 'work',
@@ -61,17 +60,17 @@ const timelineEntries: TimelineEntry[] = [
   },
   {
     id: 'nextep-edu',
-    period: '05/2025 – 03/2026',
-    role: 'Technical Project Lead',
+    period: '05/2025 - 03/2026',
+    role: 'Technical Project Lead (Non-Commercial Project)',
     org: 'NexTep Edu',
     type: 'work',
     summary:
-      'Mapped end-to-end student admissions in BPMN 2.0, deployed the bilingual 17-country Next.js platform, and shipped a private Supabase self-service application tracker.',
+      'Voluntary, non-commercial technical project: mapped end-to-end student admissions in BPMN 2.0, deployed the bilingual 17-country Next.js platform, and shipped a private Supabase self-service application tracker.',
     projectSlug: 'nextep-edu',
   },
   {
     id: 'ma-imis',
-    period: '03/2025 – Present',
+    period: '03/2025 - Present',
     role: 'M.A. International Management & Information Systems (IMIS)',
     org: 'Fachhochschule Südwestfalen · Soest, Germany',
     type: 'education',
@@ -81,7 +80,7 @@ const timelineEntries: TimelineEntry[] = [
   },
   {
     id: 'renaissance',
-    period: '02/2023 – 03/2024',
+    period: '02/2023 - 03/2024',
     role: 'Data & Operations Analyst',
     org: 'Renaissance Diagnostic Care',
     type: 'work',
@@ -91,7 +90,7 @@ const timelineEntries: TimelineEntry[] = [
   },
   {
     id: 'bba',
-    period: '10/2016 – 05/2022',
+    period: '10/2016 - 05/2022',
     role: 'B.B.A. in Management (Grade: 2.1)',
     org: 'National University, Bangladesh',
     type: 'education',
@@ -114,20 +113,19 @@ const quickFacts = [
 
 export default function About() {
   const [activeTimelineId, setActiveTimelineId] = useState<string>(timelineEntries[0].id);
-  const [isCvOpen, setIsCvOpen] = useState(false);
-
-  // Listen for global `portfolio:open-cv` events from Navbar, Hero, CommandPalette, or Contact
-  useEffect(() => {
-    const handleOpenCv = () => setIsCvOpen(true);
-    window.addEventListener('portfolio:open-cv', handleOpenCv);
-    return () => window.removeEventListener('portfolio:open-cv', handleOpenCv);
-  }, []);
 
   const handleOpenProjectCaseStudy = (e: React.MouseEvent, slug: string) => {
     e.stopPropagation();
     window.dispatchEvent(new CustomEvent('portfolio:open-project', { detail: { slug } }));
     const workSection = document.getElementById('work');
     workSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleScrollToContact = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const contactSection = document.getElementById('contact');
+    contactSection?.scrollIntoView({ behavior: 'smooth' });
+    window.history.pushState(null, '', '#contact');
   };
 
   return (
@@ -176,41 +174,38 @@ export default function About() {
                   I am a 3rd-semester Master&apos;s candidate in{' '}
                   <strong>International Management and Information Systems (IMIS)</strong> at
                   Fachhochschule Südwestfalen, specializing in SAP BW/4HANA data warehousing,
-                  BPMN 2.0 process optimization, and agile IT project delivery. Across roles at{' '}
-                  <strong>FH Südwestfalen</strong>, <strong>NexTep Edu</strong>, and{' '}
+                  BPMN 2.0 process optimization, and agile IT project delivery. Across work at{' '}
+                  <strong>FH Südwestfalen</strong>,{' '}
+                  <strong>NexTep Edu (Non-Commercial Project)</strong>, and{' '}
                   <strong>Renaissance Diagnostic Care</strong>, I have translated messy operational
                   bottlenecks into structured Jira workflows, self-service tracking systems, and a{' '}
                   <strong>25% reduction in clinical patient wait times</strong>.
                 </p>
                 <p className={styles.bio}>
-                  Beyond institutional work, I founded <strong>PetBhai</strong>—a live bilingual
-                  (EN/BN) Web PWA and native Android ecosystem combining pet commerce, multi-tier
-                  SKU inventory logic, live community Q&amp;A, and clinic booking to fund street
-                  animal rescue—alongside two community networks scaled to{' '}
-                  <strong>450,000+ members</strong>. I approach every initiative through{' '}
-                  <strong>People, Process, and Technology</strong>: understand stakeholders first,
-                  map clean workflows second, and ship practical systems that teams actually adopt.
+                  Beyond institutional work, I built{' '}
+                  <strong>PetBhai (Non-Commercial Project)</strong>, a live bilingual (EN/BN) Web
+                  PWA and native Android student architecture and animal welfare initiative
+                  exploring multi-tier SKU inventory logic, live community Q&amp;A, adoption, and
+                  veterinary clinic discovery with zero commercial revenue, alongside two
+                  animal-welfare community networks scaled to <strong>450,000+ members</strong>. I
+                  approach every initiative through <strong>People, Process, and Technology</strong>
+                  : understand stakeholders first, map clean workflows second, and ship practical
+                  systems that teams actually adopt.
                 </p>
 
-                <div className={styles.cvActions}>
-                  <motion.button
-                    type="button"
-                    onClick={() => setIsCvOpen(true)}
-                    className={styles.previewCvBtn}
-                    whileTap={{ scale: 0.97 }}
+                <div className={styles.contactCtaRow}>
+                  <span className={styles.cvRequestNote}>
+                    <FileText size={15} className={styles.cvRequestIcon} aria-hidden="true" />
+                    <span>Full CV available upon request</span>
+                  </span>
+                  <a
+                    href="#contact"
+                    onClick={handleScrollToContact}
+                    className={styles.getInTouchBtn}
                   >
-                    <Eye size={17} />
-                    <span>Preview CV</span>
-                  </motion.button>
-                  <motion.a
-                    href="/resume.pdf"
-                    download="Md-Rezaul-Karim-CV.pdf"
-                    className={styles.downloadCvBtn}
-                    whileTap={{ scale: 0.97 }}
-                  >
-                    <Download size={17} />
-                    <span>Download PDF</span>
-                  </motion.a>
+                    <span>Get in Touch</span>
+                    <ArrowRight size={15} className={styles.getInTouchArrow} aria-hidden="true" />
+                  </a>
                 </div>
               </div>
             </ScrollReveal>
@@ -247,7 +242,7 @@ export default function About() {
                               <span className={styles.timelineDot} aria-hidden="true">
                                 <Icon size={15} />
                               </span>
-                              <div>
+                              <div className={styles.timelineTitleWrap}>
                                 <span className={styles.timelineRole}>{entry.role}</span>
                                 <span className={styles.timelineOrg}>{entry.org}</span>
                               </div>
@@ -360,9 +355,6 @@ export default function About() {
           </div>
         </div>
       </div>
-
-      {/* Inline CV Preview Modal */}
-      <CvPreviewModal isOpen={isCvOpen} onClose={() => setIsCvOpen(false)} />
     </section>
   );
 }

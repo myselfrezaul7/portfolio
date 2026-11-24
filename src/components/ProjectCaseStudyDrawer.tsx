@@ -38,8 +38,18 @@ export default function ProjectCaseStudyDrawer({
     idx: 0,
   });
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const scrollBodyRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return;
+    const mq = window.matchMedia('(max-width: 767px)');
+    const syncViewport = () => setIsMobileViewport(mq.matches);
+    syncViewport();
+    mq.addEventListener('change', syncViewport);
+    return () => mq.removeEventListener('change', syncViewport);
+  }, []);
 
   const activeImageIdx =
     project && gallerySelection.slug === project.slug ? gallerySelection.idx : 0;
@@ -117,6 +127,10 @@ export default function ProjectCaseStudyDrawer({
       ? project.gallery[Math.min(activeImageIdx, project.gallery.length - 1)]
       : null;
 
+  const filteredPlatformBadges = project?.platformBadges
+    ? project.platformBadges.filter((badge) => badge !== project.projectNature)
+    : [];
+
   return (
     <AnimatePresence>
       {project && (
@@ -134,27 +148,38 @@ export default function ProjectCaseStudyDrawer({
             aria-modal="true"
             aria-labelledby="case-study-drawer-title"
             className={styles.drawer}
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
+            initial={isMobileViewport ? { y: '100%', x: 0 } : { x: '100%', y: 0 }}
+            animate={{ x: 0, y: 0 }}
+            exit={isMobileViewport ? { y: '100%', x: 0 } : { x: '100%', y: 0 }}
             transition={{ type: 'spring', stiffness: 360, damping: 36 }}
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Mobile Bottom-Sheet Grab Indicator */}
+            <div className={styles.sheetHandle} aria-hidden="true">
+              <span className={styles.sheetHandleBar} />
+            </div>
+
             {/* Top Bar */}
             <header className={styles.topBar}>
               <div className={styles.topMeta}>
                 <span className={styles.categoryPill}>{project.category}</span>
+                {project.projectNature && (
+                  <span className={styles.naturePill}>
+                    <span className={styles.natureDot} aria-hidden="true" />
+                    <span>{project.projectNature}</span>
+                  </span>
+                )}
                 <span className={styles.periodTag}>{project.period}</span>
               </div>
               <div className={styles.topActions}>
                 <button
                   type="button"
                   onClick={handleCopyShareLink}
-                  className={styles.iconBtn}
-                  aria-label="Copy direct link to this case study"
+                  className={`${styles.iconBtn} ${styles.shareBtn}`}
+                  aria-label={copiedLink ? 'Link copied to clipboard' : 'Copy direct link to this case study'}
                 >
-                  {copiedLink ? <Check size={14} /> : <Link2 size={14} />}
-                  <span>{copiedLink ? 'Copied' : 'Share'}</span>
+                  {copiedLink ? <Check size={15} /> : <Link2 size={15} />}
+                  <span className={styles.shareLabel}>{copiedLink ? 'Copied' : 'Share'}</span>
                 </button>
                 <button
                   ref={closeBtnRef}
@@ -176,9 +201,9 @@ export default function ProjectCaseStudyDrawer({
                   {project.title}
                 </h2>
                 <p className={styles.subtitle}>{project.subtitle}</p>
-                {project.platformBadges && project.platformBadges.length > 0 && (
+                {filteredPlatformBadges.length > 0 && (
                   <div className={styles.badgeRow}>
-                    {project.platformBadges.map((badge) => (
+                    {filteredPlatformBadges.map((badge) => (
                       <span key={badge} className={styles.platformBadge}>
                         {badge}
                       </span>

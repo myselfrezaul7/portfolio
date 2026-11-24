@@ -6,8 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search,
   Calendar,
-  FileText,
-  Download,
   Copy,
   Check,
   Sun,
@@ -81,7 +79,7 @@ const SECTION_ITEMS = [
   { id: 'sec-work', title: 'Selected Work & Case Studies', subtitle: '6 interactive case studies', hash: '#work', keywords: 'projects work portfolio case studies' },
   { id: 'sec-process', title: 'How I Work', subtitle: 'Diagnose → Design → Implement pipeline', hash: '#process', keywords: 'process methodology workflow how i work' },
   { id: 'sec-skills', title: 'Skills Matrix & Radar', subtitle: 'Interactive competency proof matrix', hash: '#skills', keywords: 'skills radar matrix sap power bi sql' },
-  { id: 'sec-about', title: 'About & Career Timeline', subtitle: 'IMIS background, metrics & CV', hash: '#about', keywords: 'about bio education timeline resume cv' },
+  { id: 'sec-about', title: 'About & Career Timeline', subtitle: 'IMIS background, impact metrics & experience', hash: '#about', keywords: 'about bio education timeline imis languages' },
   { id: 'sec-blog', title: 'Insights & Writing', subtitle: 'Operational essays & build notes', hash: '#blog', keywords: 'blog writing essays articles insights' },
   { id: 'sec-contact', title: 'Contact & Scheduling', subtitle: 'Book a call or send a message', hash: '#contact', keywords: 'contact email hire booking call cal' },
 ];
@@ -239,35 +237,6 @@ export default function CommandPalette() {
         },
       },
       {
-        id: 'action-cv-preview',
-        group: 'Quick Actions',
-        title: 'Preview Resume / CV',
-        subtitle: 'Open inline executive CV viewer',
-        badge: 'Preview',
-        keywords: 'preview resume cv curriculum vitae pdf view',
-        icon: <FileText size={16} />,
-        run: () => dispatchOrNavigateHome('portfolio:open-cv', { hash: '#about' }),
-      },
-      {
-        id: 'action-cv-download',
-        group: 'Quick Actions',
-        title: 'Download Resume PDF',
-        subtitle: 'Save Md Rezaul Karim CV directly',
-        badge: 'PDF',
-        keywords: 'download resume cv pdf file save',
-        icon: <Download size={16} />,
-        run: () => {
-          closePalette();
-          const a = document.createElement('a');
-          a.href = '/resume.pdf';
-          a.download = 'Md_Rezaul_Karim_Resume.pdf';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          showToast('Downloading Resume PDF');
-        },
-      },
-      {
         id: 'action-copy-email',
         group: 'Quick Actions',
         title: 'Copy Email Address',
@@ -351,7 +320,6 @@ export default function CommandPalette() {
     handleCopyEmail,
     jumpToSection,
     router,
-    showToast,
   ]);
 
   const filteredItems = useMemo(() => {
@@ -482,7 +450,7 @@ export default function CommandPalette() {
     <>
       <AnimatePresence>
         {isOpen && (
-          <div className={styles.portalRoot}>
+          <div className={styles.portalRoot} data-scroll-lock="command-palette">
             <motion.div
               className={styles.backdrop}
               onClick={closePalette}
@@ -515,7 +483,7 @@ export default function CommandPalette() {
                     setSelectedIndex(0);
                   }}
                   onKeyDown={handleInputKeyDown}
-                  placeholder="Search case studies, insights, CV, booking, or sections..."
+                  placeholder="Search case studies, insights, booking, or sections..."
                   className={styles.searchInput}
                   aria-label="Search commands, projects, and articles"
                   aria-autocomplete="list"
@@ -560,7 +528,7 @@ export default function CommandPalette() {
                 {groupedSections.length === 0 ? (
                   <div className={styles.emptyState}>
                     <p>No matches for &ldquo;{query}&rdquo;</p>
-                    <span className="font-mono">Try &ldquo;SAP&rdquo;, &ldquo;PetBhai&rdquo;, &ldquo;CV&rdquo;, or &ldquo;Book&rdquo;</span>
+                    <span className="font-mono">Try &ldquo;SAP&rdquo;, &ldquo;PetBhai&rdquo;, &ldquo;BPMN&rdquo;, or &ldquo;Book&rdquo;</span>
                   </div>
                 ) : (
                   groupedSections.map((group) => (

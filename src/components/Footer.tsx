@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin, Github, Mail, ArrowUp, Command, MapPin } from 'lucide-react';
+import { Linkedin, Github, Mail, ArrowUp, Command, MapPin, Search } from 'lucide-react';
 import { openMailClient } from '@/utils/obfuscate';
 import styles from './Footer.module.css';
 
@@ -47,7 +47,7 @@ export default function Footer() {
   };
 
   const handleEmailClick = () => {
-    openMailClient('Portfolio Inquiry — Md Rezaul Karim');
+    openMailClient('Portfolio Inquiry - Md Rezaul Karim');
   };
 
   return (
@@ -60,7 +60,6 @@ export default function Footer() {
             onClick={scrollToTop}
             className={styles.logo}
             aria-label="Scroll to top"
-            whileHover={{ y: -2 }}
             whileTap={{ scale: 0.95 }}
           >
             <span>M•K</span>
@@ -84,11 +83,14 @@ export default function Footer() {
               type="button"
               onClick={openCommandPalette}
               className={`${styles.cmdButton} font-mono`}
-              aria-label="Open command palette"
+              aria-label="Open quick search and command palette"
               title="Open Command Palette (⌘K)"
             >
-              <Command size={13} aria-hidden="true" />
-              <span>K</span>
+              <Search size={17} className={styles.cmdSearchIcon} aria-hidden="true" />
+              <span className={styles.cmdKeycap} aria-hidden="true">
+                <Command size={13} />
+                <span>K</span>
+              </span>
             </button>
 
             <motion.a
@@ -96,7 +98,6 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className={styles.socialLink}
-              whileHover={{ y: -2, scale: 1.03 }}
               whileTap={{ scale: 0.94 }}
               transition={{ type: 'spring', stiffness: 400, damping: 18 }}
               aria-label="LinkedIn"
@@ -109,7 +110,6 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className={styles.socialLink}
-              whileHover={{ y: -2, scale: 1.03 }}
               whileTap={{ scale: 0.94 }}
               transition={{ type: 'spring', stiffness: 400, damping: 18 }}
               aria-label="GitHub"
@@ -121,7 +121,6 @@ export default function Footer() {
               type="button"
               onClick={handleEmailClick}
               className={styles.socialLink}
-              whileHover={{ y: -2, scale: 1.03 }}
               whileTap={{ scale: 0.94 }}
               transition={{ type: 'spring', stiffness: 400, damping: 18 }}
               aria-label="Open email client"

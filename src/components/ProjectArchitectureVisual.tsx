@@ -668,7 +668,7 @@ export default function ProjectArchitectureVisual({
           >
             {variant === 'expanded'
               ? 'SCOPE: 100+ DAILY SAMPLES · REAGENT LOGISTICS · PATIENT JOURNEY MAPPING · EXECUTIVE DECKS'
-              : 'RENAISSANCE DIAGNOSTIC CARE · 02/2023–03/2024 · PROCESS + ETL ANALYTICS'}
+              : 'RENAISSANCE DIAGNOSTIC CARE · 02/2023 - 03/2024 · PROCESS + ETL ANALYTICS'}
           </text>
         </g>
       </svg>

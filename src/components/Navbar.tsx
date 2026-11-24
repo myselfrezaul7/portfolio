@@ -3,8 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { motion, AnimatePresence, useScroll, useSpring, PanInfo } from 'framer-motion';
-import { Menu, X, Download, ArrowUpRight, Search, Command } from 'lucide-react';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { Menu, X, ArrowUpRight, Search, Command } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import styles from './Navbar.module.css';
 
@@ -44,6 +44,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const paletteOpenRafRef = useRef<number | null>(null);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -215,17 +216,28 @@ export default function Navbar() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Body scroll lock when mobile menu is open
+  // Body scroll lock when mobile menu is open (safe against CommandPalette handoff)
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    if (!isMobileMenuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
     return () => {
-      document.body.style.overflow = '';
+      if (!document.querySelector('[data-scroll-lock="command-palette"]')) {
+        document.body.style.overflow = previousOverflow;
+      }
     };
   }, [isMobileMenuOpen]);
+
+  // Cancel any queued CommandPalette handoff frame on unmount
+  useEffect(() => {
+    return () => {
+      if (paletteOpenRafRef.current !== null) {
+        window.cancelAnimationFrame(paletteOpenRafRef.current);
+      }
+    };
+  }, []);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     setIsMobileMenuOpen(false);
@@ -256,14 +268,18 @@ export default function Navbar() {
   };
 
   const openCommandPalette = () => {
-    setIsMobileMenuOpen(false);
-    window.dispatchEvent(new CustomEvent('portfolio:open-command-palette'));
-  };
-
-  const handleMobileDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    if (info.offset.y < -55 || info.velocity.y < -280 || info.offset.y > 95) {
+    if (isMobileMenuOpen) {
       setIsMobileMenuOpen(false);
+      if (paletteOpenRafRef.current !== null) {
+        window.cancelAnimationFrame(paletteOpenRafRef.current);
+      }
+      paletteOpenRafRef.current = window.requestAnimationFrame(() => {
+        paletteOpenRafRef.current = null;
+        window.dispatchEvent(new CustomEvent('portfolio:open-command-palette'));
+      });
+      return;
     }
+    window.dispatchEvent(new CustomEvent('portfolio:open-command-palette'));
   };
 
   const effectiveActive = pathname.startsWith('/blog')
@@ -340,11 +356,6 @@ export default function Navbar() {
 
             <ThemeToggle />
 
-            <a href="/resume.pdf" download className={styles.resumeLink}>
-              <Download size={14} aria-hidden="true" />
-              <span>Resume</span>
-            </a>
-
             <Link
               href={contactHref}
               onClick={(e) => handleNavClick(e, '#contact')}
@@ -381,7 +392,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Menu & Backdrop with Real Swipe-to-Dismiss */}
+      {/* Mobile Menu & Backdrop */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
@@ -401,16 +412,11 @@ export default function Navbar() {
               aria-modal="true"
               aria-label="Navigation menu"
               className={styles.mobileMenu}
-              drag="y"
-              dragConstraints={{ top: -140, bottom: 24 }}
-              dragElastic={{ top: 0.25, bottom: 0.18 }}
-              onDragEnd={handleMobileDragEnd}
-              initial={{ opacity: 0, y: -20 }}
+              initial={{ opacity: 0, y: -16 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -24 }}
-              transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className={styles.dragHandleBar} aria-hidden="true" />
               <div className={styles.mobileMenuContent}>
                 {navLinks.map((link, index) => {
                   const isActive = effectiveActive === link.href;
@@ -439,21 +445,11 @@ export default function Navbar() {
                   <button
                     type="button"
                     onClick={openCommandPalette}
-                    className={styles.mobileResumeLink}
+                    className={styles.mobileSearchBtn}
                   >
                     <Search size={16} aria-hidden="true" />
-                    <span>Quick Search (⌘K)</span>
+                    <span>Quick Search</span>
                   </button>
-
-                  <a
-                    href="/resume.pdf"
-                    download
-                    className={styles.mobileResumeLink}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <Download size={16} aria-hidden="true" />
-                    <span>Download Resume</span>
-                  </a>
 
                   <Link
                     href={contactHref}

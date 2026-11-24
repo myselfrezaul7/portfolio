@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef } from 'react';
+import type { CSSProperties } from 'react';
 
 export interface TiltConfig {
   maxDeg?: number;
@@ -8,6 +9,8 @@ export interface TiltConfig {
   scale?: number;
   speed?: number;
 }
+
+const IDLE_STYLE: CSSProperties = {};
 
 export function useTilt<T extends HTMLElement = HTMLDivElement>(config: TiltConfig = {}) {
   const {
@@ -19,25 +22,44 @@ export function useTilt<T extends HTMLElement = HTMLDivElement>(config: TiltConf
 
   const ref = useRef<T>(null);
   const rafRef = useRef<number | null>(null);
+  const resetTimerRef = useRef<number | null>(null);
+  const isActiveRef = useRef(false);
 
-  const isInteractionDisabled = useCallback(() => {
-    if (typeof window === 'undefined') return true;
+  const canUseTilt = useCallback(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return false;
+    }
     return (
-      window.matchMedia('(pointer: coarse)').matches ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches
     );
+  }, []);
+
+  const activateTiltLayer = useCallback((el: T) => {
+    if (resetTimerRef.current !== null) {
+      window.clearTimeout(resetTimerRef.current);
+      resetTimerRef.current = null;
+    }
+    if (!isActiveRef.current) {
+      el.style.willChange = 'transform';
+      el.style.transformStyle = 'preserve-3d';
+      isActiveRef.current = true;
+    }
   }, []);
 
   const handleEnter = useCallback(() => {
     const el = ref.current;
-    if (!el || isInteractionDisabled()) return;
+    if (!el || !canUseTilt()) return;
+    activateTiltLayer(el);
     el.style.transition = `transform ${Math.min(120, Math.round(speed * 0.25))}ms cubic-bezier(0.22, 1, 0.36, 1)`;
-  }, [isInteractionDisabled, speed]);
+  }, [activateTiltLayer, canUseTilt, speed]);
 
   const handleMove = useCallback(
     (e: React.MouseEvent<T>) => {
       const el = ref.current;
-      if (!el || isInteractionDisabled()) return;
+      if (!el || !canUseTilt()) return;
+
+      activateTiltLayer(el);
 
       const clientX = e.clientX;
       const clientY = e.clientY;
@@ -47,6 +69,7 @@ export function useTilt<T extends HTMLElement = HTMLDivElement>(config: TiltConf
       }
 
       rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null;
         const rect = el.getBoundingClientRect();
         if (rect.width === 0 || rect.height === 0) return;
 
@@ -68,12 +91,12 @@ export function useTilt<T extends HTMLElement = HTMLDivElement>(config: TiltConf
         el.style.setProperty('--glare-opacity', '1');
       });
     },
-    [isInteractionDisabled, maxDeg, perspective, scale]
+    [activateTiltLayer, canUseTilt, maxDeg, perspective, scale]
   );
 
   const handleLeave = useCallback(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || !isActiveRef.current) return;
 
     if (rafRef.current !== null) {
       cancelAnimationFrame(rafRef.current);
@@ -83,12 +106,30 @@ export function useTilt<T extends HTMLElement = HTMLDivElement>(config: TiltConf
     el.style.transition = `transform ${speed}ms cubic-bezier(0.22, 1, 0.36, 1)`;
     el.style.transform = `perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
     el.style.setProperty('--glare-opacity', '0');
+
+    if (resetTimerRef.current !== null) {
+      window.clearTimeout(resetTimerRef.current);
+    }
+
+    resetTimerRef.current = window.setTimeout(() => {
+      resetTimerRef.current = null;
+      isActiveRef.current = false;
+      el.style.willChange = '';
+      el.style.transformStyle = '';
+      el.style.transform = '';
+      el.style.transition = '';
+    }, speed);
   }, [perspective, speed]);
 
   useEffect(() => {
     return () => {
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+      if (resetTimerRef.current !== null) {
+        window.clearTimeout(resetTimerRef.current);
+        resetTimerRef.current = null;
       }
     };
   }, []);
@@ -102,13 +143,7 @@ export function useTilt<T extends HTMLElement = HTMLDivElement>(config: TiltConf
     [handleEnter, handleMove, handleLeave]
   );
 
-  const style = useMemo(
-    () => ({
-      willChange: 'transform',
-      transformStyle: 'preserve-3d' as const,
-    }),
-    []
-  );
+  const style = IDLE_STYLE;
 
   return { ref, style, handlers, handleEnter, handleMove, handleLeave };
 }

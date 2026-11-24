@@ -194,11 +194,10 @@
     }
 }
 
-@media (max-width: 480px) {
-    .hudCue {
-        font-size: 10px;
-        padding: 5px 10px;
-        bottom: 14px;
+@media (max-width: 767px), (pointer: coarse) {
+    .hudCue,
+    .telemetryPill {
+        display: none;
     }
 }
 

@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-export const alt = 'Md Rezaul Karim — Bridging Business Operations & Technology';
+export const alt = 'Md Rezaul Karim - Bridging Business Operations & Technology';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 

@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import { useMobileCarousel } from '@/hooks/useMobileCarousel';
+import MobileCarouselControls from './ui/MobileCarouselControls';
 import ScrollReveal from './animations/ScrollReveal';
 import styles from './SkillsRadar.module.css';
 
@@ -74,7 +76,7 @@ const RADAR_AXES: RadarAxis[] = [
     summary: 'People-Process-Tech alignment, executive storytelling, and 450K+ community governance.',
     proofProjects: [
       { slug: 'community-operations', label: 'Community Ops (450K+)' },
-      { slug: 'petbhai-ecosystem', label: 'PetBhai (Social Venture)' },
+      { slug: 'petbhai-ecosystem', label: 'PetBhai (Animal Welfare)' },
     ],
   },
 ];
@@ -301,6 +303,29 @@ export default function SkillsRadar() {
   const [pinnedAxis, setPinnedAxis] = useState<number | null>(null);
   const [hoveredSkill, setHoveredSkill] = useState<SkillChipItem | null>(null);
   const [pinnedSkill, setPinnedSkill] = useState<SkillChipItem | null>(null);
+  const lastScrubAxisRef = useRef<number | null>(null);
+
+  const {
+    trackRef: matrixTrackRef,
+    activeIndex: matrixActiveIndex,
+    canScrollPrev: canScrollMatrixPrev,
+    canScrollNext: canScrollMatrixNext,
+    scrollToIndex: scrollMatrixToIndex,
+    step: stepMatrix,
+  } = useMobileCarousel({ itemCount: SKILL_CATEGORIES.length });
+
+  const scrollMatrixToAxis = useCallback(
+    (axisIndex: number) => {
+      if (typeof window === 'undefined' || window.innerWidth >= 768) return;
+      const firstMatchingCategoryIdx = SKILL_CATEGORIES.findIndex((cat) =>
+        cat.skills.some((s) => s.axisIndex === axisIndex)
+      );
+      if (firstMatchingCategoryIdx !== -1) {
+        scrollMatrixToIndex(firstMatchingCategoryIdx);
+      }
+    },
+    [scrollMatrixToIndex]
+  );
 
   const activeSkill = hoveredSkill ?? pinnedSkill;
 
@@ -384,13 +409,22 @@ export default function SkillsRadar() {
     setHoveredSkill(null);
     setPinnedSkill(null);
     setPinnedAxis(closestIndex);
+    if (lastScrubAxisRef.current !== closestIndex) {
+      lastScrubAxisRef.current = closestIndex;
+      scrollMatrixToAxis(closestIndex);
+    }
   };
 
   const handleAxisClick = (e: React.SyntheticEvent, index: number) => {
     e.stopPropagation();
     setHoveredSkill(null);
     setPinnedSkill(null);
-    setPinnedAxis((prev) => (prev === index ? null : index));
+    const nextPinned = pinnedAxis === index ? null : index;
+    setPinnedAxis(nextPinned);
+    lastScrubAxisRef.current = nextPinned;
+    if (nextPinned !== null) {
+      scrollMatrixToAxis(nextPinned);
+    }
   };
 
   const handleOpenProjectProof = (slug: string) => {
@@ -456,7 +490,7 @@ export default function SkillsRadar() {
               </div>
 
               <svg
-                viewBox="-84 -32 468 364"
+                viewBox="-74 -26 448 352"
                 className={styles.radarSvg}
                 aria-label={`Skills competency radar chart under ${activeLens} lens`}
                 onTouchStart={handleTouchScrub}
@@ -662,7 +696,7 @@ export default function SkillsRadar() {
                       <span className={styles.proofScore}>6 Domains</span>
                     </div>
                     <p className={styles.proofHint}>
-                      Hover, tap, or scrub any radar vertex—or select any skill chip on the right—to see real project evidence and jump directly into its case study.
+                      Select any radar vertex or skill card to see real project evidence and jump directly into its case study.
                     </p>
                   </>
                 )}
@@ -670,86 +704,98 @@ export default function SkillsRadar() {
             </div>
           </ScrollReveal>
 
-          {/* Right: 2x2 Coupled Skill Matrix */}
-          <div className={styles.matrixGrid}>
-            {SKILL_CATEGORIES.map((category) => {
-              const categoryMatchesAxis =
-                effectiveAxis !== null &&
-                category.skills.some((s) => s.axisIndex === effectiveAxis);
+          {/* Right: 2x2 Coupled Skill Matrix (Mobile Horizontal Scroll-Snap Carousel) */}
+          <div className={styles.matrixColumn}>
+            <div ref={matrixTrackRef} className={styles.matrixGrid}>
+              {SKILL_CATEGORIES.map((category) => {
+                const categoryMatchesAxis =
+                  effectiveAxis !== null &&
+                  category.skills.some((s) => s.axisIndex === effectiveAxis);
 
-              return (
-                <div
-                  key={category.title}
-                  className={`${styles.categoryGroup} ${
-                    categoryMatchesAxis ? styles.categoryGroupHighlighted : ''
-                  }`}
-                >
-                  <h3 className={styles.categoryTitle}>{category.title}</h3>
-                  <div className={styles.chipsContainer}>
-                    {category.skills.map((skill) => {
-                      const isDirectSkill = activeSkill?.name === skill.name;
-                      const isAxisMatch =
-                        effectiveAxis !== null && skill.axisIndex === effectiveAxis;
-                      const isDimmed =
-                        effectiveAxis !== null && !isAxisMatch && !isDirectSkill;
+                return (
+                  <div
+                    key={category.title}
+                    className={`${styles.categoryGroup} ${
+                      categoryMatchesAxis ? styles.categoryGroupHighlighted : ''
+                    }`}
+                  >
+                    <h3 className={styles.categoryTitle}>{category.title}</h3>
+                    <div className={styles.chipsContainer}>
+                      {category.skills.map((skill) => {
+                        const isDirectSkill = activeSkill?.name === skill.name;
+                        const isAxisMatch =
+                          effectiveAxis !== null && skill.axisIndex === effectiveAxis;
+                        const isDimmed =
+                          effectiveAxis !== null && !isAxisMatch && !isDirectSkill;
 
-                      return (
-                        <button
-                          key={skill.name}
-                          type="button"
-                          aria-label={`${skill.name}: Level ${skill.level} of 5. ${skill.proof}`}
-                          aria-pressed={isDirectSkill}
-                          className={`${styles.skillChip} ${
-                            isDirectSkill || isAxisMatch ? styles.skillChipActive : ''
-                          } ${isDimmed ? styles.skillChipDimmed : ''}`}
-                          onMouseEnter={() => {
-                            if (
-                              typeof window !== 'undefined' &&
-                              window.matchMedia('(hover: hover)').matches
-                            ) {
-                              setHoveredSkill(skill);
-                            }
-                          }}
-                          onMouseLeave={() => {
-                            if (
-                              typeof window !== 'undefined' &&
-                              window.matchMedia('(hover: hover)').matches
-                            ) {
-                              setHoveredSkill(null);
-                            }
-                          }}
-                          onFocus={() => setHoveredSkill(skill)}
-                          onBlur={() => setHoveredSkill(null)}
-                          onClick={() => {
-                            setPinnedAxis(null);
-                            setPinnedSkill((prev) =>
-                              prev?.name === skill.name ? null : skill
-                            );
-                          }}
-                        >
-                          <div className={styles.skillChipRow}>
-                            <span className={styles.skillName}>{skill.name}</span>
-                            <div className={styles.dotMeter} aria-hidden="true">
-                              {[1, 2, 3, 4, 5].map((dot) => (
-                                <span
-                                  key={dot}
-                                  className={`${styles.dot} ${
-                                    dot <= skill.level ? styles.dotFilled : ''
-                                  }`}
-                                />
-                              ))}
+                        return (
+                          <button
+                            key={skill.name}
+                            type="button"
+                            aria-label={`${skill.name}: Level ${skill.level} of 5. ${skill.proof}`}
+                            aria-pressed={isDirectSkill}
+                            className={`${styles.skillChip} ${
+                              isDirectSkill || isAxisMatch ? styles.skillChipActive : ''
+                            } ${isDimmed ? styles.skillChipDimmed : ''}`}
+                            onMouseEnter={() => {
+                              if (
+                                typeof window !== 'undefined' &&
+                                window.matchMedia('(hover: hover)').matches
+                              ) {
+                                setHoveredSkill(skill);
+                              }
+                            }}
+                            onMouseLeave={() => {
+                              if (
+                                typeof window !== 'undefined' &&
+                                window.matchMedia('(hover: hover)').matches
+                              ) {
+                                setHoveredSkill(null);
+                              }
+                            }}
+                            onFocus={() => setHoveredSkill(skill)}
+                            onBlur={() => setHoveredSkill(null)}
+                            onClick={() => {
+                              setPinnedAxis(null);
+                              setPinnedSkill((prev) =>
+                                prev?.name === skill.name ? null : skill
+                              );
+                            }}
+                          >
+                            <div className={styles.skillChipRow}>
+                              <span className={styles.skillName}>{skill.name}</span>
+                              <div className={styles.dotMeter} aria-hidden="true">
+                                {[1, 2, 3, 4, 5].map((dot) => (
+                                  <span
+                                    key={dot}
+                                    className={`${styles.dot} ${
+                                      dot <= skill.level ? styles.dotFilled : ''
+                                    }`}
+                                  />
+                                ))}
+                              </div>
                             </div>
-                          </div>
-                          {isDirectSkill && (
-                            <span className={styles.skillInlineProof}>{skill.proof}</span>
-                          )}
-                        </button>
-                      );
-                    })}
+                            {isDirectSkill && (
+                              <span className={styles.skillInlineProof}>{skill.proof}</span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+
+            <MobileCarouselControls
+              count={SKILL_CATEGORIES.length}
+              activeIndex={matrixActiveIndex}
+              canScrollPrev={canScrollMatrixPrev}
+              canScrollNext={canScrollMatrixNext}
+              onSelect={scrollMatrixToIndex}
+              onStep={stepMatrix}
+              label="skill category"
+            />
           </div>
         </div>
       </div>

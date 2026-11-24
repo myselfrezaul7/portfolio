@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { blogPosts, getPostBySlug } from '@/data/blogPosts';
 
-export const alt = 'Article — Md Rezaul Karim';
+export const alt = 'Article - Md Rezaul Karim';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -89,7 +89,7 @@ function truncateExcerpt(text: string, maxLength: number): string {
     const sliced = text.slice(0, maxLength - 1);
     const lastSpace = sliced.lastIndexOf(' ');
     const wordSafe = lastSpace > maxLength * 0.6 ? sliced.slice(0, lastSpace) : sliced;
-    return `${wordSafe.replace(/[\s,;:\-—]+$/, '')}…`;
+    return `${wordSafe.replace(/[\s,;:\-]+$/, '')}…`;
 }
 
 export function generateStaticParams() {

@@ -8,6 +8,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import styles from './CalBookingModal.module.css';
 
 export const CAL_BOOKING_URL = 'https://cal.eu/myself-karim/30min';
+export const CAL_EMBED_URL = 'https://app.eu.cal.com/myself-karim/30min';
 
 export interface CalBookingModalProps {
     isOpen: boolean;
@@ -24,15 +25,20 @@ export default function CalBookingModal({
     const shouldReduceMotion = useReducedMotion();
     const closeButtonRef = useRef<HTMLButtonElement>(null);
     const openerRef = useRef<HTMLElement | null>(null);
+    const onCloseRef = useRef(onClose);
 
-    const iframeUrl = `${CAL_BOOKING_URL}?embed=true&layout=month_view&theme=${theme}`;
+    useEffect(() => {
+        onCloseRef.current = onClose;
+    }, [onClose]);
+
+    const iframeUrl = `${CAL_EMBED_URL}?embed=true&layout=month_view&theme=${theme}`;
     const [loadedUrl, setLoadedUrl] = useState<string | null>(null);
     const [slowUrl, setSlowUrl] = useState<string | null>(null);
 
     const isIframeLoading = loadedUrl !== iframeUrl;
     const showFallbackHint = isIframeLoading && slowUrl === iframeUrl;
 
-    // Manage Escape key, scroll lock, and focus restoration
+    // Manage Escape key, scroll lock, focus restoration, and load-state reset on close
     useEffect(() => {
         if (!isOpen) return;
 
@@ -50,7 +56,7 @@ export default function CalBookingModal({
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
                 event.preventDefault();
-                onClose();
+                onCloseRef.current();
             }
         };
 
@@ -61,8 +67,10 @@ export default function CalBookingModal({
             window.removeEventListener('keydown', handleKeyDown);
             document.body.style.overflow = previousOverflow;
             openerRef.current?.focus();
+            setLoadedUrl(null);
+            setSlowUrl(null);
         };
-    }, [isOpen, onClose]);
+    }, [isOpen]);
 
     // Show gentle external fallback hint if embed takes longer than 7s
     useEffect(() => {
@@ -195,8 +203,8 @@ export default function CalBookingModal({
                                 title="Schedule a 30-minute call with Md Rezaul Karim via Cal.eu"
                                 className={`${styles.iframe} ${isIframeLoading ? styles.iframeHidden : styles.iframeVisible}`}
                                 loading="eager"
+                                referrerPolicy="strict-origin-when-cross-origin"
                                 onLoad={() => setLoadedUrl(iframeUrl)}
-                                allow="payment"
                             />
                         </div>
                     </motion.div>

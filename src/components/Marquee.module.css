@@ -44,8 +44,16 @@
     transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
-.marqueePill:hover,
-.marqueePill:focus-visible {
+@media (hover: hover) and (pointer: fine) {
+    .marqueePill:hover {
+        color: var(--text-primary);
+        background: var(--bg-card);
+        border-color: rgba(74, 155, 155, 0.45);
+    }
+}
+
+.marqueePill:focus-visible,
+.marqueePill:active {
     color: var(--text-primary);
     background: var(--bg-card);
     border-color: rgba(74, 155, 155, 0.45);
@@ -58,12 +66,31 @@
     user-select: none;
 }
 
+@media (max-width: 767px) {
+    .marqueeContainer {
+        padding: 10px 0;
+        mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+    }
+
+    .marqueePill {
+        min-height: 36px;
+        padding: 7px 12px;
+        font-size: 12px;
+        letter-spacing: 0.06em;
+    }
+
+    .separator {
+        margin: 0 8px;
+    }
+}
+
 /* Accessible Wrapping Fallback under Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
     .marqueeContainer {
         mask-image: none;
         -webkit-mask-image: none;
-        padding: 16px 24px;
+        padding: 14px 20px;
     }
 
     .marqueeTrack {

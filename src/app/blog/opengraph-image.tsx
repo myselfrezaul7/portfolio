@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { blogPosts } from '@/data/blogPosts';
 
-export const alt = 'Insights & Writing — Md Rezaul Karim';
+export const alt = 'Insights & Writing - Md Rezaul Karim';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 

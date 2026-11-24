@@ -4,7 +4,6 @@ import {
     useState,
     useRef,
     useEffect,
-    useMemo,
     useSyncExternalStore,
 } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
@@ -14,13 +13,10 @@ import {
     Check,
     Copy,
     Linkedin,
-    FileText,
-    Download,
+    Github,
     MapPin,
     Clock,
-    Sparkles,
     ArrowUpRight,
-    Send,
 } from 'lucide-react';
 import ScrollReveal from './animations/ScrollReveal';
 import CalBookingModal, { CAL_BOOKING_URL } from './CalBookingModal';
@@ -31,56 +27,6 @@ import {
 } from '@/utils/obfuscate';
 import { copyTextToClipboard } from '@/utils/blogUtils';
 import styles from './Contact.module.css';
-
-type IntentKey = 'working-student' | 'master-thesis' | 'process-bi' | 'general';
-
-interface IntentConfig {
-    key: IntentKey;
-    label: string;
-    shortLabel: string;
-    subject: string;
-    placeholder: string;
-    defaultIntro: string;
-}
-
-const INTENTS: readonly IntentConfig[] = [
-    {
-        key: 'working-student',
-        label: 'Working Student / Internship',
-        shortLabel: 'Werkstudent / Intern',
-        subject: 'Working Student / Internship Opportunity — Md Rezaul Karim',
-        placeholder: 'Team, location (remote / hybrid in Germany), start date, or role focus...',
-        defaultIntro:
-            'We are exploring Working Student / Internship candidates in Data Analytics, Supply Chain Operations, or IT Project Management and would like to connect.',
-    },
-    {
-        key: 'master-thesis',
-        label: 'Master Thesis',
-        shortLabel: 'Master Thesis',
-        subject: 'Master Thesis Collaboration — IMIS (FH Südwestfalen)',
-        placeholder: 'Department, thesis topic area (SAP BI, BPMN, Supply Chain, Digital Ops), or timeline...',
-        defaultIntro:
-            'We would like to discuss a practice-oriented Master Thesis collaboration in Business Intelligence, Process Management, or Digital Operations.',
-    },
-    {
-        key: 'process-bi',
-        label: 'Process & BI Project',
-        shortLabel: 'Process & BI Project',
-        subject: 'Process Architecture & BI Project Inquiry',
-        placeholder: 'Brief scope: BPMN workflow mapping, reporting dashboard, web app, or advisory...',
-        defaultIntro:
-            'We have a workflow, analytics, or digital operations initiative and would love to discuss how your process-and-systems approach could help.',
-    },
-    {
-        key: 'general',
-        label: 'General Hello',
-        shortLabel: 'General Hello',
-        subject: 'Hello from your portfolio — Connecting with Md Rezaul Karim',
-        placeholder: 'What caught your eye (a case study, essay, or shared interest in IMIS / ops)...',
-        defaultIntro:
-            'I came across your portfolio and writing and wanted to reach out for a brief introductory chat.',
-    },
-];
 
 const AVAILABILITY_ROLES = [
     'Working Student',
@@ -176,10 +122,7 @@ export default function Contact() {
     );
 
     const [isBookingOpen, setIsBookingOpen] = useState(false);
-    const [selectedIntent, setSelectedIntent] = useState<IntentKey>('working-student');
-    const [senderName, setSenderName] = useState('');
-    const [contextNote, setContextNote] = useState('');
-    const [copiedTarget, setCopiedTarget] = useState<'email' | 'bundle' | null>(null);
+    const [copiedEmail, setCopiedEmail] = useState(false);
     const [liveAnnouncement, setLiveAnnouncement] = useState('');
     const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -196,65 +139,25 @@ export default function Contact() {
         };
     }, []);
 
-    const activeIntent = useMemo(
-        () => INTENTS.find((item) => item.key === selectedIntent) ?? INTENTS[0],
-        [selectedIntent]
-    );
-
-    const assembledMessage = useMemo(() => {
-        const trimmedName = senderName.trim();
-        const trimmedContext = contextNote.trim();
-        const subject = trimmedName
-            ? `${activeIntent.subject} (${trimmedName})`
-            : activeIntent.subject;
-
-        const greeting = 'Hi Rezaul,';
-        const introLine = trimmedContext ? trimmedContext : activeIntent.defaultIntro;
-        const closing = trimmedName ? `Best regards,\n${trimmedName}` : 'Best regards,';
-        const body = `${greeting}\n\n${introLine}\n\nWould you be available for a quick 30-minute call this week or next?\n\n${closing}`;
-
-        return { subject, body };
-    }, [activeIntent, senderName, contextNote]);
-
     // Email display stays obfuscated during SSR HTML generation and hydrates client-side only
     const displayedEmail = isHydrated ? getEmailAddress() : getObfuscatedEmailLabel();
-
-    const triggerCopyFeedback = (target: 'email' | 'bundle', announcement: string) => {
-        setCopiedTarget(target);
-        setLiveAnnouncement(announcement);
-        if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
-        copyTimerRef.current = setTimeout(() => {
-            setCopiedTarget(null);
-            setLiveAnnouncement('');
-        }, 2400);
-    };
 
     const handleCopyEmail = async () => {
         const email = getEmailAddress();
         const ok = await copyTextToClipboard(email);
         if (ok) {
-            triggerCopyFeedback('email', 'Email address copied to clipboard.');
+            setCopiedEmail(true);
+            setLiveAnnouncement('Email address copied to clipboard.');
+            if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+            copyTimerRef.current = setTimeout(() => {
+                setCopiedEmail(false);
+                setLiveAnnouncement('');
+            }, 2400);
         }
     };
 
-    const handleCopyMessageAndEmail = async () => {
-        const email = getEmailAddress();
-        const bundle = `To: ${email}\nSubject: ${assembledMessage.subject}\n\n${assembledMessage.body}`;
-        const ok = await copyTextToClipboard(bundle);
-        if (ok) {
-            triggerCopyFeedback(
-                'bundle',
-                'Recipient email and pre-formatted message copied to clipboard.'
-            );
-        }
-    };
-
-    const handleOpenEmailApp = () => {
-        openMailClient(assembledMessage.subject, assembledMessage.body);
-    };
-
-    const handlePreviewCv = () => {
-        window.dispatchEvent(new CustomEvent('portfolio:open-cv'));
+    const handleSendEmail = () => {
+        openMailClient('Portfolio Inquiry - Md Rezaul Karim');
     };
 
     return (
@@ -277,7 +180,12 @@ export default function Contact() {
                                     <Clock size={13} aria-hidden="true" />
                                     <span>{liveGermanyTime || 'CET/CEST'}</span>
                                 </span>
-                                <span className={styles.statusDivider} aria-hidden="true">·</span>
+                                <span
+                                    className={`${styles.statusDivider} ${styles.slaDivider}`}
+                                    aria-hidden="true"
+                                >
+                                    ·
+                                </span>
                                 <span className={styles.replySla}>Typical reply &lt; 24h</span>
                             </div>
 
@@ -290,85 +198,39 @@ export default function Contact() {
                             </div>
                         </div>
 
-                        {/* Two-Column Executive Concierge Grid */}
+                        {/* Balanced Two-Column Contact Grid */}
                         <div className={styles.hubGrid}>
-                            {/* Left Column: Direct Actions & Credentials */}
+                            {/* Left Column: Narrative & Primary Actions */}
                             <div className={styles.conciergeCol}>
-                                <span className={styles.eyebrow}>Concierge Contact Hub</span>
+                                <span className={styles.eyebrow}>Direct Contact</span>
                                 <h2 className={styles.title}>Let&apos;s Connect</h2>
                                 <p className={styles.description}>
                                     Seeking Working Student (Werkstudent), Internship, Master Thesis, and selective consulting collaborations in Data Analytics, SAP BI, Supply Chain Operations, and IT Project Management across Germany.
                                 </p>
 
-                                {/* Primary In-Page Booking Trigger */}
-                                <motion.button
-                                    type="button"
-                                    onClick={() => setIsBookingOpen(true)}
-                                    className={styles.bookCallBtn}
-                                    whileHover={shouldReduceMotion ? undefined : { y: -2 }}
-                                    whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
-                                >
-                                    <Calendar size={18} strokeWidth={1.9} aria-hidden="true" />
-                                    <span>Schedule a 30-Min Call</span>
-                                    <span className={styles.bookCallBadge}>In-Page</span>
-                                </motion.button>
+                                {/* Primary CTA Pair */}
+                                <div className={styles.primaryActions}>
+                                    <motion.button
+                                        type="button"
+                                        onClick={() => setIsBookingOpen(true)}
+                                        className={styles.bookCallBtn}
+                                        whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+                                        whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+                                    >
+                                        <Calendar size={17} strokeWidth={1.9} aria-hidden="true" />
+                                        <span>Schedule a 30-Min Call</span>
+                                    </motion.button>
 
-                                {/* Direct Email Display + Quick Actions */}
-                                <div className={styles.directChannelBox}>
-                                    <div className={styles.emailStrip}>
-                                        <span className={styles.emailLabel}>Direct Email</span>
-                                        <code className={styles.emailValue}>{displayedEmail}</code>
-                                    </div>
-
-                                    <div className={styles.quickActionsGrid}>
-                                        <button
-                                            type="button"
-                                            onClick={handleCopyEmail}
-                                            className={styles.quickActionBtn}
-                                            aria-label="Copy email address"
-                                        >
-                                            {copiedTarget === 'email' ? (
-                                                <>
-                                                    <Check size={15} className={styles.copiedIcon} aria-hidden="true" />
-                                                    <span>Copied Email!</span>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <Copy size={15} aria-hidden="true" />
-                                                    <span>Copy Email</span>
-                                                </>
-                                            )}
-                                        </button>
-
-                                        <a
-                                            href="https://www.linkedin.com/in/myselfkarim"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className={styles.quickActionBtn}
-                                        >
-                                            <Linkedin size={15} aria-hidden="true" />
-                                            <span>LinkedIn</span>
-                                            <ArrowUpRight size={13} className={styles.externalMini} aria-hidden="true" />
-                                        </a>
-
-                                        <button
-                                            type="button"
-                                            onClick={handlePreviewCv}
-                                            className={styles.quickActionBtn}
-                                        >
-                                            <FileText size={15} aria-hidden="true" />
-                                            <span>Preview CV</span>
-                                        </button>
-
-                                        <a
-                                            href="/resume.pdf"
-                                            download
-                                            className={styles.quickActionBtn}
-                                        >
-                                            <Download size={15} aria-hidden="true" />
-                                            <span>Download CV</span>
-                                        </a>
-                                    </div>
+                                    <motion.button
+                                        type="button"
+                                        onClick={handleSendEmail}
+                                        className={styles.sendEmailBtn}
+                                        whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+                                        whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+                                    >
+                                        <Mail size={16} strokeWidth={1.9} aria-hidden="true" />
+                                        <span>Send Email</span>
+                                    </motion.button>
                                 </div>
 
                                 <p className={styles.bookingNote}>
@@ -383,122 +245,60 @@ export default function Contact() {
                                 </p>
                             </div>
 
-                            {/* Right Column: Role-Guided Quick-Connect Composer */}
-                            <div className={styles.composerCol}>
-                                <div className={styles.composerHeader}>
-                                    <div className={styles.composerTitleRow}>
-                                        <Sparkles size={15} className={styles.composerIcon} aria-hidden="true" />
-                                        <h3 className={styles.composerTitle}>Role-Guided Quick Composer</h3>
-                                    </div>
-                                    <span className={styles.composerHint}>
-                                        Pick an intent to pre-draft a crisp intro — zero backend forms.
-                                    </span>
-                                </div>
-
-                                {/* 4 One-Tap Intent Pills */}
-                                <div
-                                    className={styles.intentPills}
-                                    role="group"
-                                    aria-label="Select conversation intent"
-                                >
-                                    {INTENTS.map((intent) => {
-                                        const isActive = intent.key === selectedIntent;
-                                        return (
-                                            <button
-                                                key={intent.key}
-                                                type="button"
-                                                aria-pressed={isActive}
-                                                onClick={() => setSelectedIntent(intent.key)}
-                                                className={`${styles.intentPill} ${isActive ? styles.intentPillActive : ''}`}
-                                            >
-                                                {isActive && (
-                                                    <motion.span
-                                                        layoutId="contactIntentPill"
-                                                        className={styles.intentPillBg}
-                                                        transition={
-                                                            shouldReduceMotion
-                                                                ? { duration: 0 }
-                                                                : { type: 'spring', stiffness: 460, damping: 34 }
-                                                        }
-                                                    />
-                                                )}
-                                                <span className={styles.intentPillText}>{intent.label}</span>
-                                            </button>
-                                        );
-                                    })}
-                                </div>
-
-                                {/* Compact Optional Inputs */}
-                                <div className={styles.inputGroup}>
-                                    <div className={styles.field}>
-                                        <label htmlFor="composer-name" className={styles.fieldLabel}>
-                                            Your Name <span className={styles.optionalTag}>(optional)</span>
-                                        </label>
-                                        <input
-                                            id="composer-name"
-                                            type="text"
-                                            value={senderName}
-                                            onChange={(event) => setSenderName(event.target.value)}
-                                            placeholder="e.g., Alex Meyer · Logistics & BI"
-                                            className={styles.textInput}
-                                            autoComplete="name"
-                                        />
-                                    </div>
-
-                                    <div className={styles.field}>
-                                        <label htmlFor="composer-context" className={styles.fieldLabel}>
-                                            Context or Role Note <span className={styles.optionalTag}>(optional)</span>
-                                        </label>
-                                        <textarea
-                                            id="composer-context"
-                                            rows={2}
-                                            value={contextNote}
-                                            onChange={(event) => setContextNote(event.target.value)}
-                                            placeholder={activeIntent.placeholder}
-                                            className={styles.textArea}
-                                        />
+                            {/* Right Column: Elevated Direct Channels Surface Card */}
+                            <div className={styles.directChannelBox}>
+                                <div className={styles.emailStrip}>
+                                    <span className={styles.emailLabel}>Direct Email</span>
+                                    <div className={styles.emailRow}>
+                                        <code className={styles.emailValue}>{displayedEmail}</code>
+                                        <button
+                                            type="button"
+                                            onClick={handleCopyEmail}
+                                            className={`${styles.copyInlineBtn} ${copiedEmail ? styles.copyInlineBtnDone : ''}`}
+                                            aria-label="Copy email address"
+                                        >
+                                            {copiedEmail ? (
+                                                <>
+                                                    <Check size={14} className={styles.copiedIcon} aria-hidden="true" />
+                                                    <span>Copied!</span>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Copy size={14} aria-hidden="true" />
+                                                    <span>Copy</span>
+                                                </>
+                                            )}
+                                        </button>
                                     </div>
                                 </div>
 
-                                {/* Live Assembled Message Preview */}
-                                <div className={styles.previewBox} aria-label="Pre-formatted message preview">
-                                    <div className={styles.previewSubject}>
-                                        <span className={styles.previewMetaKey}>Subject:</span>
-                                        <span className={styles.previewMetaVal}>{assembledMessage.subject}</span>
-                                    </div>
-                                    <p className={styles.previewBody}>{assembledMessage.body}</p>
-                                </div>
-
-                                {/* Dual 1-Click Dispatch Actions */}
-                                <div className={styles.composerActions}>
-                                    <button
-                                        type="button"
-                                        onClick={handleCopyMessageAndEmail}
-                                        className={styles.copyBundleBtn}
+                                <div className={styles.quickActionsGrid}>
+                                    <a
+                                        href="https://www.linkedin.com/in/myselfkarim"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={styles.quickActionBtn}
                                     >
-                                        {copiedTarget === 'bundle' ? (
-                                            <>
-                                                <Check size={16} className={styles.copiedIcon} aria-hidden="true" />
-                                                <span>Copied Message + Email!</span>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Copy size={16} aria-hidden="true" />
-                                                <span>Copy Message + Email</span>
-                                            </>
-                                        )}
-                                    </button>
+                                        <Linkedin size={15} aria-hidden="true" />
+                                        <span>LinkedIn</span>
+                                        <ArrowUpRight size={13} className={styles.externalMini} aria-hidden="true" />
+                                    </a>
 
-                                    <button
-                                        type="button"
-                                        onClick={handleOpenEmailApp}
-                                        className={styles.openMailBtn}
+                                    <a
+                                        href="https://github.com/myselfrezaul7"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={styles.quickActionBtn}
                                     >
-                                        <Mail size={16} aria-hidden="true" />
-                                        <span>Open in Email App</span>
-                                        <Send size={13} aria-hidden="true" />
-                                    </button>
+                                        <Github size={15} aria-hidden="true" />
+                                        <span>GitHub</span>
+                                        <ArrowUpRight size={13} className={styles.externalMini} aria-hidden="true" />
+                                    </a>
                                 </div>
+
+                                <p className={styles.cvRequestNote}>
+                                    Full CV available upon request.
+                                </p>
                             </div>
                         </div>
 
@@ -512,7 +312,6 @@ export default function Contact() {
             <CalBookingModal
                 isOpen={isBookingOpen}
                 onClose={() => setIsBookingOpen(false)}
-                contextLabel={activeIntent.shortLabel}
             />
         </section>
     );

@@ -5,14 +5,14 @@
 
 @media (max-width: 767px) {
   .about {
-    padding: 60px 0;
+    padding: 52px 0;
   }
 }
 
 .container {
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 20px;
 }
 
 @media (min-width: 768px) {
@@ -34,6 +34,12 @@
   margin-bottom: 36px;
 }
 
+@media (max-width: 767px) {
+  .header {
+    margin-bottom: 24px;
+  }
+}
+
 .eyebrow {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 11.5px;
@@ -44,7 +50,7 @@
 }
 
 .sectionTitle {
-  font-size: clamp(32px, 5vw, 48px);
+  font-size: clamp(30px, 5vw, 48px);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
@@ -90,10 +96,6 @@
   }
 }
 
-.bentoCard:hover {
-  border-color: var(--border-hover);
-}
-
 .cardLabel {
   display: inline-flex;
   align-items: center;
@@ -122,8 +124,9 @@
   color: var(--text-secondary);
   line-height: 1.75;
   margin-bottom: 16px;
-  text-align: left;
-  text-wrap: pretty;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
   max-width: 66ch;
 }
 
@@ -136,54 +139,63 @@
   font-weight: 600;
 }
 
-/* Dual CV Action Row */
-.cvActions {
+/* CV Request Note + Contact CTA Row */
+.contactCtaRow {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 12px 16px;
   margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
 }
 
-.previewCvBtn {
+.cvRequestNote {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  padding: 13px 22px;
-  font-size: 14px;
+  gap: 8px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.cvRequestIcon {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.getInTouchBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 20px;
+  font-size: 13.5px;
   font-weight: 600;
   color: #ffffff;
   background: var(--gradient-accent);
   border: none;
   border-radius: 12px;
+  text-decoration: none;
   cursor: pointer;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.previewCvBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(74, 155, 155, 0.34);
+.getInTouchArrow {
+  transition: transform var(--transition-fast);
 }
 
-.downloadCvBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  padding: 13px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-primary);
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  text-decoration: none;
-  transition: transform var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
-}
+@media (max-width: 479px) {
+  .contactCtaRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-.downloadCvBtn:hover {
-  transform: translateY(-2px);
-  border-color: var(--accent);
-  background: var(--bg-card-hover);
+  .getInTouchBtn {
+    width: 100%;
+  }
 }
 
 /* 4-Tile Animated Impact Strip */
@@ -210,9 +222,12 @@
   transition: border-color var(--transition-fast), transform var(--transition-fast);
 }
 
-.impactTile:hover {
-  border-color: rgba(74, 155, 155, 0.45);
-  transform: translateY(-2px);
+@media (max-width: 767px) {
+  .impactTile {
+    padding: 14px 12px;
+    border-radius: 14px;
+    gap: 4px;
+  }
 }
 
 .impactValue {
@@ -286,11 +301,6 @@
   cursor: pointer;
 }
 
-.timelineItem:hover {
-  border-color: var(--border-hover);
-  background: var(--bg-card-hover);
-}
-
 .timelineItemActive {
   border-color: rgba(74, 155, 155, 0.55);
   background: var(--bg-card-hover);
@@ -309,6 +319,12 @@
   align-items: flex-start;
   gap: 12px;
   min-width: 0;
+  flex: 1;
+}
+
+.timelineTitleWrap {
+  min-width: 0;
+  flex: 1;
 }
 
 .timelineDot {
@@ -352,6 +368,18 @@
   flex-shrink: 0;
 }
 
+@media (max-width: 539px) {
+  .timelineTop {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .timelinePeriod {
+    margin-left: 42px;
+  }
+}
+
 .timelineDetails {
   margin-top: 12px;
   padding-top: 12px;
@@ -369,8 +397,9 @@
   font-size: 13.5px;
   line-height: 1.6;
   color: var(--text-secondary);
-  text-align: left;
-  text-wrap: pretty;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
   margin-bottom: 10px;
 }
 
@@ -385,11 +414,6 @@
   border: none;
   padding: 0;
   cursor: pointer;
-}
-
-.timelineCaseLink:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 /* Right Sidebar Card (At a Glance & Languages) */
@@ -418,10 +442,6 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   transition: border-color var(--transition-fast);
-}
-
-.factRow:hover {
-  border-color: var(--border-hover);
 }
 
 .factIcon {
@@ -554,4 +574,58 @@
   font-size: 12px;
   line-height: 1.45;
   color: var(--text-secondary);
+}
+
+@media (max-width: 519px) {
+  .pptGrid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .pptCell {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 11px 12px;
+  }
+
+  .pptKey {
+    margin-bottom: 0;
+    flex-shrink: 0;
+    min-width: 74px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .bentoCard:hover {
+    border-color: var(--border-hover);
+  }
+
+  .getInTouchBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(74, 155, 155, 0.34);
+  }
+
+  .getInTouchBtn:hover .getInTouchArrow {
+    transform: translateX(3px);
+  }
+
+  .impactTile:hover {
+    border-color: rgba(74, 155, 155, 0.45);
+    transform: translateY(-2px);
+  }
+
+  .timelineItem:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+  }
+
+  .timelineCaseLink:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .factRow:hover {
+    border-color: var(--border-hover);
+  }
 }

@@ -73,7 +73,9 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -83,8 +85,14 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
+  overflow-wrap: break-word;
   transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+a,
+button {
+  touch-action: manipulation;
 }
 
 /* Visually Hidden Screen Reader Utility */
@@ -121,7 +129,7 @@ pre {
   width: 100%;
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 20px;
 }
 
 @media (min-width: 768px) {
@@ -141,9 +149,9 @@ pre {
   padding: 100px 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .section {
-    padding: 60px 0;
+    padding: 52px 0;
   }
 }
 
@@ -316,7 +324,15 @@ h3,
 section[id],
 div[id],
 article[id] {
-  scroll-margin-top: 100px;
+  scroll-margin-top: 84px;
+}
+
+@media (min-width: 768px) {
+  section[id],
+  div[id],
+  article[id] {
+    scroll-margin-top: 100px;
+  }
 }
 
 /* Suppress CSS transitions during View Transition snapshot capture */

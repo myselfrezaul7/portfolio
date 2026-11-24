@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ArrowRight, Calendar, FileText, GraduationCap, Cpu } from 'lucide-react';
+import { ArrowRight, Calendar } from 'lucide-react';
 import { useTilt } from '@/hooks/useTilt';
 import styles from './Hero.module.css';
 
@@ -37,12 +37,6 @@ export default function Hero({ id = 'hero' }: HeroProps) {
     }
   };
 
-  const handleOpenCv = () => {
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('portfolio:open-cv'));
-    }
-  };
-
   const handleOpenBooking = () => {
     if (typeof window !== 'undefined') {
       window.dispatchEvent(new CustomEvent('portfolio:open-booking'));
@@ -69,7 +63,7 @@ export default function Hero({ id = 'hero' }: HeroProps) {
             Data Analytics · Supply Chain Operations · IT Project Management
           </h2>
 
-          {/* Left-Aligned Executive Summary */}
+          {/* Executive Summary */}
           <p className={styles.description}>
             Master&apos;s student in International Management &amp; Information Systems (IMIS) in Germany. I bridge business operations and technology, transforming complex workflows into automated, data-driven systems using SAP, Power BI, and modern digital tools.
           </p>
@@ -92,12 +86,12 @@ export default function Hero({ id = 'hero' }: HeroProps) {
           {/* Clean Action Bar (Zero SSR mailto:) */}
           <div className={styles.actions}>
             <motion.a
-              href="#contact"
-              onClick={(e) => handleSmoothScroll(e, '#contact')}
+              href="#work"
+              onClick={(e) => handleSmoothScroll(e, '#work')}
               className={styles.primaryBtn}
               whileTap={{ scale: 0.97 }}
             >
-              <span>Get in Touch</span>
+              <span>View Selected Work</span>
               <ArrowRight size={16} className={styles.btnIcon} strokeWidth={2} />
             </motion.a>
 
@@ -110,20 +104,10 @@ export default function Hero({ id = 'hero' }: HeroProps) {
               <Calendar size={15} strokeWidth={1.8} />
               <span>Book Call</span>
             </motion.button>
-
-            <motion.button
-              type="button"
-              onClick={handleOpenCv}
-              className={styles.ghostBtn}
-              whileTap={{ scale: 0.97 }}
-            >
-              <FileText size={15} strokeWidth={1.8} />
-              <span>Preview CV</span>
-            </motion.button>
           </div>
         </div>
 
-        {/* Instant-LCP Portrait Stage with 120Hz Specular Tilt & Floating Credential Chips */}
+        {/* Instant-LCP Portrait Stage with 120Hz Specular Tilt */}
         <div className={styles.imageWrapper}>
           <div className={styles.imageGlowBackdrop} aria-hidden="true" />
 
@@ -136,28 +120,16 @@ export default function Hero({ id = 'hero' }: HeroProps) {
             <div className={styles.imageContainer}>
               <Image
                 src="/images/profile.webp"
-                alt="Md Rezaul Karim — Data Analytics, Supply Chain & IT Project Management"
+                alt="Md Rezaul Karim, Data Analytics, Supply Chain & IT Project Management"
                 fill
                 priority
                 quality={88}
                 placeholder="blur"
                 blurDataURL={PROFILE_BLUR_DATA_URL}
-                sizes="(max-width: 768px) 220px, (max-width: 1024px) 300px, 340px"
+                sizes="(max-width: 768px) 176px, (max-width: 1024px) 300px, 340px"
                 style={{ objectFit: 'cover', objectPosition: 'center top' }}
               />
               <div className={styles.specularSheen} aria-hidden="true" />
-              <div className={styles.imageGlow} aria-hidden="true" />
-            </div>
-
-            {/* Floating Glass Credential Chips */}
-            <div className={`${styles.credentialChip} ${styles.chipTop}`}>
-              <GraduationCap size={13} className={styles.chipIcon} aria-hidden="true" />
-              <span>M.A. IMIS · FH Südwestfalen</span>
-            </div>
-
-            <div className={`${styles.credentialChip} ${styles.chipBottom}`}>
-              <Cpu size={13} className={styles.chipIcon} aria-hidden="true" />
-              <span className="font-mono">SAP · BPMN 2.0 · BI</span>
             </div>
           </div>
         </div>

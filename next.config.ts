@@ -63,7 +63,7 @@ const nextConfig: NextConfig = {
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: blob: https:",
               "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com",
-              "frame-src 'self' https://cal.com https://cal.eu https://vercel.live",
+              "frame-src 'self' https://cal.eu https://*.cal.eu https://cal.com https://*.cal.com https://vercel.live",
               "frame-ancestors 'none'",
               "object-src 'none'",
               "base-uri 'self'",
@@ -75,27 +75,6 @@ const nextConfig: NextConfig = {
           {
             key: 'Strict-Transport-Security',
             value: 'max-age=31536000; includeSubDomains; preload',
-          },
-        ],
-      },
-      {
-        // Scoped override so same-origin <iframe src="/resume.pdf"> renders inside CvPreviewModal
-        // while all other routes keep X-Frame-Options: DENY and frame-ancestors 'none'.
-        source: '/resume.pdf',
-        headers: [
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN',
-          },
-          {
-            key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "object-src 'self'",
-              "frame-ancestors 'self'",
-              "base-uri 'self'",
-              "upgrade-insecure-requests",
-            ].join('; '),
           },
         ],
       },

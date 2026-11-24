@@ -13,7 +13,9 @@ import {
   getProjectBySlug,
 } from '@/data/projects';
 import { useTilt } from '@/hooks/useTilt';
+import { useMobileCarousel } from '@/hooks/useMobileCarousel';
 import ScrollReveal from './animations/ScrollReveal';
+import MobileCarouselControls from './ui/MobileCarouselControls';
 import ProjectArchitectureVisual from './ProjectArchitectureVisual';
 import ProjectCaseStudyDrawer from './ProjectCaseStudyDrawer';
 import styles from './Projects.module.css';
@@ -39,6 +41,10 @@ function ProjectCard({ project, isLoaded, onImageLoad, onOpen }: ProjectCardProp
       onOpen(project.slug);
     }
   };
+
+  const displayBadges = (project.platformBadges ?? project.tags.slice(0, 3)).filter(
+    (badge) => badge !== project.projectNature
+  );
 
   return (
     <div
@@ -67,7 +73,7 @@ function ProjectCard({ project, isLoaded, onImageLoad, onOpen }: ProjectCardProp
                 isLoaded ? styles.imageLoaded : styles.imageLoading
               }`}
               style={{ objectFit: 'cover', objectPosition: 'top center' }}
-              sizes="(max-width: 767px) 95vw, (max-width: 1119px) 48vw, 33vw"
+              sizes="(max-width: 767px) 86vw, (max-width: 1119px) 48vw, 33vw"
               placeholder={project.blurDataURL ? 'blur' : 'empty'}
               blurDataURL={project.blurDataURL}
               onLoad={() => onImageLoad(project.id)}
@@ -95,11 +101,20 @@ function ProjectCard({ project, isLoaded, onImageLoad, onOpen }: ProjectCardProp
           <span className={styles.cardPeriod}>{project.period}</span>
         </div>
 
+        {project.projectNature && (
+          <div className={styles.natureRow}>
+            <span className={styles.natureBadge}>
+              <span className={styles.natureDot} aria-hidden="true" />
+              <span>{project.projectNature}</span>
+            </span>
+          </div>
+        )}
+
         <h3 className={styles.projectTitle}>{project.title}</h3>
         <p className={styles.projectDescription}>{project.shortDescription}</p>
 
         <div className={styles.platformRow}>
-          {(project.platformBadges ?? project.tags.slice(0, 3)).map((badge) => (
+          {displayBadges.map((badge) => (
             <span key={badge} className={styles.tag}>
               {badge}
             </span>
@@ -148,6 +163,16 @@ export default function Projects() {
   const [activeLens, setActiveLens] = useState<ProjectDomainLens>('All');
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return;
+    const mq = window.matchMedia('(max-width: 767px)');
+    const syncViewport = () => setIsMobileViewport(mq.matches);
+    syncViewport();
+    mq.addEventListener('change', syncViewport);
+    return () => mq.removeEventListener('change', syncViewport);
+  }, []);
 
   const syncQueryParam = useCallback((slug: string | null) => {
     if (typeof window === 'undefined') return;
@@ -222,6 +247,18 @@ export default function Projects() {
     return PROJECTS.filter((project) => project.domainLenses.includes(activeLens));
   }, [activeLens]);
 
+  const {
+    trackRef,
+    activeIndex,
+    canScrollPrev,
+    canScrollNext,
+    scrollToIndex,
+    step,
+  } = useMobileCarousel({
+    itemCount: filteredProjects.length,
+    resetKey: activeLens,
+  });
+
   const selectedProject = useMemo(
     () => (selectedSlug ? getProjectBySlug(selectedSlug) ?? null : null),
     [selectedSlug]
@@ -293,32 +330,56 @@ export default function Projects() {
           })}
         </div>
 
-        {/* Projects Grid */}
+        {/* Projects Grid / Mobile Horizontal Scroll-Snap Carousel */}
         <div
+          ref={trackRef}
           className={styles.projectsGrid}
           data-count={filteredProjects.length}
         >
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project) => (
-              <motion.div
-                layout
-                key={project.slug}
-                className={styles.gridItem}
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.3 }}
-              >
+          {isMobileViewport ? (
+            filteredProjects.map((project) => (
+              <div key={project.slug} className={styles.gridItem}>
                 <ProjectCard
                   project={project}
                   isLoaded={!!loadedImages[project.id]}
                   onImageLoad={handleImageLoad}
                   onOpen={openProject}
                 />
-              </motion.div>
-            ))}
-          </AnimatePresence>
+              </div>
+            ))
+          ) : (
+            <AnimatePresence mode="popLayout">
+              {filteredProjects.map((project) => (
+                <motion.div
+                  layout
+                  key={project.slug}
+                  className={styles.gridItem}
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <ProjectCard
+                    project={project}
+                    isLoaded={!!loadedImages[project.id]}
+                    onImageLoad={handleImageLoad}
+                    onOpen={openProject}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          )}
         </div>
+
+        <MobileCarouselControls
+          count={filteredProjects.length}
+          activeIndex={activeIndex}
+          canScrollPrev={canScrollPrev}
+          canScrollNext={canScrollNext}
+          onSelect={scrollToIndex}
+          onStep={step}
+          label="project"
+        />
       </div>
 
       {/* Interactive Case Study Deep-Dive Drawer */}

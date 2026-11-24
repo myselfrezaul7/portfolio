@@ -462,8 +462,9 @@
     font-size: 17px;
     color: var(--text-secondary);
     line-height: 1.82;
-    text-align: left;
-    text-wrap: pretty;
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
     margin-bottom: 22px;
 }
 

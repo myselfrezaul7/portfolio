@@ -1,0 +1,319 @@
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  margin-top: 14px;
+  user-select: none;
+}
+
+.compact {
+  margin-top: 10px;
+  gap: 8px;
+}
+
+/* Pagination dots */
+.dots {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.dots::-webkit-scrollbar {
+  display: none;
+}
+
+.dotButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  min-height: 32px;
+  padding: 0 3px;
+  background: transparent;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dotButton:active {
+  transform: scale(0.92);
+}
+
+.dotButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.24);
+  transition: width 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.dotButtonActive .dot {
+  width: 22px;
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(74, 155, 155, 0.52);
+}
+
+:global([data-theme="light"]) .dot {
+  background: rgba(17, 19, 23, 0.2);
+}
+
+:global([data-theme="light"]) .dotButtonActive .dot {
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(15, 118, 110, 0.32);
+}
+
+/* Right-side counter and step buttons */
+.metaControls {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.compact .metaControls {
+  gap: 6px;
+}
+
+.counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
+  font-size: 11.5px;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.counterCurrent {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.counterDivider {
+  color: var(--text-tertiary);
+  opacity: 0.7;
+}
+
+.counterTotal {
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.navGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.navButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 9999px;
+  background: rgba(26, 26, 26, 0.78);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24);
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    opacity 180ms ease,
+    box-shadow 180ms ease,
+    transform 150ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.navButton:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.navButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.navButton:disabled {
+  opacity: 0.36;
+  cursor: default;
+  box-shadow: none;
+}
+
+:global([data-theme="light"]) .navButton {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: var(--border);
+  color: var(--text-primary);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+:global([data-theme="light"]) .navButton:disabled {
+  background: rgba(244, 245, 247, 0.75);
+  box-shadow: none;
+}
+
+/* Next button with inline More cue */
+.nextButton {
+  gap: 2px;
+  padding: 0 8px 0 11px;
+}
+
+.compact .nextButton {
+  padding: 0 7px 0 9px;
+}
+
+.nextButtonActive {
+  border-color: rgba(74, 155, 155, 0.42);
+  background: linear-gradient(
+    135deg,
+    rgba(74, 155, 155, 0.16) 0%,
+    rgba(26, 26, 26, 0.84) 100%
+  );
+  color: var(--text-primary);
+  box-shadow: 0 2px 12px rgba(74, 155, 155, 0.16);
+}
+
+:global([data-theme="light"]) .nextButtonActive {
+  border-color: rgba(15, 118, 110, 0.35);
+  background: linear-gradient(
+    135deg,
+    rgba(15, 118, 110, 0.1) 0%,
+    rgba(255, 255, 255, 0.94) 100%
+  );
+  color: var(--accent);
+  box-shadow: 0 2px 10px rgba(15, 118, 110, 0.1);
+}
+
+.moreCue {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--accent-hover);
+  transition: color 180ms ease, opacity 180ms ease;
+}
+
+.nextButton:disabled .moreCue {
+  color: var(--text-tertiary);
+}
+
+.nextChevron {
+  flex-shrink: 0;
+  color: var(--accent-hover);
+  transition: color 180ms ease;
+}
+
+.nextButton:disabled .nextChevron {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="light"]) .nextButtonActive .moreCue,
+:global([data-theme="light"]) .nextButtonActive .nextChevron {
+  color: var(--accent);
+}
+
+.nextButtonActive .moreCue,
+.nextButtonActive .nextChevron {
+  animation: carouselMoreNudge 2.1s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+.nextButtonActive .nextChevron {
+  animation-delay: 80ms;
+}
+
+@keyframes carouselMoreNudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(2.5px);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dotButton:hover .dot {
+    background: rgba(255, 255, 255, 0.45);
+  }
+
+  .dotButtonActive:hover .dot {
+    background: var(--accent-hover);
+  }
+
+  :global([data-theme="light"]) .dotButton:hover .dot {
+    background: rgba(17, 19, 23, 0.4);
+  }
+
+  .navButton:hover:not(:disabled) {
+    border-color: rgba(74, 155, 155, 0.52);
+    background: var(--bg-card-hover);
+  }
+
+  :global([data-theme="light"]) .navButton:hover:not(:disabled) {
+    border-color: rgba(15, 118, 110, 0.45);
+    background: var(--bg-card);
+  }
+}
+
+@media (max-width: 359px) {
+  .controls {
+    gap: 8px;
+  }
+
+  .counter {
+    font-size: 11px;
+  }
+
+  .moreCue {
+    font-size: 10px;
+  }
+
+  .nextButton {
+    padding: 0 7px 0 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot,
+  .dotButton,
+  .navButton,
+  .moreCue,
+  .nextChevron {
+    transition: none;
+  }
+
+  .nextButtonActive .moreCue,
+  .nextButtonActive .nextChevron {
+    animation: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .controls {
+    display: none;
+  }
+}

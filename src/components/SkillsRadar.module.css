@@ -5,14 +5,14 @@
 
 @media (max-width: 767px) {
   .skills {
-    padding: 60px 0;
+    padding: 52px 0;
   }
 }
 
 .container {
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 20px;
 }
 
 @media (min-width: 768px) {
@@ -32,6 +32,13 @@
   flex-direction: column;
   gap: 20px;
   margin-bottom: 36px;
+}
+
+@media (max-width: 767px) {
+  .headerRow {
+    gap: 16px;
+    margin-bottom: 24px;
+  }
 }
 
 @media (min-width: 900px) {
@@ -58,7 +65,7 @@
 }
 
 .sectionTitle {
-  font-size: clamp(32px, 5vw, 48px);
+  font-size: clamp(30px, 5vw, 48px);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
@@ -70,8 +77,9 @@
   color: var(--text-secondary);
   line-height: 1.65;
   max-width: 56ch;
-  text-align: left;
-  text-wrap: pretty;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 /* Role-Fit Lens Segmented Toggle */
@@ -84,7 +92,16 @@
   background: var(--bg-card);
   border: 1px solid var(--border);
   align-self: flex-start;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.lensToggleGroup::-webkit-scrollbar {
+  display: none;
 }
 
 .lensBtn {
@@ -98,11 +115,15 @@
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
+  flex-shrink: 0;
   transition: color var(--transition-fast);
 }
 
-.lensBtn:hover {
-  color: var(--text-primary);
+@media (max-width: 767px) {
+  .lensBtn {
+    padding: 7px 11px;
+    font-size: 11.5px;
+  }
 }
 
 .lensBtnActive {
@@ -130,6 +151,10 @@
   gap: 24px;
 }
 
+.bentoGrid > * {
+  min-width: 0;
+}
+
 @media (min-width: 1060px) {
   .bentoGrid {
     grid-template-columns: 400px 1fr;
@@ -152,9 +177,12 @@
   transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
 }
 
-.radarBentoCard:hover {
-  border-color: var(--border-hover);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), var(--shadow-lg);
+@media (max-width: 767px) {
+  .radarBentoCard {
+    padding: 16px 12px;
+    border-radius: 16px;
+    gap: 12px;
+  }
 }
 
 .radarCardTop {
@@ -163,6 +191,7 @@
   justify-content: space-between;
   gap: 8px;
   width: 100%;
+  padding: 0 4px;
 }
 
 .bentoEyebrow {
@@ -194,6 +223,12 @@
   user-select: none;
 }
 
+@media (max-width: 767px) {
+  .radarSvg {
+    max-width: 100%;
+  }
+}
+
 .gridLevel {
   fill: none;
   stroke: var(--border);
@@ -219,10 +254,6 @@
   stroke-width: 2;
   stroke-linejoin: round;
   transition: fill var(--transition-normal), stroke var(--transition-normal);
-}
-
-.radarBentoCard:hover .dataPolygon {
-  fill: rgba(74, 155, 155, 0.22);
 }
 
 .beaconRing {
@@ -272,6 +303,13 @@ g[role="button"]:focus-visible .dataPoint {
   font-weight: 500;
   fill: var(--text-secondary);
   transition: fill var(--transition-fast);
+}
+
+@media (max-width: 767px) {
+  .label {
+    font-size: 11.5px;
+    font-weight: 550;
+  }
 }
 
 .labelHovered {
@@ -345,8 +383,9 @@ g[role="button"]:focus-visible .dataPoint {
   font-size: 12.5px;
   line-height: 1.5;
   color: var(--text-secondary);
-  text-align: left;
-  text-wrap: pretty;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .proofPills {
@@ -370,28 +409,49 @@ g[role="button"]:focus-visible .dataPoint {
   transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
 }
 
-.proofProjectBtn:hover {
-  background: rgba(74, 155, 155, 0.18);
-  border-color: var(--accent);
-  transform: translateY(-1px);
-}
-
 .proofHint {
   font-size: 12.5px;
   line-height: 1.5;
   color: var(--text-tertiary);
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
-/* 2x2 Category Bento Matrix */
+/* 2x2 Category Bento Matrix / Mobile Horizontal Carousel */
+.matrixColumn {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+}
+
 .matrixGrid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 18px;
+  flex: 1;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 767px) {
   .matrixGrid {
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 20px;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    margin-inline: -20px;
+    padding: 2px 20px 6px;
+  }
+
+  .matrixGrid::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -403,6 +463,17 @@ g[role="button"]:focus-visible .dataPoint {
   display: flex;
   flex-direction: column;
   transition: border-color var(--transition-normal), box-shadow var(--transition-normal), opacity var(--transition-normal);
+}
+
+@media (max-width: 767px) {
+  .categoryGroup {
+    flex: 0 0 86vw;
+    max-width: 345px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 18px 16px;
+    border-radius: 16px;
+  }
 }
 
 .categoryGroupHighlighted {
@@ -440,11 +511,6 @@ g[role="button"]:focus-visible .dataPoint {
   transition: border-color var(--transition-fast), background-color var(--transition-fast), opacity var(--transition-fast), transform var(--transition-fast);
 }
 
-.skillChip:hover {
-  border-color: var(--border-hover);
-  background: var(--bg-tertiary);
-}
-
 .skillChipActive {
   border-color: rgba(74, 155, 155, 0.55);
   background: rgba(74, 155, 155, 0.1);
@@ -472,8 +538,9 @@ g[role="button"]:focus-visible .dataPoint {
   font-size: 11.5px;
   line-height: 1.45;
   color: var(--text-secondary);
-  text-align: left;
-  text-wrap: pretty;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .dotMeter {
@@ -493,4 +560,30 @@ g[role="button"]:focus-visible .dataPoint {
 
 .dotFilled {
   background: var(--accent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lensBtn:hover {
+    color: var(--text-primary);
+  }
+
+  .radarBentoCard:hover {
+    border-color: var(--border-hover);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), var(--shadow-lg);
+  }
+
+  .radarBentoCard:hover .dataPolygon {
+    fill: rgba(74, 155, 155, 0.22);
+  }
+
+  .proofProjectBtn:hover {
+    background: rgba(74, 155, 155, 0.18);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .skillChip:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-tertiary);
+  }
 }

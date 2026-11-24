@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Search, FileText, Rocket, ArrowUpRight } from 'lucide-react';
+import { useMobileCarousel } from '@/hooks/useMobileCarousel';
 import ScrollReveal from './animations/ScrollReveal';
+import MobileCarouselControls from './ui/MobileCarouselControls';
 import styles from './HowIWork.module.css';
 
 const steps = [
@@ -33,15 +35,18 @@ const steps = [
   },
 ];
 
+interface TraceStepItem {
+  tag: string;
+  text: string;
+}
+
 interface TraceExample {
   id: string;
   label: string;
   metric: string;
   projectSlug: string;
   outcome: string;
-  diagnose: string;
-  design: string;
-  implement: string;
+  steps: TraceStepItem[];
 }
 
 const TRACE_EXAMPLES: TraceExample[] = [
@@ -51,38 +56,62 @@ const TRACE_EXAMPLES: TraceExample[] = [
     metric: '-25% Wait',
     projectSlug: 'renaissance-diagnostic',
     outcome: 'Result: Average wait cut from 40 min -> 30 min + rural outreach launched',
-    diagnose:
-      'Mapped reception-to-lab patient queues across 100+ daily pathology samples and reconciled manual stock & demographic logs.',
-    design:
-      'Redesigned appointment booking handoffs and built locked validation sheets feeding weekly urban-vs-rural PowerPoint BI decks.',
-    implement:
-      'Rolled out simplified slot triage (-25% wait time) and enabled management to launch targeted rural diagnostic outreach.',
+    steps: [
+      {
+        tag: '01 · DIAGNOSE',
+        text: 'Mapped reception-to-lab patient queues across 100+ daily pathology samples and reconciled manual stock & demographic logs.',
+      },
+      {
+        tag: '02 · DESIGN',
+        text: 'Redesigned appointment booking handoffs and built locked validation sheets feeding weekly urban-vs-rural PowerPoint BI decks.',
+      },
+      {
+        tag: '03 · IMPLEMENT',
+        text: 'Rolled out simplified slot triage (-25% wait time) and enabled management to launch targeted rural diagnostic outreach.',
+      },
+    ],
   },
   {
     id: 'nextep',
     label: 'NexTep Edu',
     metric: '17 Guides',
     projectSlug: 'nextep-edu',
-    outcome: 'Result: Shared BPMN 2.0 playbook + self-service Supabase tracking portal',
-    diagnose:
-      'Identified scattered counselor chat handoffs and repetitive "any update on my file?" student inquiries across admissions.',
-    design:
-      'Modeled end-to-end eligibility and offer gateways in BPMN 2.0 and mapped every stage 1:1 to a private Supabase tracking schema.',
-    implement:
-      'Shipped the bilingual Next.js platform with 17 destination guides and code-gated student application status links.',
+    outcome: 'Result: Non-commercial BPMN 2.0 playbook + self-service Supabase tracking portal',
+    steps: [
+      {
+        tag: '01 · DIAGNOSE',
+        text: 'Identified scattered counselor chat handoffs and repetitive "any update on my file?" student inquiries across admissions.',
+      },
+      {
+        tag: '02 · DESIGN',
+        text: 'Modeled end-to-end eligibility and offer gateways in BPMN 2.0 and mapped every stage 1:1 to a private Supabase tracking schema.',
+      },
+      {
+        tag: '03 · IMPLEMENT',
+        text: 'Shipped the voluntary non-commercial bilingual Next.js platform with 17 destination guides and code-gated application status links.',
+      },
+    ],
   },
   {
     id: 'petbhai',
     label: 'PetBhai',
     metric: 'Web + Android',
     projectSlug: 'petbhai-ecosystem',
-    outcome: 'Result: Live bilingual Web PWA + Android ecosystem funding animal rescue',
-    diagnose:
-      'Pinpointed fragile donation-based street rescue funding alongside fragmented pet commerce, stockouts, and clinic discovery.',
-    design:
-      'Architected a 4-state SKU inventory machine, COD courier reconciliation, live community visitor Q&A, and vet booking flows.',
-    implement:
-      'Launched the bilingual (EN/BN) Web PWA and native Android app channeling commerce utility into sustainable animal rescue.',
+    outcome: 'Result: Non-commercial bilingual Web PWA + Android architecture for animal welfare',
+    steps: [
+      {
+        tag: '01 · DIAGNOSE',
+        text: 'Pinpointed fragile emergency rescue appeals alongside fragmented pet care listings, stock tracking gaps, and clinic discovery.',
+      },
+      {
+        tag: '02 · DESIGN',
+        text: 'Architected a 4-state SKU inventory machine, modeled courier reconciliation states, live community visitor Q&A, and vet booking flows.',
+      },
+      {
+        tag: '03 · IMPLEMENT',
+        text: 'Shipped a non-commercial bilingual (EN/BN) Web PWA and native Android ecosystem supporting street animal welfare with zero commercial revenue.',
+      },
+    ],
   },
 ];
 
@@ -90,6 +119,27 @@ export default function HowIWork() {
   const [activeTraceId, setActiveTraceId] = useState<string>(TRACE_EXAMPLES[0].id);
   const activeTrace =
     TRACE_EXAMPLES.find((t) => t.id === activeTraceId) ?? TRACE_EXAMPLES[0];
+
+  const {
+    trackRef: stepsTrackRef,
+    activeIndex: stepsActiveIndex,
+    canScrollPrev: stepsCanScrollPrev,
+    canScrollNext: stepsCanScrollNext,
+    scrollToIndex: scrollToStepIndex,
+    step: stepPipeline,
+  } = useMobileCarousel({ itemCount: steps.length });
+
+  const {
+    trackRef: traceTrackRef,
+    activeIndex: traceActiveIndex,
+    canScrollPrev: traceCanScrollPrev,
+    canScrollNext: traceCanScrollNext,
+    scrollToIndex: scrollToTraceIndex,
+    step: stepTrace,
+  } = useMobileCarousel({
+    itemCount: activeTrace.steps.length,
+    resetKey: activeTraceId,
+  });
 
   const handleOpenCaseStudy = (slug: string) => {
     window.dispatchEvent(new CustomEvent('portfolio:open-project', { detail: { slug } }));
@@ -111,20 +161,16 @@ export default function HowIWork() {
         </ScrollReveal>
 
         {/* Animated 3-Stage Pipeline */}
-        <div className={styles.stepsContainer}>
-          <div className={styles.pipelineTrack} aria-hidden="true">
-            <div className={styles.pipelineBeam} />
-          </div>
+        <ScrollReveal delay={0.08}>
+          <div className={styles.stepsContainer}>
+            <div className={styles.pipelineTrack} aria-hidden="true">
+              <div className={styles.pipelineBeam} />
+            </div>
 
-          <div className={styles.stepsGrid}>
-            {steps.map((step, index) => (
-              <div key={step.number} className={styles.stepSlot}>
-                <ScrollReveal delay={index * 0.12} className={styles.revealWrapper}>
-                  <motion.div
-                    className={styles.stepCard}
-                    whileHover={{ y: -3 }}
-                    transition={{ duration: 0.25 }}
-                  >
+            <div ref={stepsTrackRef} className={styles.stepsGrid}>
+              {steps.map((step) => (
+                <div key={step.number} className={styles.stepSlot}>
+                  <div className={styles.stepCard}>
                     <div className={styles.stepTopRow}>
                       <div className={styles.iconWrapper} aria-hidden="true">
                         <step.icon size={22} strokeWidth={1.65} />
@@ -145,15 +191,25 @@ export default function HowIWork() {
                         ))}
                       </div>
                     </div>
-                  </motion.div>
-                </ScrollReveal>
-              </div>
-            ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <MobileCarouselControls
+              count={steps.length}
+              activeIndex={stepsActiveIndex}
+              canScrollPrev={stepsCanScrollPrev}
+              canScrollNext={stepsCanScrollNext}
+              onSelect={scrollToStepIndex}
+              onStep={stepPipeline}
+              label="stage"
+            />
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Compact "See It In Action" Interactive Project Trace Switcher */}
-        <ScrollReveal delay={0.18}>
+        <ScrollReveal delay={0.14}>
           <div className={styles.traceCard}>
             <div className={styles.traceHeader}>
               <div className={styles.traceTitleGroup}>
@@ -196,42 +252,52 @@ export default function HowIWork() {
               </div>
             </div>
 
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTrace.id}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.2 }}
-              >
-                <div className={styles.traceSteps}>
-                  <div className={styles.traceStepBox}>
-                    <span className={styles.traceStepTag}>01 · DIAGNOSE</span>
-                    <p className={styles.traceStepText}>{activeTrace.diagnose}</p>
-                  </div>
-                  <div className={styles.traceStepBox}>
-                    <span className={styles.traceStepTag}>02 · DESIGN</span>
-                    <p className={styles.traceStepText}>{activeTrace.design}</p>
-                  </div>
-                  <div className={styles.traceStepBox}>
-                    <span className={styles.traceStepTag}>03 · IMPLEMENT</span>
-                    <p className={styles.traceStepText}>{activeTrace.implement}</p>
-                  </div>
-                </div>
-
-                <div className={styles.traceFooter}>
-                  <span className={styles.traceOutcomePill}>{activeTrace.outcome}</span>
-                  <button
-                    type="button"
-                    onClick={() => handleOpenCaseStudy(activeTrace.projectSlug)}
-                    className={styles.traceCaseLink}
+            {/* Keep trackRef permanently mounted so mobile scroll listeners persist across tab switches */}
+            <div ref={traceTrackRef} className={styles.traceSteps}>
+              {activeTrace.steps.map((traceStep) => (
+                <div key={traceStep.tag} className={styles.traceStepBox}>
+                  <span className={styles.traceStepTag}>{traceStep.tag}</span>
+                  <motion.p
+                    key={`${activeTrace.id}-${traceStep.tag}`}
+                    className={styles.traceStepText}
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2 }}
                   >
-                    <span>Inspect {activeTrace.label} Case Study</span>
-                    <ArrowUpRight size={15} />
-                  </button>
+                    {traceStep.text}
+                  </motion.p>
                 </div>
-              </motion.div>
-            </AnimatePresence>
+              ))}
+            </div>
+
+            <MobileCarouselControls
+              count={activeTrace.steps.length}
+              activeIndex={traceActiveIndex}
+              canScrollPrev={traceCanScrollPrev}
+              canScrollNext={traceCanScrollNext}
+              onSelect={scrollToTraceIndex}
+              onStep={stepTrace}
+              compact
+              label="step"
+            />
+
+            <motion.div
+              key={`${activeTrace.id}-footer`}
+              className={styles.traceFooter}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              <span className={styles.traceOutcomePill}>{activeTrace.outcome}</span>
+              <button
+                type="button"
+                onClick={() => handleOpenCaseStudy(activeTrace.projectSlug)}
+                className={styles.traceCaseLink}
+              >
+                <span>Inspect {activeTrace.label} Case Study</span>
+                <ArrowUpRight size={15} />
+              </button>
+            </motion.div>
           </div>
         </ScrollReveal>
       </div>

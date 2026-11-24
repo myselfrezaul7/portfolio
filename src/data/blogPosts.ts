@@ -35,7 +35,7 @@ const rawBlogPosts: Omit<BlogPost, 'readTime'>[] = [
         relatedProjectMetric: '-25% Wait Time · 100+ Daily Samples',
         tags: ['Data Quality', 'Excel & Sheets', 'Management Reporting', 'Healthcare Ops', 'BPMN 2.0'],
         tldr: [
-            'Clean capture discipline—nightly physical-log reconciliation, validation rules, and locked formulas—beats brittle complexity on high-volume clinical floors.',
+            'Clean capture discipline (nightly physical-log reconciliation, validation rules, and locked formulas) beats brittle complexity on high-volume clinical floors.',
             'Converting raw rows into weekly visual briefings exposed an underserved rural diagnostic gap and directly triggered a regional outreach campaign.',
             'Operational tools must match the team using them: simple, transparent columns survive shift handoffs far better than deeply nested multi-sheet workbooks.',
         ],
@@ -99,73 +99,73 @@ Yet the core principle remains unchanged. Whether you are building an enterprise
     {
         id: 2,
         slug: 'building-petbhai',
-        title: 'PetBhai: From Rescue-Funded Prototype to Live Bilingual Pet Care Ecosystem',
-        excerpt: 'Why our animal rescue work inspired a self-sustaining pet commerce architecture, the logistics lessons learned in Dhaka, and how PetBhai evolved in 2026 into a live bilingual Web PWA and Native Android platform.',
+        title: 'PetBhai: From Animal Welfare Prototype to Live Bilingual Pet Care Ecosystem',
+        excerpt: 'A non-commercial student software and animal welfare initiative: exploring pet care inventory state machines, logistics lessons studied in Dhaka, and how PetBhai evolved into a live bilingual Web PWA and Native Android showcase with zero commercial trading.',
         category: 'Social Venture',
         date: '2025-10-10',
         updatedAt: '2026-04-20',
         relatedProjectSlug: 'petbhai-ecosystem',
         relatedProjectTitle: 'PetBhai · Bilingual Web PWA & Native Android Ecosystem',
         relatedProjectUrl: 'https://www.petbhai.com',
-        relatedProjectMetric: 'Web PWA + Native Android · EN/BN',
-        tags: ['Social Venture', 'Supply Chain Logic', 'Web PWA', 'Android App', 'SKU State Machine'],
+        relatedProjectMetric: 'Non-Commercial · Web PWA + Android · EN/BN',
+        tags: ['Non-Commercial Project', 'Animal Welfare', 'Supply Chain Logic', 'Web PWA', 'Android App', 'SKU State Machine'],
         tldr: [
-            'Spontaneous rescue donations run dry during medical emergencies; PetBhai channels recurring pet-care demand into sustainable funding for street animal welfare.',
-            'Designing explicit SKU inventory state machines (Available -> In Basket -> Confirmed -> Dispatched) and mapping cash-on-delivery reconciliation cycles solved real operational bottlenecks before scaling.',
-            'Updated in 2026: PetBhai transitioned from an architected prototype to a live bilingual (EN/BN) platform at petbhai.com spanning a Web PWA and Native Android app with commerce, adoption, community Q&A, and vet booking.',
+            'Non-Commercial Project: PetBhai is a student software architecture and community animal welfare initiative built alongside IMIS graduate studies with zero active commercial revenue or trading.',
+            'Designing explicit SKU inventory state machines (Available -> In Basket -> Confirmed -> Dispatched) and modeling local courier reconciliation cycles solved real supply-chain architecture challenges before any real-world deployment.',
+            'Updated in 2026: PetBhai evolved from an architected prototype into a live bilingual (EN/BN) non-commercial showcase at petbhai.com spanning a Web PWA and Native Android app with pet care, adoption, community Q&A, and vet clinic workflows.',
         ],
-        content: `> **2026 Platform Update:** Originally written while PetBhai was an architected prototype, the platform is now live at [petbhai.com](https://www.petbhai.com) as a bilingual (English & Bangla) **Web PWA and Native Android ecosystem** bringing together rescue-funded commerce, community Q&A, adoption listings, and veterinary clinic booking.
+        content: `> **Non-Commercial Project & 2026 Platform Update:** PetBhai is strictly a **non-commercial student software architecture and community animal welfare initiative** built independently alongside my graduate studies, with **zero active commercial trading, sales operations, or revenue generation**. Originally written while PetBhai was an architected prototype, the platform is now live at [petbhai.com](https://www.petbhai.com) as a bilingual (English & Bangla) **Web PWA and Native Android ecosystem** showcasing pet care inventory workflows, community Q&A, adoption listings, and veterinary clinic discovery.
 
-## Why Rescue Needs a Sustainable Model
+## Why Grassroots Animal Welfare Inspired This Architecture
 
-Anyone who has participated in street animal welfare knows the emotional and financial strain it creates. Over the years of running animal welfare initiatives in Bangladesh, my friends and I routinely faced urgent emergencies: injured stray dogs hit by vehicles, malnourished litters of kittens abandoned in alleyways, and animals suffering from severe infections.
+Anyone who has participated in street animal welfare knows the emotional and coordination strain it creates. Over the years of running volunteer animal welfare initiatives in Bangladesh, my friends and I routinely faced urgent emergencies: injured stray dogs hit by vehicles, malnourished litters of kittens abandoned in alleyways, and animals suffering from severe infections.
 
-Every single rescue requires immediate funds. Veterinary consultations, antibiotics, wound dressing, surgery, and daily feeding all require reliable money. For years, we funded these operations through personal pockets and emergency appeals within our community. But relying solely on spontaneous donations and personal savings is exhausting and precarious. Some months funds run dry right when an animal needs critical medical care.
+Every single rescue requires rapid coordination, reliable veterinary information, and sustained community awareness. For years, volunteer rescuers relied on fragmented social media posts and urgent emergency appeals whenever an animal needed critical medical care. At the same time, thousands of pet owners struggled with disorganized online listings, stockouts, and hard-to-find veterinary services.
 
-At the same time, thousands of conscientious pet owners across the country buy pet food, cat litter, grooming supplies, and accessories every month through retail shops. That contrast sparked the idea for PetBhai: what if we built a dedicated pet supplies business whose primary purpose is to channel its revenue directly into rescuing and rehabilitating stray and voiceless animals?
+That contrast sparked the architectural concept behind PetBhai: designing a dedicated, non-commercial digital software showcase that models structured pet care catalogs, adoption discovery, community Q&A, and veterinary clinic workflows in one cohesive platform supporting street animal welfare.
 
 ## Designing the Core Architecture
 
-To test the feasibility of this social venture, I set out to build PetBhai first as a rigorously modeled software system. The goal was to prove the operational logic, catalogue structure, and order fulfillment flows before committing capital to warehouse leases or physical stock.
+To explore the technical and operational feasibility of this idea, I built PetBhai strictly as a rigorously modeled non-commercial student software project. The goal was to engineer clean domain logic, catalog structure, and inventory state transitions purely as a systems engineering and animal welfare initiative, without operating a commercial business or holding physical warehouse stock.
 
 I structured the platform around three core architectural capabilities:
 
-- **Structured dietary & life-stage catalogue**: Products organized cleanly by dietary needs, age stages, and pet types—replacing the cluttered social media marketplace listings typical in the local market.
-- **Deterministic SKU inventory state machine**: Explicit stock states (**Available**, **In Basket**, **Confirmed**, and **Dispatched**) that prevent overselling during high-traffic rescue campaigns and keep warehouse counts synchronized.
-- **Local courier routing workflow**: A checkout and fulfillment pipeline modeled directly around regional courier handoffs, tracking every parcel from fulfillment hubs to residential doorsteps.
+- **Structured dietary & life-stage catalog**: Items organized cleanly by dietary needs, age stages, and pet types, replacing the cluttered social media listings typical in the local ecosystem.
+- **Deterministic SKU inventory state machine**: Explicit stock states (**Available**, **In Basket**, **Confirmed**, and **Dispatched**) engineered to prevent stock drift and keep simulated warehouse counts synchronized under concurrency.
+- **Local courier routing workflow**: A fulfillment state pipeline modeled directly around regional courier handoffs, tracking each modeled parcel milestone from dispatch hub to residential doorstep.
 
 ## What Didn't Go to Plan
 
 Building the software layer was straightforward; modeling physical logistics under local constraints proved much harder.
 
-During our initial delivery simulations, we encountered major challenges with product handling and courier reliability. In Dhaka, heavy items like twenty-kilogram bags of dog food or clay cat litter require careful handling. Standard courier services frequently damaged packaging in transit during rainy monsoon days, leading to rejected deliveries and lost revenue.
+During our early logistics simulations and research in Dhaka, we identified major challenges with product handling and courier reliability. Heavy items like twenty-kilogram bags of dog food or clay cat litter require careful handling, and standard courier networks frequently damaged packaging in transit during rainy monsoon days.
 
-Furthermore, cash on delivery remains the dominant payment method in the region. Modeling cash-on-delivery reconciliations in our order pipeline revealed that payments often take several days to clear back from courier partners to the business account. For a venture meant to provide immediate cash flow for urgent veterinary surgeries, delayed courier reconciliations would create serious cash crunches.
+Furthermore, cash on delivery remains the dominant payment habit in the region. Modeling cash-on-delivery reconciliations in our workflow architecture revealed that settlements often take several days to clear from courier partners. Studying those settlement lags taught me how heavily cash-conversion cycles and reconciliation controls determine whether a logistics system can function smoothly in practice.
 
-> Writing working web code is only ten percent of the challenge; physical fulfillment and cash-conversion cycles determine whether a social venture survives.
+> Writing working web code is only ten percent of the challenge; physical fulfillment and reconciliation cycles determine whether a logistics architecture holds up in the real world.
 
 ## Staying Disciplined Through Graduate Studies
 
-When I moved to Germany to pursue my Master's degree in International Management and Information Systems (IMIS) at Fachhochschule Südwestfalen, I deliberately refused to rush into reckless commercial inventory commitments from seven thousand kilometers away.
+When I moved to Germany to pursue my Master's degree in International Management and Information Systems (IMIS) at Fachhochschule Südwestfalen, I kept PetBhai strictly as a non-commercial student software and welfare project with zero commercial trading or inventory operations.
 
-Running a physical fulfillment operation blindly across time zones would have compromised both my graduate studies and customer trust. Instead, I treated PetBhai as a living systems laboratory—applying enterprise information systems, structured database modeling, and supply chain discipline from my IMIS coursework to harden the platform piece by piece.
+Instead, I treated PetBhai as a living non-commercial systems laboratory, applying enterprise information systems, structured database modeling, and supply chain discipline from my IMIS coursework to harden the platform piece by piece.
 
 ## 2026 Live-Platform Milestone: Web PWA & Native Android Ecosystem
 
-That disciplined architecture paid off. In 2026, PetBhai graduated from a conceptual blueprint into a live bilingual (English and Bangla) digital ecosystem at [petbhai.com](https://www.petbhai.com), shipped across both a **Progressive Web App (PWA)** and a **Native Android application**.
+That disciplined architecture paid off. In 2026, PetBhai graduated from a conceptual blueprint into a live, non-commercial bilingual (English and Bangla) digital showcase at [petbhai.com](https://www.petbhai.com), shipped across both a **Progressive Web App (PWA)** and a **Native Android application**.
 
 ### What Runs Live in the Ecosystem Today
 
-1. **Multi-tier e-commerce & inventory engine**: Full bilingual storefront backed by deterministic SKU state tracking, clear pricing, and structured order lifecycle management.
+1. **Multi-tier catalog & inventory state engine**: Full bilingual architecture backed by deterministic SKU state tracking, clear catalog organization, and structured order lifecycle modeling (built as a non-commercial student showcase with zero active commercial sales).
 2. **Adoption & veterinary clinic booking workflows**: Dedicated discovery pathways connecting pet parents with verified veterinary clinics and responsible local adoptions.
-3. **Community Q&A & pet-care editorial hub**: A moderated knowledge space where real pet owners exchange practical guidance and veterinary-reviewed articles in both English and Bangla.
+3. **Community Q&A & pet-care editorial hub**: A moderated knowledge space where pet owners exchange practical guidance and veterinary-reviewed articles in both English and Bangla.
 4. **Offline-resilient mobile experience**: Service-worker caching for editorial guides combined with network-first live data synchronization so users on variable mobile networks get fast, reliable access.
 
 ## The Long-Term Vision
 
-The mission has never changed: establishing a self-sustaining social enterprise where pet owners can rely on a trustworthy platform knowing every milestone strengthens rescue and welfare capacity for voiceless street animals.
+The core purpose remains rooted in community welfare and responsible systems design: creating accessible digital tools that strengthen care, adoption, and veterinary discovery for voiceless street animals.
 
-Building PetBhai alongside my IMIS studies proved how powerfully process modeling, disciplined architecture, and empathy reinforce each other—turning a grassroots animal welfare need into a resilient, production-grade digital ecosystem.`,
+Building PetBhai as a non-commercial student initiative alongside my IMIS studies proved how powerfully process modeling, disciplined architecture, and empathy reinforce each other, turning a grassroots animal welfare need into a resilient, production-grade software ecosystem.`,
     },
     {
         id: 3,
@@ -181,8 +181,8 @@ Building PetBhai alongside my IMIS studies proved how powerfully process modelin
         tags: ['Operations at Scale', 'Moderation Playbooks', 'Automated Triage', 'Leadership', 'Animal Welfare'],
         tldr: [
             'Founder-as-bottleneck fails catastrophically at scale: solo moderation delayed life-critical rescue posts and let unverified fundraising slip through.',
-            'Three lightweight operational controls—mandatory clinic proof, standardized intake templates, and emergency keyword alerts—allowed five trusted moderators to run 450,000+ members reliably.',
-            'Relocating to Germany (+4–5h timezone delta) stress-tested the handover: clear governance enabled uninterrupted daily rescues without founder intervention.',
+            'Three lightweight operational controls (mandatory clinic proof, standardized intake templates, and emergency keyword alerts) allowed five trusted moderators to run 450,000+ members reliably.',
+            'Relocating to Germany (+4 to 5h timezone delta) stress-tested the handover: clear governance enabled uninterrupted daily rescues without founder intervention.',
         ],
         content: `## Founding the Communities
 
@@ -210,9 +210,9 @@ Instead of dividing the team into complex corporate tiers, we kept the structure
 
 To make the moderators' work sustainable without burning them out too, we codified three explicit operational rules and automated triage safeguards:
 
-1. **Mandatory clinical verification for fundraising**: We banned open, unverified donation appeals. Anyone requesting financial help for an animal must provide a clear photograph, the name and location of the treating veterinary clinic, and an itemized prescription or doctor note—eliminating fraudulent claims and protecting member trust.
+1. **Mandatory clinical verification for fundraising**: We banned open, unverified donation appeals. Anyone requesting financial help for an animal must provide a clear photograph, the name and location of the treating veterinary clinic, and an itemized prescription or doctor note, eliminating fraudulent claims and protecting member trust.
 2. **Structured adoption and lost-pet templates**: Every listing must include the animal's age, medical history, exact neighborhood location, and verified contact numbers prior to approval, cutting dozens of back-and-forth comment threads per post.
-3. **Automated emergency keyword alerts**: High-priority moderation triggers watch for life-threatening terms—poisonings, vehicular accidents, critical fractures, and urgent blood donor calls. Whenever a trigger fires, a moderator receives an instant alert, reviews the post ahead of the general queue, and pins it so nearby rescuers mobilize immediately.
+3. **Automated emergency keyword alerts**: High-priority moderation triggers watch for life-threatening terms: poisonings, vehicular accidents, critical fractures, and urgent blood donor calls. Whenever a trigger fires, a moderator receives an instant alert, reviews the post ahead of the general queue, and pins it so nearby rescuers mobilize immediately.
 
 ## Managing Across Time Zones
 
@@ -232,22 +232,24 @@ A community of 450,000 members does not stay orderly because one person works ei
         id: 4,
         slug: 'building-nextep-edu',
         title: 'From BPMN Diagrams to My First Live Website: Building NexTep Edu',
-        excerpt: 'Mapping a study abroad consultancy with BPMN 2.0, building my first production website, and adding a private application tracker backed by Supabase.',
+        excerpt: 'A voluntary, non-commercial project mapping a study abroad workflow with BPMN 2.0, building my first live bilingual website, and adding a private application tracker backed by Supabase.',
         category: 'Web & Process',
         date: '2026-03-10',
         relatedProjectSlug: 'nextep-edu',
         relatedProjectTitle: 'NexTep Edu · BPMN 2.0 Playbook & Bilingual Web Platform',
         relatedProjectUrl: 'https://www.nextepedu.com',
-        relatedProjectMetric: '17 Country Guides · Supabase Tracker',
-        tags: ['BPMN 2.0', 'Next.js', 'Supabase', 'Technical Project Lead', 'Bilingual Web'],
+        relatedProjectMetric: 'Non-Commercial · 17 Country Guides · Supabase Tracker',
+        tags: ['Non-Commercial Project', 'BPMN 2.0', 'Next.js', 'Supabase', 'Voluntary Project Lead', 'Bilingual Web'],
         tldr: [
-            'Drawing the end-to-end student admissions workflow in BPMN 2.0 before writing code exposed handoff gaps and gave the consultancy its daily operational playbook.',
-            'Built and shipped a bilingual (English & Bangla) Next.js production site featuring 17 country study guides, structured Organization schema, and dark/light themes.',
-            'A lightweight Supabase-backed private application tracker linked directly to the BPMN stages eliminated repetitive status-check messages for staff.',
+            'Non-Commercial Project: completed as a voluntary, uncompensated technical and BPMN 2.0 process modeling initiative alongside my IMIS graduate studies.',
+            'Drawing the end-to-end student admissions workflow in BPMN 2.0 before writing code exposed handoff gaps and gave the team its daily operational playbook.',
+            'Built and shipped a bilingual (English & Bangla) Next.js site featuring 17 country study guides and a private Supabase-backed application tracker linked directly to the BPMN stages.',
         ],
-        content: `## Why I Said Yes
+        content: `> **Non-Commercial Project Disclosure:** NexTep Edu was carried out strictly as a **voluntary, non-commercial technical and BPMN 2.0 process-modeling project** with zero financial compensation, completed to apply business process management and web architecture concepts from my IMIS graduate studies to a real-world educational workflow.
 
-From the very beginning of my studies, I have been drawn to the space where management meets technology. I like understanding how a business actually runs, and then finding the right tools to make that work easier. So when I joined [NexTep Edu](https://www.nextepedu.com), a study abroad consultancy helping students from Bangladesh apply to universities in Germany and other countries, as Technical Project Lead in May 2025, I saw a chance to do exactly that.
+## Why I Said Yes
+
+From the very beginning of my studies, I have been drawn to the space where management meets technology. I like understanding how a business actually runs, and then finding the right tools to make that work easier. So when I volunteered with [NexTep Edu](https://www.nextepedu.com), a study abroad consultancy helping students from Bangladesh apply to universities in Germany and other countries, as a voluntary Technical Project Lead in May 2025, I saw a chance to do exactly that.
 
 There was one catch. I had never built a full website before. NexTep Edu was my first real web project, and I learned most of what I know about web building along the way.
 
@@ -280,7 +282,7 @@ Students applying abroad are understandably anxious, and the most common message
 So I built a dedicated tracking portal backed by **Supabase**:
 
 1. When a student's file opens, they receive an email containing a unique tracking code and private link.
-2. Opening that link reveals their live application stage at any hour—without calling or messaging staff.
+2. Opening that link reveals their live application stage at any hour, without calling or messaging staff.
 3. Only authenticated staff admins can update progress states, while row-level isolation guarantees each student sees strictly their own personal record.
 
 > Every stage a student sees on the tracker maps one-to-one with a milestone in the BPMN diagram we drew before writing a single line of code.
@@ -295,7 +297,7 @@ Because this was my first production web build, there are clear architectural im
 
 ## What It Gave Me
 
-My time as Technical Project Lead at NexTep Edu concluded in March 2026. Looking back, the biggest thing I took from it was not a specific framework or library—it was operational confidence. I went in having never shipped a website, and I came out knowing I could take a real business process, map it rigorously, and ship a live system people depend on every day.
+My voluntary role as Technical Project Lead on the NexTep Edu project concluded in March 2026. Looking back, the biggest thing I took from it was not a specific framework or library; it was operational confidence. I went in having never shipped a website, and I came out knowing I could take a real business process, map it rigorously, and ship a live system people depend on every day.
 
 That confidence is the reason this portfolio exists, and it is the same mindset I bring to my work now: understand the people and the process first, then choose the technology that supports them.`,
     },

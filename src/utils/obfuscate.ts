@@ -43,7 +43,7 @@ export function getObfuscatedEmailLabel(): string {
 
 /**
  * Builds a mailto: URL with optional encoded subject and body parameters.
- * Kept for compatibility — invoke ONLY inside click handlers or useEffect, never in SSR JSX.
+ * Kept for compatibility: invoke ONLY inside click handlers or useEffect, never in SSR JSX.
  */
 export function getMailtoUrl(subject?: string, body?: string): string {
     const base = `mailto:${getEmailAddress()}`;
